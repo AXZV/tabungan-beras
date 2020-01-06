@@ -36,5 +36,6 @@ _________▄██✿███▄
 
 
 DILARANG MEMPERJUAL BELIKAN SOURCE CODE PROGRAM INI TANPA SE IZIN PENGEMBANG
-Contact us : praseetyaa@gmail.com or servicemail2071@gmail.com 
+--------------------- Undang-Undang Nomor 28 tahun 2014 --------------------
+------ Contact us : praseetyaa@gmail.com or servicemail2071@gmail.com ------
 
