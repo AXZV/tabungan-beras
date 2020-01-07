@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include('../db_con.php');
 // REGISTER USER
 if (isset($_POST['reguser'])) {
@@ -66,7 +65,7 @@ if ($passwordbetul == 1 && $notpl_betul == 1 && $username_betul == 1)
 {
     session_unset();
 
-    $_SESSION['formerror1'] == 0;
+    $_SESSION['formerror1'] = 0;
     // user_id
     $date = date("dm");
     $newhp = substr($nohp,-2);
@@ -119,8 +118,30 @@ if ($passwordbetul == 1 && $notpl_betul == 1 && $username_betul == 1)
     $query=mysqli_query($db,$sql);
     if($query)
         {
-            $_SESSION['s_user_id'] = $id_user;
-            header('Location:../profile/index.php');
+            $f= null;
+            $sql2="INSERT INTO log_status(
+                id_user,
+                s_tabungan,
+                id_transaksi_tabungan,
+                s_sedekah,
+                id_transaksi_sedekah,
+                s_penarikan,
+                id_transaksi_penarikan) 
+            VALUES (
+                '$id_user',
+                'clear',
+                '$f',
+                'clear',
+                '$f',
+                'clear',
+                '$f'
+                )";
+            $query2=mysqli_query($db,$sql2);
+            if($query2)
+            {
+                $_SESSION['s_user_id'] = $id_user;
+                header('Location:../profile/index.php');
+            }
         }
     else
         {

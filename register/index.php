@@ -126,7 +126,7 @@ else
 								<small><span class="red-text">*</span> Geser pin map sesuai alamat</small>
 								<div class="mampus">	
 									<div class="input-group" id="search">		
-										<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat" required="">
+										<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">
 									    <div class="input-group-prepend">
 									      <button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
 									    </div>

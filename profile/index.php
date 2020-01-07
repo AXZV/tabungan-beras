@@ -15,10 +15,14 @@
 
 	//// TOTAL SALDO
 
-	$query4 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_tabungan WHERE status='sudah_diverifikasi' AND id_user='$id_user'";
-	$results4 = mysqli_query($db, $query4) or die (mysqli_error());
-	$row4=mysqli_fetch_array($results4);
-	$totaltabungan = round($row4['total'], 2);
+	$query = "SELECT * FROM akun_user WHERE id_user='$id_user'";
+	$results = mysqli_query($db, $query) or die (mysqli_error());
+	$data=mysqli_fetch_array($results);
+	$totaltabungan= $data['saldo']; 
+	// $query4 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_tabungan WHERE status='sudah_diverifikasi' AND id_user='$id_user'";
+	// $results4 = mysqli_query($db, $query4) or die (mysqli_error());
+	// $row4=mysqli_fetch_array($results4);
+	// $totaltabungan = round($row4['total'], 2);
 
 	//////////////////////  char dot dot 
 	if (strpos($totaltabungan, '.') !== false) {
@@ -102,6 +106,19 @@
 		</script>";
 
 		unset($_SESSION['tabungan']);
+	}
+	if(isset($_SESSION['penarikan'])==1)
+	{
+		$jenis_transaksi_penarikan = isset($_SESSION['jenistransaksi']);
+		echo 
+		"<script> 
+			$(window).on('load', function(){
+				$('#penarikan').modal('toggle')
+			});
+		</script>";
+
+		unset($_SESSION['penarikan']);
+		unset($_SESSION['jenistransaksi']);
 	}
 ?>
 
@@ -318,7 +335,7 @@
 		</div>
 	</div>
 
-<!-- /////////////////////// Modal Sukses Menabung /////////////////////////////// -->
+<!-- /////////////////////// Modal Sukses Sedekah /////////////////////////////// -->
 	<div class="modal fade" id="sedekah" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog modal-notify modal-success" role="document">
@@ -348,6 +365,38 @@
 		</div>
 	</div>
 <!-- Central Modal Medium Success-->
+
+<!-- /////////////////////// Modal Sukses Penarikan /////////////////////////////// -->
+<div class="modal fade" id="penarikan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-notify modal-success" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header" id="sedekahhead">
+					<p class="heading lead">Penarikan</p>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+						<p>Berhasil melakukan permintaan penarikan dengan Jenis transaksi <?php echo $jenis_transaksi_penarikan ?> </p>
+						<p>Silahkan tunggu untuk admin melakukan verifikasi</p>
+					</div>
+				</div>
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+<!-- Central Modal Medium Success-->
+
 
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>

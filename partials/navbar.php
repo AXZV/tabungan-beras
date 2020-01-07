@@ -33,6 +33,9 @@ else
         <a class="nav-link" href="../tabungan/beras"><i class="fas fa-money-bill-wave"></i> Tabungan</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="../penarikan/beras"><i class="fab fa-get-pocket"></i> Penarikan</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="../sedekah/beras"><i class="fas fa-donate"></i> Sedekah</a>
       </li>
       <li class="nav-item">

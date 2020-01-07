@@ -476,7 +476,7 @@ if (isset($_SESSION['s_admin_id']))
 
 <!-- /////////////////////// Modal Update no rek /////////////////////////////// -->
 
-<div class="modal fade" id="modalnomorrekening<?php echo $bank, $norek, $pr ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	<div class="modal fade" id="modalnomorrekening<?php echo $bank, $norek, $pr ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
