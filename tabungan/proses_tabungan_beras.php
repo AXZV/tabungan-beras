@@ -8,7 +8,7 @@ if (isset($_POST['subtabungan'])) {
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
 
-    $id_transaksi = $date.$id_user.$rand;
+    $id_transaksi = $date.$id_user.$rand."_tabungan";
     $tanggal_transaksi = date("d M Y");
     $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
     $jumlah_uang =null;
@@ -71,7 +71,7 @@ else if (isset($_POST['uangtabungan'])) {
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
 
-    $id_transaksi = $date.$id_user.$rand;
+    $id_transaksi = $date.$id_user.$rand."_tabungan";
     $tanggal_transaksi = date("d M Y");
     $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah_beras']);
     $jumlah_uang = mysqli_real_escape_string($db, $_POST['jumlah']);

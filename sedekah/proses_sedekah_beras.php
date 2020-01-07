@@ -8,7 +8,7 @@ if (isset($_POST['subsedekah'])) {
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
 
-    $id_transaksi = $date.$id_user.$rand;
+    $id_transaksi = $date.$id_user.$rand."_sedekah";
     $tanggal_transaksi = date("d M Y");
     $jumlah_uang =null;
     $jenis_transaksi = "beras";
@@ -84,7 +84,7 @@ else if (isset($_POST['uangsedekah'])) {
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
 
-    $id_transaksi = $date.$id_user.$rand;
+    $id_transaksi = $date.$id_user.$rand."_sedekah";
     $tanggal_transaksi = date("d M Y");
     $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah_beras']);
     $jumlah_uang = mysqli_real_escape_string($db, $_POST['jumlah']);
