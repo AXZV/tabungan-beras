@@ -42,3 +42,10 @@ DILARANG MEMPERJUAL BELIKAN SOURCE CODE PROGRAM INI TANPA SE IZIN PENGEMBANG
 ----------------------------------------------------------------------------
 
 
+----------------------------------------------------------------------------
+DILARANG MEMPERJUAL BELIKAN SOURCE CODE PROGRAM INI TANPA SE IZIN PENGEMBANG
+--------------------- Undang-Undang Nomor 28 tahun 2014 --------------------
+------ Contact us : praseetyaa@gmail.com or servicemail2071@gmail.com ------
+----------------------------------------------------------------------------
+
+
