@@ -53,11 +53,6 @@ if (isset($_SESSION['s_user_id']))
 	<?php include('../partials/css.php'); ?>
 	<link rel="stylesheet" type="text/css" href="../asset/css/radiobuttontabungan.css">
 </head>
-<style>
-
-
-
-</style>
 <body>
 <?php include('../partials/navbar.php'); ?>
 <section>
@@ -226,7 +221,6 @@ if (isset($_SESSION['s_user_id']))
 </section>
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
 <!-- ////// konversi beras -->
 <script>

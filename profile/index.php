@@ -337,8 +337,8 @@
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-success exit2" href="riwayat_tabungan" ><i class="far fa-clock"></i> Riwayat Tabungan</a>
-					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
+					<a class="btn btn-success exit2" href="riwayat_tabungan" ><i class="far fa-clock"></i> Riwayat Tabungan</a>
+					<a class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>
 			<!--/.Content-->
@@ -368,8 +368,8 @@
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-success exit2" href="riwayat_sedekah" ><i class="far fa-clock"></i> Riwayat Sedekah</a>
-					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
+					<a class="btn btn-success exit2" href="riwayat_sedekah" ><i class="far fa-clock"></i> Riwayat Sedekah</a>
+					<a class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>
 			<!--/.Content-->
@@ -400,8 +400,8 @@
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-success exit2" href="riwayat_penarikan" ><i class="far fa-clock"></i> Riwayat Penarikan</a>
-					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
+					<a class="btn btn-color exit2" href="riwayat_penarikan" ><i class="far fa-clock"></i> Riwayat Penarikan</a>
+					<a class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>
 			<!--/.Content-->
