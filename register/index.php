@@ -84,8 +84,8 @@ else
 <?php include('../partials/navbar.php'); ?>
 <section class="container">
 	<div >
-		<div class="row">
-			<div class="col-lg-6 col-sm-12 py-5 px-0 px-sm-0 px-md-0 px-lg-3 px-xl-3">
+		<div class="row py-5">
+			<div class="col-lg-6 col-sm-12 px-0 px-sm-0 px-md-0 px-lg-3 px-xl-3">
 				<div class="card">
 					<div class="card-header">
 						<h5 class="mb-0 font-weight-bold">Daftar</h5>
@@ -156,7 +156,7 @@ else
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6 col-sm-12" style="background: url(../asset/image/undraw_complete_task_u2c3.svg); background-size: contain; background-repeat: no-repeat; background-position: center;">
+			<div class="col-lg-6 col-sm-12" style="background: url(../asset/image/undraw_complete_task_u2c3.svg); background-size: contain; background-repeat: no-repeat;">
 			</div>
 		</div>
 	</div>

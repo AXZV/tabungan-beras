@@ -95,8 +95,8 @@
 						<span>Apakah anda yakin akan keluar?</span>
 					</div>
 					<div class="modal-footer">
-						<a type="button" class="btn btn-color" data-dismiss="modal">Batal</a>
-						<a type="button" href="login/logout.php" class="btn btn-danger">Keluar</a>
+						<a class="btn btn-color" data-dismiss="modal">Batal</a>
+						<a href="login/logout.php" class="btn btn-danger">Keluar</a>
 					</div>
 				</div>
 			</div>
@@ -142,41 +142,62 @@
 <section id="pelajari" style="padding-top: 4rem;">
 	<div class="container">
 		<div class="heading text-center mb-5">
-			<h2 class="font-weight-bold">Bagaimana Tabungan Bekerja?</h2>
+			<h2 class="font-weight-bold">Bagaimana Tabungan Beras Bekerja?</h2>
 			<hr>
 		</div>
 		<div class="row">
-			<div class="col-md-6 col-sm-12 border-right">
-				<img class="img-fluid" src="asset/image/undraw_Savings_dwkw.svg">
+			<div class="col-md-6 col-sm-12 border-right mb-3">
+				<img class="img-fluid" src="asset/image/undraw_digital_currency_qpak.svg">
 			</div>
 			<div class="col-md-6 col-sm-12">
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="100" src="https://image.flaticon.com/icons/svg/755/755195.svg" alt="Generic placeholder image">
-				  <div class="media-body">
-				    <h5 class="mt-0 font-weight-bold">Media heading</h5>
-				    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-				    vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-				    congue felis in faucibus.
+				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/145/145867.svg" alt="Generic placeholder image">
+				  <div class="media-body text-justify">
+				    <h5 class="mt-0 font-weight-bold">Daftar</h5>
+				    <span>Untuk dapat mengakses layanan Tabungan Beras, anda dapat membuat akun terlebih dahulu, dengan mendaftarkan diri anda. Isi formulir pendaftaran dengan cermat, demi kemudahan transaksi. Data diri anda menjadi rahasia kami.</span>
 				  </div>
 				</div>
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="100" src="https://image.flaticon.com/icons/svg/2060/2060274.svg" alt="Generic placeholder image">
-				  <div class="media-body">
-				    <h5 class="mt-0 font-weight-bold">Media heading</h5>
-				    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-				    vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-				    congue felis in faucibus.
+				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg" alt="Generic placeholder image">
+				  <div class="media-body text-justify">
+				    <h5 class="mt-0 font-weight-bold">Menabung</h5>
+				    <span>Selesaikan proses transaksi dengan mengisi form yang tersedia.
+					Untuk setoran uang anda dapat memilih dengan menyerahkan langsung setoran ke kantor terdekat kami atau dengan transfer bank.
+					Untuk setoran beras, anda juga dapat menyerahkan langsung ke kantor terdekat kami.
+					NB: layanan COD setoran, bisa untuk transaksi tabungan dengan minimal setoran beras 500 kg, atau setoran uang Rp 500.000</span>
 				  </div>
 				</div>
-				<div class="media">
-				  <img class="d-flex mr-3" width="100" src="https://image.flaticon.com/icons/svg/639/639365.svg" alt="Generic placeholder image">
-				  <div class="media-body">
-				    <h5 class="mt-0 font-weight-bold">Media heading</h5>
-				    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-				    vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
-				    congue felis in faucibus.
+				<div class="media mb-3">
+				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+				  <div class="media-body text-justify">
+				    <h5 class="mt-0 font-weight-bold">Sedekah</h5>
+				    <span>Anda juga dapat menggunakan layanan sedekah kami, yang pengalokasiannya akan kami kordinasikan dengan pemberi sedekah, dan kami konfirmasi setelah selesai penyerahan.</span>
 				  </div>
 				</div>
+				<div class="media mb-3">
+				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/639/639365.svg" alt="Generic placeholder image">
+				  <div class="media-body text-justify">
+				    <h5 class="mt-0 font-weight-bold">Penarikan</h5>
+				    <span>Nasabah dapat menarik kapanpun tabungannya, minimal satu bulan setelah tanggal penabungan.</span>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container py-5">
+		<div class="heading text-center">
+			<h2 class="font-weight-bold">Sedekah</h2>
+			<hr>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-sm-12 text-justify">
+				<div class="alert alert-warning" role="alert">Orang dermawan yang gemar bersedekah juga menempati kedudukan yang mulia di sisi Allah. Ampunan serta surga seluas hamparan langit dan bumi dijanjikan oleh Allah bagi mereka yang suka bersedekah, baik di kala senang maupun susah <span class="font-weight-bold">(Q.S Ali Imran: 133-134)</span></div>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</div>
+			<div class="col-md-4 col-sm-12">
+				<img class="img-fluid" src="asset/image/undraw_gifts_btw0.svg">
 			</div>
 		</div>
 	</div>
@@ -184,7 +205,7 @@
 <section class="background-color-2">
 	<div class="container py-5">
 		<div class="heading text-center mb-5">
-			<h2 class="font-weight-bold">Mengapa Memilih Tabungan?</h2>
+			<h2 class="font-weight-bold">Mengapa Memilih Tabungan Beras?</h2>
 			<hr>
 		</div>
 		<div class="row text-center">
