@@ -2,14 +2,20 @@
 include('../db_con.php');
 if (isset($_SESSION['s_user_id']))
 {
+
 	$id_user = $_SESSION['s_user_id'];
 	$query = "SELECT * FROM akun_user WHERE id_user='$id_user'";
 	$results = mysqli_query($db, $query) or die (mysqli_error());
 	$data=mysqli_fetch_array($results);
-
 	$alamat=$data['alamat'];
 	$lat=$data['lat'];
 	$lng=$data['lng'];
+
+
+	$query2 = "SELECT * FROM log_status WHERE id_user='$id_user'";
+	$results2 = mysqli_query($db, $query2) or die (mysqli_error());
+	$data2=mysqli_fetch_array($results2);
+	
 
 }
 ?>
@@ -66,6 +72,12 @@ if (isset($_SESSION['s_user_id']))
 					<?php
 					if (isset($_SESSION['s_user_id']))
 					{
+						if($data2['s_tabungan'] == 'notclear')
+						{	 
+							include('detail_transaksi.php');
+						} 
+						else
+						{
 					?>
 					<div class="card-body">
 						<form method="post" action="proses_tabungan_beras.php">
@@ -110,6 +122,7 @@ if (isset($_SESSION['s_user_id']))
 						</form>
 					</div>
 					<?php
+							}
 						}
 						else
 						{	

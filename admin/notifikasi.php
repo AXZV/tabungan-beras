@@ -222,6 +222,11 @@ if (isset($_SESSION['s_admin_id']))
           <span>Notifikasi</span></a>
 
       </li>
+	  <li class="nav-item">
+        <a class="nav-link" href="penarikan">
+					<i class="fab fa-get-pocket"></i>
+          <span>Penarikan</span></a>
+      </li>
 
       <li class="nav-item">
 

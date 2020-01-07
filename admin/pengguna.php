@@ -52,6 +52,11 @@ if (isset($_SESSION['s_admin_id']))
           <i class="fa fa-bell"></i>
           <span>Notifikasi</span></a>
       </li>
+			<li class="nav-item">
+        <a class="nav-link" href="penarikan">
+					<i class="fab fa-get-pocket"></i>
+          <span>Penarikan</span></a>
+      </li>
       <li class="nav-item active">
         <a class="nav-link" href="pengguna">
           <i class="fa fa-user"></i>
@@ -192,7 +197,7 @@ if (isset($_SESSION['s_admin_id']))
 	                      <td><?php echo $row['saldo'];?></td>
 	                      <td class="text-center">
                           <form action="prosespengaturan.php" method="POST">
-						  	<button class="btn btn-sm btn-danger m-0" name="hapus_user" value="<?php //echo $row['id_user'];?>"  onclick="return confirm('apakah anda yakin akan menghapus akun ini ?')">Hapus</button></td>
+						  	<button class="btn btn-sm btn-danger m-0" name="hapus_user" value="<?php echo $row['id_user'];?>"  onclick="return confirm('apakah anda yakin akan menghapus akun ini ?')">Hapus</button></td>
                           </form>
 						</tr>
 						<?php } ?>

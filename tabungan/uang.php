@@ -33,6 +33,10 @@ if (isset($_SESSION['s_user_id']))
 	$bank=$data3['bank'];
 	$pemilik_rek=$data3['pemilik_rekening'];
 
+	$query21 = "SELECT * FROM log_status WHERE id_user='$id_user'";
+	$results21 = mysqli_query($db, $query21) or die (mysqli_error());
+	$data21=mysqli_fetch_array($results21);
+
 }
 ?>
 <!DOCTYPE html>
@@ -94,107 +98,114 @@ if (isset($_SESSION['s_user_id']))
 					<?php
 					if (isset($_SESSION['s_user_id']))
 					{
+						if($data21['s_tabungan'] == 'notclear')
+						{	 
+							include('detail_transaksi.php');
+						} 
+						else
+						{
 					?>
-					<div class="card-body">
-						<form method="post" action="proses_tabungan_beras.php" enctype="multipart/form-data">
+							<div class="card-body">
+								<form method="post" action="proses_tabungan_beras.php" enctype="multipart/form-data">
 
-						<div class='switch mb-4'><div class='quality'>
-							<input type="radio" id="radiocod" name="radiob" checked value="cod">
-							<label for='radiocod'>Cash On Delivery (COD)</label>
-						</div><div class='quality'>
-							<input type="radio" id="radiotransfer" name="radiob" value="transfer">
-							<label for='radiotransfer'>Transfer</label>
-						</div>
-						</div>
-							<div id="transferdiv" style="display:none;">
-								<label>Nomor Rekening :</label>
-								<div class="input-group mb-1">
+								<div class='switch mb-4'><div class='quality'>
+									<input type="radio" id="radiocod" name="radiob" checked value="cod">
+									<label for='radiocod'>Cash On Delivery (COD)</label>
+								</div><div class='quality'>
+									<input type="radio" id="radiotransfer" name="radiob" value="transfer">
+									<label for='radiotransfer'>Transfer</label>
+								</div>
+								</div>
+									<div id="transferdiv" style="display:none;">
+										<label>Nomor Rekening :</label>
+										<div class="input-group mb-1">
+											<div class="input-group-prepend">
+												<span class="input-group-text" style="text-transform: uppercase;"><?php echo $bank ?></span>
+											</div>
+											<input type="text" readonly="" min="0" id="norek" name="norek" class="form-control" value="<?php echo $norek ?>"  required="">
+											<div class="input-group-append">
+												<span class="input-group-text">an. <?php echo $pemilik_rek ?></span>
+											</div>
+										</div>
+										<small class=" mb-4"> * Silahkan lakukan transfer ke nomor rekening diatas, lalu upload bukti transfer pada form dibawah ini</small><br><br>
+									</div>
+
+									<label>Jumlah :</label>
+									<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<span class="input-group-text" style="text-transform: uppercase;"><?php echo $bank ?></span>
+										<span class="input-group-text">Rp.</span>
 									</div>
-									<input type="text" readonly="" min="0" id="norek" name="norek" class="form-control" value="<?php echo $norek ?>"  required="">
-									<div class="input-group-append">
-										<span class="input-group-text">an. <?php echo $pemilik_rek ?></span>
+										<input type="text" id="jumlah_uang" name="jumlah" placeholder="Jumlah" required="" class="form-control">
 									</div>
-								</div>
-								<small class=" mb-4"> * Silahkan lakukan transfer ke nomor rekening diatas, lalu upload bukti transfer pada form dibawah ini</small><br><br>
-							</div>
+									
+									<div class="form-row">
+										<div class="col-sm-12 col-lg-6 mb-3 mb-lg-0 mb-xl-0">
+											<label>Harga Patokan Beras :</label>
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Rp.</span>
+												</div>
+												<input type="text" id="harga" readonly="" value="<?php echo harga($harga); ?>" class="form-control" placeholder="First name">
+												<div class="input-group-append">
+													<span class="input-group-text">/Kg</span>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-12 col-lg-6">
+											<label>Hasil Konfersi Ke Beras :</label>
+											<div class="input-group mb-4">
+												<input type="text" readonly="" min="0" id="jumlah_beras2" name="jumlah_beras" class="form-control" placeholder="Jumlah" required="">
+											<div class="input-group-append">
+												<span class="input-group-text">Kg</span>
+											</div>
+											</div>
+										
+										</div>
+									</div>	
 
-							<label>Jumlah :</label>
-							<div class="input-group mb-3">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Rp.</span>
-							</div>
-								<input type="text" id="jumlah_uang" name="jumlah" placeholder="Jumlah" required="" class="form-control">
-							</div>
-							
-							<div class="form-row">
-								<div class="col-sm-12 col-lg-6 mb-3 mb-lg-0 mb-xl-0">
-									<label>Harga Patokan Beras :</label>
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Rp.</span>
+									<div id="transferdiv2" style="display:none;">
+										<p class="m-0">Bukti Transfer : </p>
+										<img class="img-fluid mb-3 rounded" style="max-height: 150px;" id="img-upload">
+										<div class="input-group mb-3">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input btn-file" id="buktitf"
+											aria-describedby="inputGroupFileAddon01" name="buktitf">
+											<label class="custom-file-label" for="buktitf">Choose file</label>
 										</div>
-										<input type="text" id="harga" readonly="" value="<?php echo harga($harga); ?>" class="form-control" placeholder="First name">
-										<div class="input-group-append">
-											<span class="input-group-text">/Kg</span>
 										</div>
 									</div>
-								</div>
-								<div class="col-sm-12 col-lg-6">
-									<label>Hasil Konfersi Ke Beras :</label>
-									<div class="input-group mb-4">
-										<input type="text" readonly="" min="0" id="jumlah_beras2" name="jumlah_beras" class="form-control" placeholder="Jumlah" required="">
-									<div class="input-group-append">
-										<span class="input-group-text">Kg</span>
+
+
+									<div id="coddiv">
+										<label>Alamat : </label>
+										<div>
+											<small>Geser pin map sesuai alamat</small>
+											<div class="mampus">	
+												<div class="input-group" id="search">		
+													<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">
+													<div class="input-group-prepend">
+													<button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
+													</div>
+												</div>
+												<div id="results" class="border rounded p-2 grey lighten-4"></div>
+												<div class="rounded my-3" id="map" style="z-index: 1"></div>
+												<div class="form-group row d-none">
+													<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
+													<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
+												</div>
+												<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
+												<?php include('../maps/maps-in-data.php'); ?>
+											</div>
+										</div>
 									</div>
-									</div>
+
+									<button class="btn btn-color btn-block m-0" name="uangtabungan" type="submit">Kirim</button>
+								</form>
 								
-								</div>
-							</div>	
 
-							<div id="transferdiv2" style="display:none;">
-								<p class="m-0">Bukti Transfer : </p>
-								<img class="img-fluid mb-3 rounded" style="max-height: 150px;" id="img-upload">
-								<div class="input-group mb-3">
-								  <div class="custom-file">
-								    <input type="file" class="custom-file-input btn-file" id="buktitf"
-								      aria-describedby="inputGroupFileAddon01" name="buktitf">
-								    <label class="custom-file-label" for="buktitf">Choose file</label>
-								  </div>
-								</div>
 							</div>
-
-
-							<div id="coddiv">
-								<label>Alamat : </label>
-								<div>
-									<small>Geser pin map sesuai alamat</small>
-									<div class="mampus">	
-										<div class="input-group" id="search">		
-											<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">
-										    <div class="input-group-prepend">
-										      <button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
-										    </div>
-										</div>
-										<div id="results" class="border rounded p-2 grey lighten-4"></div>
-										<div class="rounded my-3" id="map" style="z-index: 1"></div>
-										<div class="form-group row d-none">
-											<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
-											<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
-										</div>
-										<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
-										<?php include('../maps/maps-in-data.php'); ?>
-									</div>
-								</div>
-							</div>
-
-						    <button class="btn btn-color btn-block m-0" name="uangtabungan" type="submit">Kirim</button>
-						</form>
-						
-
-					</div>
 					<?php
+							}
 						}
 						else
 						{	

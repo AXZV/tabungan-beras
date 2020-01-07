@@ -72,6 +72,11 @@ $data=mysqli_fetch_array($results);
           <i class="fa fa-bell"></i>
           <span>Notifikasi</span></a>
       </li>
+			<li class="nav-item">
+        <a class="nav-link" href="penarikan">
+					<i class="fab fa-get-pocket"></i>
+          <span>Penarikan</span></a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="pengguna">
           <i class="fa fa-user"></i>

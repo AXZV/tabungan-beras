@@ -109,7 +109,6 @@
 	}
 	if(isset($_SESSION['penarikan'])==1)
 	{
-		$jenis_transaksi_penarikan = isset($_SESSION['jenistransaksi']);
 		echo 
 		"<script> 
 			$(window).on('load', function(){
@@ -118,7 +117,6 @@
 		</script>";
 
 		unset($_SESSION['penarikan']);
-		unset($_SESSION['jenistransaksi']);
 	}
 ?>
 
@@ -173,9 +171,21 @@
 						</div>
 						<div class="row">
 							<div class="col-4">
-								<a class="black-text active-tab-2" href="riwayat">
+								<a class="black-text active-tab-2" href="riwayat_tabungan">
 									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
-									<p>Riwayat Transaksi</p>
+									<p>Riwayat Tabungan</p>
+								</a>
+							</div>
+							<div class="col-4">
+								<a class="black-text active-tab-2" href="riwayat_penarikan">
+									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+									<p>Riwayat Penarikan</p>
+								</a>
+							</div>
+							<div class="col-4">
+								<a class="black-text active-tab-2" href="riwayat_sedekah">
+									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+									<p>Riwayat Sedekah</p>
 								</a>
 							</div>
 						</div>
@@ -327,7 +337,7 @@
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-success exit2" href="riwayat" ><i class="far fa-clock"></i> Riwayat transaksi</a>
+					<a type="button" class="btn btn-success exit2" href="riwayat_tabungan" ><i class="far fa-clock"></i> Riwayat Tabungan</a>
 					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>
@@ -358,16 +368,17 @@
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
+					<a type="button" class="btn btn-success exit2" href="riwayat_sedekah" ><i class="far fa-clock"></i> Riwayat Sedekah</a>
 					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>
 			<!--/.Content-->
 		</div>
 	</div>
-<!-- Central Modal Medium Success-->
+	<!-- Central Modal Medium Success-->
 
 <!-- /////////////////////// Modal Sukses Penarikan /////////////////////////////// -->
-<div class="modal fade" id="penarikan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<div class="modal fade" id="penarikan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog modal-notify modal-success" role="document">
 			<!--Content-->
@@ -383,12 +394,13 @@
 				<div class="modal-body">
 					<div class="text-center">
 						<i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-						<p>Berhasil melakukan permintaan penarikan dengan Jenis transaksi <?php echo $jenis_transaksi_penarikan ?> </p>
+						<p>Berhasil melakukan permintaan penarikan</p>
 						<p>Silahkan tunggu untuk admin melakukan verifikasi</p>
 					</div>
 				</div>
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
+					<a type="button" class="btn btn-success exit2" href="riwayat_penarikan" ><i class="far fa-clock"></i> Riwayat Penarikan</a>
 					<a type="button" class="btn btn-outline-success waves-effect exit" data-dismiss="modal">Keluar</a>
 				</div>
 			</div>

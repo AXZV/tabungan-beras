@@ -12,6 +12,12 @@ if (isset($_SESSION['s_user_id']))
 	$lat=$data['lat'];
 	$lng=$data['lng'];
 
+
+	$query2 = "SELECT * FROM log_status WHERE id_user='$id_user'";
+	$results2 = mysqli_query($db, $query2) or die (mysqli_error());
+	$data2=mysqli_fetch_array($results2);
+
+
 }
 ?>
 <!DOCTYPE html>
@@ -68,67 +74,74 @@ if (isset($_SESSION['s_user_id']))
 					<?php
 					if (isset($_SESSION['s_user_id']))
 					{
-					?>
-					<div class="card-body">
-						<form method="post" action="proses_sedekah_beras.php">
-						<div class='switch mb-4'><div class='quality'>
-							<input type="radio" id="radionontabungan" name="radiob" checked value="nontabungan">
-							<label for='radionontabungan'>Cash On Delivery (COD)</label>
-						</div><div class='quality'>
-							<input type="radio" id="radiotabungan" name="radiob" value="tabungan">
-							<label for='radiotabungan'>Ambil dari Tabungan</label>
-						</div>
-						</div>
-						<div id="tabungan" style="display:none;">
-							<label>Jumlah Saldo Tabungan Anda :</label>
-							<div class="input-group mb-2">
-								<input type="text" readonly="" min="0" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $jumlah_tabungan ?>" placeholder="Jumlah (Rp)"  >
-								<div class="input-group-append">
-									<span class="input-group-text">Kg</span>
+						if($data2['s_sedekah'] == 'notclear')
+						{	
+							include('detail_transaksi.php');
+						} 
+						else
+						{
+						?>
+							<div class="card-body">
+								<form method="post" action="proses_sedekah_beras.php">
+								<div class='switch mb-4'><div class='quality'>
+									<input type="radio" id="radionontabungan" name="radiob" checked value="nontabungan">
+									<label for='radionontabungan'>Cash On Delivery (COD)</label>
+								</div><div class='quality'>
+									<input type="radio" id="radiotabungan" name="radiob" value="tabungan">
+									<label for='radiotabungan'>Ambil dari Tabungan</label>
 								</div>
-							</div>
-							<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
-							<label>Jumlah Sedekah :</label>
-							<div class="input-group mb-4">
-								<input type="number" min="0" step="any" id="jumlah_uang" name="jumlah2" class="form-control" placeholder="Jumlah Sedekah" >								
-								<div class="input-group-append">
-									<span class="input-group-text">Kg</span>
 								</div>
-							</div>
-						</div>
-						<div id="nontabungan">
-							<label>Jumlah Sedekah :</label>
-							<div class="input-group mb-4">
-							<input type="number" min="0" step="any" id="jumlah_uang2" name="jumlah" placeholder="Jumlah Sedekah" class="form-control" >
-							<div class="input-group-append">
-								<span class="input-group-text">Kg</span>
-							</div>
-							</div>
-						</div>
-							<label>Alamat : </label>
-							<div>
-								<small>Geser pin map sesuai alamat</small>
-								<div class="mampus">	
-									<div class="input-group" id="search">		
-										<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">
-									    <div class="input-group-prepend">
-									      <button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
-									    </div>
+								<div id="tabungan" style="display:none;">
+									<label>Jumlah Saldo Tabungan Anda :</label>
+									<div class="input-group mb-2">
+										<input type="text" readonly="" min="0" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $jumlah_tabungan ?>" placeholder="Jumlah (Rp)"  >
+										<div class="input-group-append">
+											<span class="input-group-text">Kg</span>
+										</div>
 									</div>
-									<div id="results" class="border rounded p-2 grey lighten-4"></div>
-									<div class="rounded my-3" id="map" style="z-index: 1"></div>
-									<div class="form-group row d-none">
-										<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
-										<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
+									<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
+									<label>Jumlah Sedekah :</label>
+									<div class="input-group mb-4">
+										<input type="number" min="0" step="any" id="jumlah_uang" name="jumlah2" class="form-control" placeholder="Jumlah Sedekah" >								
+										<div class="input-group-append">
+											<span class="input-group-text">Kg</span>
+										</div>
 									</div>
-									<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
-									<?php include('../maps/maps-in-data.php'); ?>
 								</div>
+								<div id="nontabungan">
+									<label>Jumlah Sedekah :</label>
+									<div class="input-group mb-4">
+									<input type="number" min="0" step="any" id="jumlah_uang2" name="jumlah" placeholder="Jumlah Sedekah" class="form-control" >
+									<div class="input-group-append">
+										<span class="input-group-text">Kg</span>
+									</div>
+									</div>
+								</div>
+									<label>Alamat : </label>
+									<div>
+										<small>Geser pin map sesuai alamat</small>
+										<div class="mampus">	
+											<div class="input-group" id="search">		
+												<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">
+												<div class="input-group-prepend">
+												<button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
+												</div>
+											</div>
+											<div id="results" class="border rounded p-2 grey lighten-4"></div>
+											<div class="rounded my-3" id="map" style="z-index: 1"></div>
+											<div class="form-group row d-none">
+												<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
+												<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
+											</div>
+											<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
+											<?php include('../maps/maps-in-data.php'); ?>
+										</div>
+									</div>
+									<button class="btn btn-color btn-block m-0" name="subsedekah" type="submit">Kirim</button>
+								</form>
 							</div>
-						    <button class="btn btn-color btn-block m-0" name="subsedekah" type="submit">Kirim</button>
-						</form>
-					</div>
 						<?php
+							}
 						}
 						else
 						{	

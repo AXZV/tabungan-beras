@@ -58,7 +58,10 @@ if (isset($_SESSION['s_user_id']))
 			$finaltotalsaldo2=$hasil_rupiah2;
 		}
 	//////////////////////////////////////
-
+	
+	$query21 = "SELECT * FROM log_status WHERE id_user='$id_user'";
+	$results21 = mysqli_query($db, $query21) or die (mysqli_error());
+	$data21=mysqli_fetch_array($results21);
 
 }
 ?>
@@ -101,66 +104,73 @@ if (isset($_SESSION['s_user_id']))
 			<div class="col-lg-8 col-sm-12 px-0 px-sm-0 px-md-0 px-lg-3 px-xl-3">
 				<div class="card">
 					<div class="card-header">
-						<h5 class="mb-0 font-weight-bold">Formulir Penarikan Tabungan</h5>
+						<h5 class="mb-0 font-weight-bold">Penarikan Tabungan</h5>
 					</div>
 					<?php
 					if (isset($_SESSION['s_user_id']))
 					{
+						if($data21['s_penarikan'] == 'notclear')
+						{
+							include('detail_transaksi.php');
+						} 
+						else 
+						{
 					?>
-					<div class="card-body">
-						<form method="post" id="formfield" action="proses_penarikan.php">
-						<div class='switch mb-4'><div class='quality'>
-							<input type="radio" id="radionontabungan" name="radiob" checked value="cod">
-							<label for='radionontabungan'>Cash On Delivery (COD)</label>
-						</div><div class='quality'>
-							<input type="radio" id="radiotabungan" name="radiob" value="noncod">
-							<label for='radiotabungan'>Ambil Di Kantor</label>
-						</div>
-						</div>
-						<div>
-							<label>Jumlah Saldo Tabungan Anda :</label>
-							<div class="input-group mb-2">
-								<input type="text" readonly="" min="0" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $finaltotalsaldo ?>" placeholder="Jumlah (Rp)"  >
-								<div class="input-group-append">
-									<span class="input-group-text">Kg</span>
+							<div class="card-body">
+								<form method="post" id="formfield" action="proses_penarikan.php">
+								<div class='switch mb-4'><div class='quality'>
+									<input type="radio" id="radionontabungan" name="radiob" checked value="cod">
+									<label for='radionontabungan'>Cash On Delivery (COD)</label>
+								</div><div class='quality'>
+									<input type="radio" id="radiotabungan" name="radiob" value="noncod">
+									<label for='radiotabungan'>Ambil Di Kantor</label>
 								</div>
-							</div>
-							<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
-							<label>Jumlah Penarikan:</label>
-							<div class="input-group mb-4">
-								<input type="number" min="0" step="any" required="" id="jumlah_transaksi" name="jumlah_transaksi" class="form-control" placeholder="Jumlah Sedekah" >								
-								<div class="input-group-append">
-									<span class="input-group-text">Kg</span>
 								</div>
-							</div>
-						</div>
-						<div id="nontabungan">
-							<label>Alamat : </label>
-							<div>
-								<small>Geser pin map sesuai alamat</small>
-								<div class="mampus">	
-									<div class="input-group" id="search">		
-										<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat" >
-									    <div class="input-group-prepend">
-									      <button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
-									    </div>
+								<div>
+									<label>Jumlah Saldo Tabungan Anda :</label>
+									<div class="input-group mb-2">
+										<input type="text" readonly="" min="0" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $finaltotalsaldo ?>" placeholder="Jumlah (Rp)"  >
+										<div class="input-group-append">
+											<span class="input-group-text">Kg</span>
+										</div>
 									</div>
-									<div id="results" class="border rounded p-2 grey lighten-4"></div>
-									<div class="rounded my-3" id="map" style="z-index: 1"></div>
-									<div class="form-group row d-none">
-										<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
-										<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
+									<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
+									<label>Jumlah Penarikan:</label>
+									<div class="input-group mb-4">
+										<input type="number" min="0" step="any" required="" id="jumlah_transaksi" name="jumlah_transaksi" class="form-control" placeholder="Jumlah Penarikan" >								
+										<div class="input-group-append">
+											<span class="input-group-text">Kg</span>
+										</div>
 									</div>
-									<textarea id="address" class="form-control mb-3" name="alamat" ><?php echo $alamat ?></textarea>
-									<?php include('../maps/maps-in-data.php'); ?>
 								</div>
+								<div id="nontabungan">
+									<label>Alamat : </label>
+									<div>
+										<small>Geser pin map sesuai alamat</small>
+										<div class="mampus">	
+											<div class="input-group" id="search">		
+												<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat" >
+												<div class="input-group-prepend">
+												<button type="button" class="btn btn-color white m-0 btn-sm z-depth-0" onclick="addr_search();showResult();" style="border-radius: 0 .25rem .25rem 0; z-index: 1">Cari</button>
+												</div>
+											</div>
+											<div id="results" class="border rounded p-2 grey lighten-4"></div>
+											<div class="rounded my-3" id="map" style="z-index: 1"></div>
+											<div class="form-group row d-none">
+												<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
+												<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
+											</div>
+											<textarea id="address" class="form-control mb-3" name="alamat" ><?php echo $alamat ?></textarea>
+											<?php include('../maps/maps-in-data.php'); ?>
+										</div>
+									</div>
+								</div>
+									<!-- <input type="button" id="btnmdl" value="kirim" class="btn-color form-control"  data-toggle="modal" data-target="#modalpengaturanadmin"></input> -->
+									<button class="btn btn-color btn-block m-0" name="penarikan" type="submit">Kirim</button>
+								</form>
 							</div>
-						</div>
-						    <!-- <input type="button" id="btnmdl" value="kirim" class="btn-color form-control"  data-toggle="modal" data-target="#modalpengaturanadmin"></input> -->
-							<button class="btn btn-color btn-block m-0" name="penarikan" type="submit">Kirim</button>
-						</form>
-					</div>
 						<?php
+							}
 						}
 						else
 						{	

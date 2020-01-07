@@ -51,9 +51,17 @@ if (isset($_POST['penarikan'])) {
     $query=mysqli_query($db,$sql);
     if($query)
         {
-            header('Location:../profile/index.php');
-            $_SESSION['jenistransaksi'] = $jenis_transaksi;
-            $_SESSION['penarikan'] = 1;
+            $sql2="UPDATE log_status SET
+            s_penarikan='notclear',
+            id_transaksi_penarikan='$id_transaksi'
+            WHERE id_user='$id_user'";
+            $query2=mysqli_query($db,$sql2);
+            if ($query2) 
+            {
+                header('Location:../profile/index.php');
+                $_SESSION['jenistransaksi'] = $jenis_transaksi;
+                $_SESSION['penarikan'] = 1;
+            }
         }
 
 }

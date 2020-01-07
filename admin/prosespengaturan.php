@@ -97,55 +97,120 @@ if (isset($_POST['konfirmasi_tabungan'])) {
         $query2=mysqli_query($db,$sql2) or die (mysqli_error($db));
         if ($query2) 
         {
-            echo("<script>console.log('PHPRR: " . " z ". "');</script>");
-            header("location: notifikasi.php");
+
+            $n = null;
+            $sql3="UPDATE log_status SET
+            s_tabungan='clear',
+            id_transaksi_tabungan='$n'
+            WHERE id_user='$id_userx'";
+            $query3=mysqli_query($db,$sql3);
+            if ($query3) 
+            {
+                header("location: notifikasi.php");
+            }
         }
     }
 
-    // else
-    // {
-    //     header("location: profil.php?p=e");
-    // }
 }
 
 
 //////////////////////////  KONFIRMASI SEDEKAH ///////////////////////////////////
-if (isset($_POST['konfirmasisedekah']))
-{
-    echo("<script>console.log('PHPRR: " . " x ". "');</script>");
-
-    $id_transaksi = $_POST['konfirmasisedekah'];
-    $sedekah_dari = $_POST['sedekah_dari'];
-    $saldo = $_POST['saldo'];
-    $id_userx = $_POST['id_user'];
-    $jumlah_transaksi_beras = $_POST['jumlah_transaksi_beras'];
-
-    $sql="UPDATE log_sedekah SET status='sudah_diverifikasi' WHERE id_transaksi='$id_transaksi'";
-    $query=mysqli_query($db,$sql) or die (mysqli_error($db));
-    if ($query) 
+    if (isset($_POST['konfirmasisedekah']))
     {
-        if ($sedekah_dari == "tabungan")
+
+        $id_transaksi = $_POST['konfirmasisedekah'];
+        $sedekah_dari = $_POST['sedekah_dari'];
+        $saldo = $_POST['saldo'];
+        $id_userx = $_POST['id_user'];
+        $jumlah_transaksi_beras = $_POST['jumlah_transaksi'];
+
+        $sql="UPDATE log_sedekah SET status='sudah_diverifikasi' WHERE id_transaksi='$id_transaksi'";
+        $query=mysqli_query($db,$sql) or die (mysqli_error($db));
+        if ($query) 
         {
-            echo("<script>console.log('PHPRR: " . " y ". "');</script>");
-
-            $total_saldo_baru = $saldo - $jumlah_transaksi_beras;
-
-            $sql2="UPDATE akun_user SET saldo='$total_saldo_baru' WHERE id_user='$id_userx'";
-            $query2=mysqli_query($db,$sql2) or die (mysqli_error($db));
-            if ($query2) 
+            if ($sedekah_dari == "tabungan")
             {
-                echo("<script>console.log('PHPRR: " . " z ". "');</script>");
-                header("location: sedekah.php");
+
+
+                $total_saldo_baru = $saldo - $jumlah_transaksi_beras;
+
+                echo("<script>console.log('PHPRR: " . " y ". $id_userx . " y ". $total_saldo_baru. "');</script>");
+
+                $sql2="UPDATE akun_user SET saldo='$total_saldo_baru' WHERE id_user='$id_userx'";
+                $query2=mysqli_query($db,$sql2) or die (mysqli_error($db));
+                if ($query2) 
+                {
+                    echo("<script>console.log('PHPRR: " . " x " . "');</script>");
+
+                    $n = null;
+                    $sql3="UPDATE log_status SET
+                    s_sedekah='clear',
+                    id_transaksi_sedekah='$n'
+                    WHERE id_user='$id_userx'";
+                    $query3=mysqli_query($db,$sql3);
+                    if ($query3) 
+                    {
+                        header("location: sedekah.php");
+                    }
+                }
             }
-        }
-        else
-        {
-            header("location: sedekah.php");
+            else
+            {
+                $n = null;
+                $sql3="UPDATE log_status SET
+                s_sedekah='clear',
+                id_transaksi_sedekah='$n'
+                WHERE id_user='$id_userx'";
+                $query3=mysqli_query($db,$sql3);
+                if ($query3) 
+                {
+                    header("location: sedekah.php");
+                }
+            }
+
         }
 
     }
 
-}
+//////////////////////////  KONFIRMASI PENARIKAN ///////////////////////////////////
+    if (isset($_POST['konfirmasipenarikan']))
+    {
+        echo("<script>console.log('PHPRR: " . " x ". "');</script>");
+
+        $id_transaksi = $_POST['konfirmasipenarikan'];
+        $saldo = $_POST['saldo'];
+        $id_userx = $_POST['id_user'];
+        $jumlah_transaksi = $_POST['jumlah_transaksi'];
+
+        $sql="UPDATE log_penarikan SET status='sudah_diverifikasi' WHERE id_transaksi='$id_transaksi'";
+        $query=mysqli_query($db,$sql) or die (mysqli_error($db));
+        if ($query) 
+        {
+
+                $total_saldo_baru = $saldo - $jumlah_transaksi;
+
+                $sql2="UPDATE akun_user SET saldo='$total_saldo_baru' WHERE id_user='$id_userx'";
+                $query2=mysqli_query($db,$sql2) or die (mysqli_error($db));
+                if ($query2) 
+                {
+                    $n = null;
+                    $sql3="UPDATE log_status SET
+                    s_penarikan='clear',
+                    id_transaksi_penarikan='$n'
+                    WHERE id_user='$id_userx'";
+                    $query3=mysqli_query($db,$sql3);
+                    if ($query3) 
+                    {
+                        header("location: penarikan.php");
+                    }
+                }
+
+
+        }
+
+    }
+
+
 
 
 

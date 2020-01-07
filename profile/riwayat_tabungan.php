@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Riwayat Transaksi</title>
+	<title>Riwayat Transaksi Tabungan</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -40,7 +40,7 @@
 						<div class="card-header">
 							<div class="row">
 							<div class="col d-flex">
-									<h5 class="mb-0 font-weight-bold">Riwayat Transaksi</h5>
+									<h5 class="mb-0 font-weight-bold">Riwayat Transaksi Tabungan</h5>
 							</div>
 							<div class="col-auto">
 								<a class="btn btn-sm btn-color m-0" href="index.php" >Kembail</a>
@@ -138,6 +138,7 @@
 													<th>Jumlah Transaksi</th>
 													<th>Jenis Transaksi</th>
 													<th>Jenis Pembayaran</th>
+													<th>Aksi</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -147,6 +148,7 @@
 													<th>Jumlah Transaksi</th>
 													<th>Jenis Transaksi</th>
 													<th>Jenis Pembayaran</th>
+													<th>Aksi</th>
 												</tr>
 											</tfoot>
 											<tbody>
@@ -179,6 +181,12 @@
 														<td><?php echo $finaltotalsaldo ?></td>
 														<td><?php echo $row3['jenis_transaksi'] ?></td>
 														<td><?php echo $row3['jenis_pembayaran'] ?></td>
+														<td>
+															<form action="proses_pengaturan.php" method="POST">
+																<input type="hidden" name="iduser" value="<?php echo $id_user ?>" type="text" /> <!-- hidden -->
+																<button class="btn btn-sm btn-danger m-0" name="hapus_transaksi_tabungan" value="<?php echo $row3['id_transaksi'];?>"  onclick="return confirm('apakah anda yakin akan membatalkan transaksi ini ?')">Batalkan</button></td>
+															</form>
+														</td>
 													</tr>
 												<?php } ?>
 											</tbody>

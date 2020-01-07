@@ -50,9 +50,16 @@ if (isset($_POST['subtabungan'])) {
     $query=mysqli_query($db,$sql);
     if($query)
         {
-            // $_SESSION['s_user_id'] = $id_user;
-            header('Location:../profile/index.php');
-            $_SESSION['tabungan'] = 1;
+            $sql2="UPDATE log_status SET
+            s_tabungan='notclear',
+            id_transaksi_tabungan='$id_transaksi'
+            WHERE id_user='$id_user'";
+            $query2=mysqli_query($db,$sql2);
+            if ($query2) 
+            {
+                header('Location:../profile/index.php');
+                $_SESSION['tabungan'] = 1;
+            }
         }
 
 }
@@ -122,8 +129,16 @@ else if (isset($_POST['uangtabungan'])) {
     $query=mysqli_query($db,$sql);
     if($query)
     {
-        header('Location:../profile/index.php');
-        $_SESSION['tabungan'] = 1;
+        $sql2="UPDATE log_status SET
+        s_tabungan='notclear',
+        id_transaksi_tabungan='$id_transaksi'
+        WHERE id_user='$id_user'";
+        $query2=mysqli_query($db,$sql2);
+        if ($query2) 
+        {
+            header('Location:../profile/index.php');
+            $_SESSION['tabungan'] = 1;
+        }
     }
 
 }

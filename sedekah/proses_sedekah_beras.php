@@ -61,9 +61,17 @@ if (isset($_POST['subsedekah'])) {
         '$status')";
     $query=mysqli_query($db,$sql) or die (mysqli_error($db)); 
     if($query)
-        {            header('Location:../profile/index.php');
-
-            $_SESSION['sedekah'] = 1;
+        {            
+            $sql2="UPDATE log_status SET
+            s_sedekah='notclear',
+            id_transaksi_sedekah='$id_transaksi'
+            WHERE id_user='$id_user'";
+            $query2=mysqli_query($db,$sql2);
+            if ($query2) 
+            {
+                header('Location:../profile/index.php');
+                $_SESSION['sedekah'] = 1;
+            }
         }
 
 
@@ -134,8 +142,16 @@ else if (isset($_POST['uangsedekah'])) {
     $query=mysqli_query($db,$sql) or die (mysqli_error($db)); 
     if($query)
     {
-        header('Location:../profile/index.php');
-        $_SESSION['sedekah'] = 1;
+        $sql2="UPDATE log_status SET
+        s_sedekah='notclear',
+        id_transaksi_sedekah='$id_transaksi'
+        WHERE id_user='$id_user'";
+        $query2=mysqli_query($db,$sql2);
+        if ($query2) 
+        {
+            header('Location:../profile/index.php');
+            $_SESSION['sedekah'] = 1;
+        }
     }
 
 }
