@@ -108,14 +108,21 @@ if (isset($_SESSION['s_user_id']))
 							<div class="card-body">
 								<form method="post" action="proses_tabungan_beras.php" enctype="multipart/form-data">
 
-								<div class='switch mb-4'><div class='quality'>
-									<input type="radio" id="radiocod" name="radiob" checked value="cod">
-									<label for='radiocod'>Cash On Delivery (COD)</label>
-								</div><div class='quality'>
-									<input type="radio" id="radiotransfer" name="radiob" value="transfer">
-									<label for='radiotransfer'>Transfer</label>
+								<div class='switch mb-4 d-flex'>
+									<div class='quality'>
+										<input type="radio" id="radiononcod" name="radiob" value="noncod">
+										<label for='radiononcod'>Antar Ke Kantor</label>
+									</div>
+									<div class='quality'>
+										<input type="radio" id="radiocod" name="radiob" checked value="cod">
+										<label for='radiocod'>Cash On Delivery (COD)</label>
+									</div>
+									<div class='quality'>
+										<input type="radio" id="radiotransfer" name="radiob" value="transfer">
+										<label for='radiotransfer'>Transfer</label>
+									</div>
 								</div>
-								</div>
+
 									<div id="transferdiv" style="display:none;">
 										<label>Nomor Rekening :</label>
 										<div class="input-group mb-1">
@@ -239,6 +246,14 @@ if (isset($_SESSION['s_user_id']))
 
 	$(document).ready(function() {
 	$('input[type="radio"]').click(function() {
+	if($(this).attr('id') == 'radiononcod') {
+		$('#coddiv').hide();
+		$('#coddiv2').show();
+		$('#map')
+		$('#transferdiv').hide();
+		$('#transferdiv2').hide();
+		document.getElementById("buktitf").required = false;              
+	}
 	if($(this).attr('id') == 'radiocod') {
 		$('#coddiv').show();
 		$('#coddiv2').show();

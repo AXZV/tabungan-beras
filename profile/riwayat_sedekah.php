@@ -17,7 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Riwayat Transaksi</title>
+	<title>Riwayat Transaksi Sedekah</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -40,7 +40,7 @@
 						<div class="card-header">
 							<div class="row">
 							<div class="col d-flex">
-									<h5 class="mb-0 font-weight-bold">Riwayat Transaksi</h5>
+									<h5 class="mb-0 font-weight-bold">Riwayat Transaksi Sedekah</h5>
 							</div>
 							<div class="col-auto">
 								<a class="btn btn-sm btn-color m-0" href="index.php" >Kembail</a>

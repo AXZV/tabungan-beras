@@ -105,13 +105,19 @@ if (isset($_SESSION['s_user_id']))
 							<div class="card-body">
 								<form method="post" action="proses_sedekah_beras.php" enctype="multipart/form-data">
 									
-									<div class='switch mb-4'><div class='quality'>
-										<input type="radio" id="radiocod" name="radiob" checked value="cod">
-										<label for='radiocod'>Cash On Delivery (COD)</label>
-									</div><div class='quality'>
-										<input type="radio" id="radiotransfer" name="radiob" value="transfer">
-										<label for='radiotransfer'>Transfer</label>
-									</div>
+									<div class='switch mb-4 d-flex'>
+										<div class='quality'>
+											<input type="radio" id="radiononcod" name="radiob" value="noncod">
+											<label for='radiononcod'>Antar Ke Kantor</label>
+										</div>
+										<div class='quality'>
+											<input type="radio" id="radiocod" name="radiob" checked value="cod">
+											<label for='radiocod'>Cash On Delivery (COD)</label>
+										</div>
+										<div class='quality'>
+											<input type="radio" id="radiotransfer" name="radiob" value="transfer">
+											<label for='radiotransfer'>Transfer</label>
+										</div>
 									</div>
 
 									<div id="transferdiv" style="display:none;">
@@ -243,6 +249,16 @@ if (isset($_SESSION['s_user_id']))
 		$('#coddiv2').show();
 		$('#transferdiv').hide();
 		$('#transferdiv2').hide();
+		
+		document.getElementById("address").required = true;  
+		document.getElementById("buktitf").required = false;              
+	}
+	if($(this).attr('id') == 'radiononcod') {
+		$('#coddiv').hide();
+		$('#coddiv2').show();
+		$('#transferdiv').hide();
+		$('#transferdiv2').hide();
+		document.getElementById("address").required = false;  
 		document.getElementById("buktitf").required = false;              
 	}
 	if($(this).attr('id') == 'radiotransfer') {
@@ -250,6 +266,7 @@ if (isset($_SESSION['s_user_id']))
 		$('#coddiv2').hide();
 		$('#transferdiv').show();
 		$('#transferdiv2').show();
+		document.getElementById("address").required = false;  
 		document.getElementById("buktitf").required = true;           
 	}
 	});

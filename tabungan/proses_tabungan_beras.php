@@ -18,7 +18,18 @@ if (isset($_POST['subtabungan'])) {
     $lat = mysqli_real_escape_string($db, $_POST['lat2']);
     $lng = mysqli_real_escape_string($db, $_POST['lng2']);
     $status = "belum_diverifikasi";
-    $jenis_pembayaran = "cod";
+    $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
+
+
+    if($radiobutton == "cod")
+    {
+        $jenis_pembayaran = "COD";
+    }
+    else if($radiobutton == "noncod")
+    {
+        $jenis_pembayaran = "Antar ke Kantor";
+    }
+    
 
 
     $sql="INSERT INTO log_tabungan(
@@ -89,9 +100,16 @@ else if (isset($_POST['uangtabungan'])) {
     if($radiobutton == "cod")
     {
         $newfilename=null;
+        $jenis_pembayaran = "COD";
+    }
+    else if($radiobutton == "noncod")
+    {
+        $newfilename=null;
+        $jenis_pembayaran = "Antar ke Kantor";
     }
     else if($radiobutton == "transfer")
     {
+        $jenis_pembayaran = "Transfer";
         $temp = explode(".", $_FILES['buktitf']["name"]);
         $newfilename = $id_transaksi.'.'.end($temp);
         move_uploaded_file($_FILES["buktitf"]["tmp_name"],"../asset/image/log_transfer_tabungan/".$newfilename);
@@ -120,7 +138,7 @@ else if (isset($_POST['uangtabungan'])) {
         '$b',
         '$kategori',
         '$jenis_transaksi',
-        '$radiobutton',
+        '$jenis_pembayaran',
         '$alamat',
         '$newfilename',
         '$lat',
