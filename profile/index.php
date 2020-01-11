@@ -19,30 +19,11 @@
 	$results = mysqli_query($db, $query) or die (mysqli_error());
 	$data=mysqli_fetch_array($results);
 	$totaltabungan= $data['saldo']; 
-	// $query4 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_tabungan WHERE status='sudah_diverifikasi' AND id_user='$id_user'";
-	// $results4 = mysqli_query($db, $query4) or die (mysqli_error());
-	// $row4=mysqli_fetch_array($results4);
-	// $totaltabungan = round($row4['total'], 2);
 
-	//////////////////////  char dot dot 
-	if (strpos($totaltabungan, '.') !== false) {
-		$b=strstr($totaltabungan, '.', true);
-		$removecoma = str_replace('.', '', $b );
-		$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-	}
-	else
-	{
-		$removecoma = $totaltabungan;
-		$takedecimal = null;
-	}
-	$hasil_rupiah = number_format($removecoma,0,'','.');
-	if (strpos($totaltabungan, '.') !== false) {
-		$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-	}
-	else
-	{
-		$finaltotalsaldo=$hasil_rupiah;
-	}
+
+
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 
 ?>
 
@@ -138,7 +119,7 @@
 						<div class="media">
 						  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image" style="align-self: center;">
 						  <div class="media-body">
-						    <h1 class="font-color font-weight-bold"><?php echo $finaltotalsaldo ?> Kg</h1>
+						    <h1 class="font-color font-weight-bold"><?php echo $konversi->normal($totaltabungan) ?> Kg</h1>
 						    <span>Saldo beras di peroleh pada saat kamu menabung beras maupun uang.</span>
 						  </div>
 						</div>

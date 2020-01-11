@@ -12,6 +12,9 @@
 	$query3 = "SELECT * FROM log_penarikan WHERE status='belum_diverifikasi' AND id_user='$id_user'";
 	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
 	$lenght3=mysqli_num_rows($results3);
+
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 ?>
 
 <!DOCTYPE html>
@@ -84,31 +87,11 @@
 												<?php	$no=1;
 												while ($row2=mysqli_fetch_array($results2))
 												{ 
-														$totaltabungan = $row2['jumlah_transaksi'];
-														if (strpos($totaltabungan, '.') !== false) {
-															$b=strstr($totaltabungan, '.', true);
-															$removecoma = str_replace('.', '', $b );
-															$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-														}
-														else
-														{
-															$removecoma = $totaltabungan;
-															$takedecimal = null;
-														}
-														$hasil_rupiah = number_format($removecoma,0,'','.');
-														if (strpos($totaltabungan, '.') !== false) {
-															$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-														}
-														else
-														{
-															$finaltotalsaldo=$hasil_rupiah."  Kg";
-														}
-
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no++;?></td>
 														<td><?php echo $row2['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo?></td>
+														<td><?php echo $konversi->normal($row2['jumlah_transaksi'])?></td>
 														<td><?php echo $row2['jenis_transaksi'] ?></td>
 													</tr>
 												<?php } ?>
@@ -149,30 +132,11 @@
 												<?php	$no2=1;
 												while ($row3=mysqli_fetch_array($results3))
 												{ 
-													$totaltabungan = $row3['jumlah_transaksi'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no2++;?></td>
 														<td><?php echo $row3['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo ?></td>
+														<td><?php echo $konversi->normal($row3['jumlah_transaksi']) ?></td>
 														<td><?php echo $row3['jenis_transaksi'] ?></td>
 														<td>
 															<form action="proses_pengaturan.php" method="POST">

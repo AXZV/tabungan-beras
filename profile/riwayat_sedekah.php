@@ -12,8 +12,15 @@
 	$query3 = "SELECT * FROM log_sedekah WHERE status='belum_diverifikasi' AND id_user='$id_user'";
 	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
 	$lenght3=mysqli_num_rows($results3);
-?>
 
+	$query4 = "SELECT * FROM log_sedekah WHERE status='sudah_disalurkan' AND id_user='$id_user'";
+	$results4 = mysqli_query($db, $query4) or die (mysqli_error());
+	$lenght4 = mysqli_num_rows($results4);
+
+	include '../function/fungsi.php';
+	$konversi = new konversi();
+	
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,11 +62,15 @@
 							  </li>
 							  <li class="nav-item">
 							    <a class="nav-link font-color" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-							      aria-selected="false"><i class="fa fa-history"></i> Riwayat Transaksi</a>
+							      aria-selected="false"><i class="fa fa-history"></i> Belum Di Salurkan</a>
+							  </li>
+							  <li class="nav-item">
+							    <a class="nav-link font-color" id="profile-tab" data-toggle="tab" href="#disalurkan" role="tab" aria-controls="disalurkan"
+							      aria-selected="false"><i class="fas fa-hand-holding-heart"></i> Sudah Disalurkan</a>
 							  </li>
 							</ul>
 								<div class="tab-content p-3" style="width:100%" id="myTabContent"> <!-- myTabContent -->
-									<!-- /////////////////////////// riwayat belum terverifikasi /////////////////////////// -->
+								<!-- /////////////////////////// riwayat belum terverifikasi /////////////////////////// -->
 									<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 									<?php if($lenght2 > 0){ ?>
 									<div class="table-responsive">
@@ -85,33 +96,12 @@
 											<tbody>
 												<?php	$no=1;
 												while ($row2=mysqli_fetch_array($results2))
-												{ 
-														$totaltabungan = $row2['jumlah_transaksi_beras'];
-														if (strpos($totaltabungan, '.') !== false) {
-															$b=strstr($totaltabungan, '.', true);
-															$removecoma = str_replace('.', '', $b );
-															$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-														}
-														else
-														{
-															$removecoma = $totaltabungan;
-															$takedecimal = null;
-														}
-														$hasil_rupiah = number_format($removecoma,0,'','.');
-														if (strpos($totaltabungan, '.') !== false) {
-															$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-														}
-														else
-														{
-															$finaltotalsaldo=$hasil_rupiah."  Kg";
-														}
-															// echo("<script>console.log('PHP: " . $finaltotalsaldo . "');</script>");
-
+												{ 														
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no++;?></td>
 														<td><?php echo $row2['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo?></td>
+														<td><?php echo $konversi->normal($row2['jumlah_transaksi_beras']) ?> Kg</td>
 														<td><?php echo $row2['jenis_transaksi'] ?></td>
 														<td><?php echo $row2['jenis_pembayaran'] ?></td>
 													</tr>
@@ -126,7 +116,7 @@
 										</div>
 									<?php } ?>	
 									</div>
-									<!-- /////////////////////////// riwayat terverifikasi /////////////////////////// -->
+								<!-- /////////////////////////// riwayat terverifikasi /////////////////////////// -->
 									<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 									<?php if($lenght3 > 0){ ?>
 									<div class="table-responsive">
@@ -154,31 +144,12 @@
 											<tbody>
 												<?php	$no2=1;
 												while ($row3=mysqli_fetch_array($results3))
-												{ 
-													$totaltabungan = $row3['jumlah_transaksi_beras'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
+												{ 								
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no2++;?></td>
 														<td><?php echo $row3['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo ?></td>
+														<td><?php echo $konversi->normal($row3['jumlah_transaksi_beras']) ?> Kg</td>
 														<td><?php echo $row3['jenis_transaksi'] ?></td>
 														<td><?php echo $row3['jenis_pembayaran'] ?></td>
 														<td>
@@ -198,6 +169,55 @@
 											<h5 class="m-0 mt-3">Tidak ada transaksi yang belum diverifikasi</h5>
 										</div>
 									<?php } ?>			
+									</div>
+								<!-- /////////////////////////// riwayat belum terverifikasi /////////////////////////// -->
+									<div class="tab-pane fade" id="disalurkan" role="tabpanel" aria-labelledby="disalurkan-tab">
+									<?php if($lenght4 > 0){ ?>
+									<div class="table-responsive">
+										<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+											<thead>
+												<tr style="text-align:center">
+													<th>No</th>
+													<th>Tanggal Transaksi</th>
+													<th>Tanggal Disalurkan</th>
+													<th>Jumlah Transaksi</th>
+													<th>Jenis Transaksi</th>
+													<th>Jenis Pembayaran</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr style="text-align:center">
+													<th>No</th>
+													<th>Tanggal Transaksi</th>
+													<th>Tanggal Disalurkan</th>
+													<th>Jumlah Transaksi</th>
+													<th>Jenis Transaksi</th>
+													<th>Jenis Pembayaran</th>
+												</tr>
+											</tfoot>
+											<tbody>
+												<?php	$no=1;
+												while ($row4=mysqli_fetch_array($results4))
+												{ 
+													?>
+													<tr>
+														<td style="text-align:center" ><?php echo $no++;?></td>
+														<td><?php echo $row4['tanggal_transaksi'] ?></td>
+														<td><?php echo $row4['tanggal_penyaluran'] ?></td>
+														<td><?php echo $konversi->normal($row4['jumlah_transaksi_beras']) ?> Kg</td>
+														<td><?php echo $row4['jenis_transaksi'] ?></td>
+														<td><?php echo $row4['jenis_pembayaran'] ?></td>
+													</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
+									<?php } else {?>
+										<div class="card-body text-center">
+											<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+											<h5 class="m-0 mt-3" >Belum ada sedekah yang disalurkan</h5>
+										</div>
+									<?php } ?>	
 									</div>
 							</div><!-- myTabContent -->
 						</div>

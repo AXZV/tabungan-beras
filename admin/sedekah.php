@@ -17,32 +17,18 @@ if (isset($_SESSION['s_admin_id']))
 	$results2 = mysqli_query($db, $query2) or die (mysqli_error());
 	$lenght22 = mysqli_num_rows($results2);
 
+	$query4 = "SELECT * FROM log_sedekah WHERE status='sudah_disalurkan'";
+	$results4 = mysqli_query($db, $query4) or die (mysqli_error());
+	$lenght4 = mysqli_num_rows($results4);
+
 
 	$query3 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_sedekah WHERE status='sudah_diverifikasi'";
 	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
 	$row3=mysqli_fetch_array($results3);
 	$totalsedekah = round($row3['total'], 2);
 
-	//////////////////////  char dot dot 
-	$totaltabungan = $totalsedekah;
-	if (strpos($totaltabungan, '.') !== false) {
-		$b=strstr($totaltabungan, '.', true);
-		$removecoma = str_replace('.', '', $b );
-		$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-	}
-	else
-	{
-		$removecoma = $totaltabungan;
-		$takedecimal = null;
-	}
-	$hasil_rupiah = number_format($removecoma,0,'','.');
-	if (strpos($totaltabungan, '.') !== false) {
-		$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-	}
-	else
-	{
-		$finaltotalsaldo=$hasil_rupiah;
-	}
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 ?>
 <!DOCTYPE html>
 <html>
@@ -204,10 +190,21 @@ if (isset($_SESSION['s_admin_id']))
 						<img class="img-fluid" src="../asset/image/undraw_wallet_aym5.svg">
 					</div>
 					<div class="col-lg-8 col-md-12">
-					<h5 class="mt-0 font-weight-bold">Saldo Sedekah</h5>
-					<span>Kamu bisa mengecek total keseluruhan saldo sedekah, angka dapat berubah setiap pengguna menyelesaikan transaksi.</span><br>
-					<span>Total keseluruhan saldo sedekah saat ini adalah :</span>
-					<h1 style="font-size: 80px" class="font-color"><?php echo $finaltotalsaldo ?> Kg</h1>
+						<h5 class="mt-0 font-weight-bold">Saldo Sedekah</h5>
+						<span>Kamu bisa mengecek total keseluruhan saldo sedekah, angka dapat berubah setiap pengguna menyelesaikan transaksi.</span><br>
+						<span>Total keseluruhan saldo sedekah saat ini adalah :</span>
+						<h1 style="font-size: 80px" class="font-color"><?php echo $konversi->normal($totalsedekah) ?> Kg</h1>
+						<?php if ($lenght22 > 0)
+						{ ?>
+							<a class="btn btn-primary m-0" data-toggle="modal" data-target="#modalsedekah" >Konfirmasi Sedekah</a>
+						<?php } else { ?>
+							<button class="btn btn-primary m-0" data-toggle="modal" data-target="#modalsedekah" disabled>Konfirmasi Sedekah</button>
+						<?php } ?> 
+					</div>
+					<div class="col-lg-4 col-md-12">
+						
+					</div>
+					<div class="col-lg-8 col-md-12">
 					</div>
 				</div>
         	</section>
@@ -224,271 +221,351 @@ if (isset($_SESSION['s_admin_id']))
 								</li>
 								<li class="nav-item">
 									<a class="nav-link font-color" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-										aria-selected="false"><i class="fa fa-history"></i> Riwayat Sedekah</a>
+										aria-selected="false"><i class="fa fa-history"></i> Belum Disalurkan</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link font-color" id="disalurkan-tab" data-toggle="tab" href="#disalurkan" role="tab" aria-controls="disalurkan"
+										aria-selected="false"><i class="fas fa-hand-holding-heart"></i> Sudah Disalurkan</a>
 								</li>
 							</ul>
 
-									
-
+	
 	<!-- //////////////////////////////// SEDEKAH BELUM DI KONFIRMASI  /////////////////////////////////// -->
 
-							<div class="tab-content p-3" id="myTabContent"> <!-- myTabContent -->
-						  	<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-								<?php if($lenght11 > 0){ ?>
-						  		<div class="">							
-										<div class="table-responsive">
-											<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-												<thead>
-													<tr style="text-align:center">
-														<th>No</th>
-														<th width="150">Nama</th>
-														<th>Jenis Sedekah</th>
-														<th>Jumlah Uang</th>
-														<th>Jumlah Beras</th>
-														<th>Sedekah diambil dari</th>
-														<th>Jenis Pembayaran</th>
-														<th width="200">Alamat</th>
-														<th>Aksi</th>
-													</tr>
-												</thead>
-												<tfoot>
-													<tr style="text-align:center">
-														<th>No</th>
-														<th>Nama</th>
-														<th>Jenis Sedekah</th>
-														<th>Jumlah Uang</th>
-														<th>Jumlah Beras</th>
-														<th>Sedekah diambil dari</th>
-														<th>Jenis Pembayaran</th>
-														<th>Alamat</th>
-														<th>Aksi</th>
-													</tr>
-												</tfoot>
-												<tbody>
-												<?php	$no=0;
-												while ($row=mysqli_fetch_array($results))
-												{
-													$id_u =	$row['id_user'];
-													$queryx = "SELECT * FROM akun_user WHERE id_user='$id_u'";
-													$resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
-													$datax=mysqli_fetch_array($resultsx);
-													$nama=$datax['nama'];
-													$saldo=$datax['saldo'];
-													$lat=$row['lat'];
-													$lng=$row['lng'];
+		<div class="tab-content p-3" id="myTabContent"> <!-- myTabContent -->
+		<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+			<?php if($lenght11 > 0){ ?>
+			<div class="">							
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr style="text-align:center">
+									<th>No</th>
+									<th width="150">Nama</th>
+									<th>Jenis Sedekah</th>
+									<th>Jumlah Uang</th>
+									<th>Jumlah Beras</th>
+									<th>Sedekah diambil dari</th>
+									<th>Jenis Pembayaran</th>
+									<th width="200">Alamat</th>
+									<th>Aksi</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr style="text-align:center">
+									<th>No</th>
+									<th>Nama</th>
+									<th>Jenis Sedekah</th>
+									<th>Jumlah Uang</th>
+									<th>Jumlah Beras</th>
+									<th>Sedekah diambil dari</th>
+									<th>Jenis Pembayaran</th>
+									<th>Alamat</th>
+									<th>Aksi</th>
+								</tr>
+							</tfoot>
+							<tbody>
+							<?php	$no=0;
+							while ($row=mysqli_fetch_array($results))
+							{
+								$id_u =	$row['id_user'];
+								$queryx = "SELECT * FROM akun_user WHERE id_user='$id_u'";
+								$resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
+								$datax=mysqli_fetch_array($resultsx);
+								$nama=$datax['nama'];
+								$saldo=$datax['saldo'];
+								$lat=$row['lat'];
+								$lng=$row['lng'];
 
-													$useragent=$_SERVER['HTTP_USER_AGENT'];
-													$mobile = preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4));
-													if($mobile)
-													{
-														$linkmaps="google.navigation:q=$lat,$lng&mode=d";
-													}
-													else
-													{
-														$linkmaps="http://www.google.com/maps/place/$lat,$lng";
-													}
+								$useragent=$_SERVER['HTTP_USER_AGENT'];
+								$mobile = preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4));
+								if($mobile)
+								{
+									$linkmaps="google.navigation:q=$lat,$lng&mode=d";
+								}
+								else
+								{
+									$linkmaps="http://www.google.com/maps/place/$lat,$lng";
+								}
 
-													$totaltabungan = $row['jumlah_transaksi_beras'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
+								$finaltotalsaldo = $konversi->normal($row['jumlah_transaksi_beras'])." Kg";
 
-													/////////////// konversi uang ke angka
-													if($row['jenis_transaksi'] == 'uang') {
-														$uang = $row['jumlah_transaksi_uang']; 
-														$x= number_format($uang,0,'','.');
-														$rupiah = "Rp. ".$x;
-													}
-													else
-													{
-														$rupiah = "Rp. -";
-													}
+								/////////////// konversi uang ke angka
+								if($row['jenis_transaksi'] == 'uang') {
+									$uang = $row['jumlah_transaksi_uang']; 
+									$x= number_format($uang,0,'','.');
+									$rupiah = "Rp. ".$x;
+								}
+								else
+								{
+									$rupiah = "Rp. -";
+								}
 
-													?>
-													<tr style="text-align:center">
-														<td><?php echo ++$no ?></td>
-														<td><?php echo $nama ?></td>
-														<td><?php echo $row['jenis_transaksi'] ?></td>
-														<td><?php echo $rupiah ?></td>
-														<td><?php echo $finaltotalsaldo ?></td>
-														<td><?php echo $row['sedekah_dari'] ?></td>
-														<td><?php 
-																echo $row['jenis_pembayaran'];
-																if($row['jenis_pembayaran'] == "transfer")
-																{ ?>
-																	<br>
-																		<a class="btn btn-sm btn-warning m-0 image-popup-no-margins" href="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>">Cek Bukti Transfer
-																			<img src="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>" class="d-none" width="227">
-																		</a>																
-																<?php } 
-														?>													
-													</td>
-														<td>
-															<?php echo $row['alamat'] ?>
-														</td>
-														<td class="text-center">
-															<a class="btn btn-sm btn-primary m-0"  href="<?php echo $linkmaps ?>" target="_blank" >Buka Peta</a>
-															<form action="prosespengaturan.php" method="POST">
-																<input type="hidden" name="id_user" value="<?php echo $id_u ?>" type="text" /> <!-- hidden -->
-																<input type="hidden" name="sedekah_dari" value="<?php echo $row['sedekah_dari'] ?>" type="text" /> <!-- hidden -->
-																<input type="hidden" name="saldo" value="<?php echo $saldo ?>" type="text" /> <!-- hidden -->
-																<input type="hidden" name="jumlah_transaksi" value="<?php echo $row['jumlah_transaksi_beras'] ?>" type="text" /> <!-- hidden -->
-																<button name="konfirmasisedekah" value="<?php echo 	$row['id_transaksi']; ?>" onclick="return confirm('Apakah anda yakin akan mengkonfirmasi transaksi ini ?')"  class="btn btn-sm btn-success m-0 mt-3">Konfirmasi</button>
-															</form>
-														</td>
-													</tr>
-												<?php } ?>
-												</tbody>
-											</table>
-										</div>
-									</div>
+								?>
+								<tr style="text-align:center">
+									<td><?php echo ++$no ?></td>
+									<td><?php echo $nama ?></td>
+									<td><?php echo $row['jenis_transaksi'] ?></td>
+									<td><?php echo $rupiah ?></td>
+									<td><?php echo $finaltotalsaldo ?></td>
+									<td><?php echo $row['sedekah_dari'] ?></td>
+									<td><?php 
+											echo $row['jenis_pembayaran'];
+											if($row['jenis_pembayaran'] == "transfer")
+											{ ?>
+												<br>
+													<a class="btn btn-sm btn-warning m-0 image-popup-no-margins" href="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>">Cek Bukti Transfer
+														<img src="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>" class="d-none" width="227">
+													</a>																
+											<?php } 
+									?>													
+								</td>
+									<td>
+										<?php echo $row['alamat'] ?>
+									</td>
+									<td class="text-center">
+										<a class="btn btn-sm btn-primary m-0"  href="<?php echo $linkmaps ?>" target="_blank" >Buka Peta</a>
+										<form action="prosespengaturan.php" method="POST">
+											<input type="hidden" name="id_user" value="<?php echo $id_u ?>" type="text" /> <!-- hidden -->
+											<input type="hidden" name="sedekah_dari" value="<?php echo $row['sedekah_dari'] ?>" type="text" /> <!-- hidden -->
+											<input type="hidden" name="saldo" value="<?php echo $saldo ?>" type="text" /> <!-- hidden -->
+											<input type="hidden" name="jumlah_transaksi" value="<?php echo $row['jumlah_transaksi_beras'] ?>" type="text" /> <!-- hidden -->
+											<button name="konfirmasisedekah" value="<?php echo 	$row['id_transaksi']; ?>" onclick="return confirm('Apakah anda yakin akan mengkonfirmasi transaksi ini ?')"  class="btn btn-sm btn-success m-0 mt-3">Konfirmasi</button>
+										</form>
+									</td>
+								</tr>
+							<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
-									<?php } else {?>
-										<div class="card-body text-center">
-											<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
-											<h5 class="m-0 mt-3">Tidak ada transaksi sedekah yang belum dikonfirmasi</h5>
-										</div>
+				<?php } else {?>
+					<div class="card-body text-center">
+						<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+						<h5 class="m-0 mt-3">Tidak ada transaksi sedekah yang belum dikonfirmasi</h5>
+					</div>
+				<?php } ?>
+			</div>
+
+
+	<!-- //////////////////////////////// RIWAYAT SEDEKAH  /////////////////////////////////// -->
+					<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<?php if($lenght22 > 0){ ?>
+						<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+									<thead>
+										<tr style="text-align:center">
+											<th>No</th>
+											<th width="150">Nama</th>
+											<th>Jenis Sedekah</th>
+											<th>Jumlah Uang</th>
+											<th>Jumlah Beras</th>
+											<th>Sedekah diambil dari</th>
+											<th>Jenis Pembayaran</th>
+											<th width="200">Alamat</th>
+											<th>Aksi</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr style="text-align:center">
+											<th>No</th>
+											<th>Nama</th>
+											<th>Jenis Sedekah</th>
+											<th>Jumlah Uang</th>
+											<th>Jumlah Beras</th>
+											<th>Sedekah diambil dari</th>
+											<th>Jenis Pembayaran</th>
+											<th>Alamat</th>
+											<th>Aksi</th>
+										</tr>
+									</tfoot>
+									<tbody>
+									<?php	$no=0;
+									while ($row2=mysqli_fetch_array($results2))
+									{
+										$id_u =	$row2['id_user'];
+										$queryx = "SELECT * FROM akun_user WHERE id_user='$id_u'";
+										$resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
+										$datax=mysqli_fetch_array($resultsx);
+										$nama=$datax['nama'];
+										$saldo=$datax['saldo'];
+										$lat=$row2['lat'];
+										$lng=$row2['lng'];
+										
+										$useragent=$_SERVER['HTTP_USER_AGENT'];
+										$mobile = preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4));
+										if($mobile)
+										{
+											$linkmaps="google.navigation:q=$lat,$lng&mode=d";
+										}
+										else
+										{
+											$linkmaps="http://www.google.com/maps/place/$lat,$lng";
+										}									
+										
+										$finaltotalsaldo = $konversi->normal($row2['jumlah_transaksi_beras'])." Kg";
+
+
+										/////////////// konversi uang ke angka
+										if($row2['jenis_transaksi'] == 'uang') {
+											$uang = $row2['jumlah_transaksi_uang']; 
+											$x = number_format($uang,0,'','.');
+											$rupiah = "Rp. ".$x;
+										}
+										else
+										{
+											$rupiah = "Rp. -";
+										}
+
+										?>
+										<tr style="text-align:center">
+											<td><?php echo ++$no ?></td>
+											<td><?php echo $nama ?></td>
+											<td><?php echo $row2['jenis_transaksi'] ?></td>
+											<td><?php echo $rupiah ?></td>
+											<td><?php echo $finaltotalsaldo ?></td>
+											<td><?php echo $row2['sedekah_dari'] ?></td>
+											<td><?php 
+													echo $row2['jenis_pembayaran'];
+													if($row2['jenis_pembayaran'] == "transfer")
+													{ ?>
+														<br>
+															<a class="btn btn-sm btn-warning m-0 image-popup-no-margins" href="../asset/image/log_transfer_sedekah/<?php echo $row2['bukti_tf'] ?>">Cek Bukti Transfer
+																<img src="../asset/image/log_transfer_sedekah/<?php echo $row2['bukti_tf'] ?>" class="d-none" width="107" height="75">
+															</a>
+													<?php } 
+											?></td>
+											<td>
+												<?php echo $row2['alamat'] ?>
+											</td>
+											<td><a class="btn btn-sm btn-primary m-0"  href="<?php echo $linkmaps ?>" target="_blank" >Buka Peta</a></td>
+										</tr>
 									<?php } ?>
-								</div>
+									</tbody>
+								</table>
+							</div>
+						<?php } else {?>
+						<div class="card-body text-center">
+							<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+							<h5 class="m-0 mt-3">Tidak ada transaksi sedekah</h5>
+						</div>
+					<?php } ?>
+					</div>
+	<!-- //////////////////////////////// SEDEKAH BELUM DI KONFIRMASI  /////////////////////////////////// -->
 
+		<div class="tab-pane fade" id="disalurkan" role="tabpanel" aria-labelledby="disalurkan-tab">
+			<?php if($lenght4 > 0){ ?>
+			<div class="">							
+					<div class="table-responsive">
+						<table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
+							<thead>
+								<tr style="text-align:center">
+									<th>No</th>
+									<th>Tanggal Penyaluran</th>
+									<th width="150">Nama</th>
+									<th>Jenis Sedekah</th>
+									<th>Jumlah Uang</th>
+									<th>Jumlah Beras</th>
+									<th>Sedekah diambil dari</th>
+									<th>Jenis Pembayaran</th>
+									<th width="200">Alamat</th>
+									<th>Aksi</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr style="text-align:center">
+									<th>No</th>
+									<th>Tanggal Penyaluran</th>
+									<th>Nama</th>
+									<th>Jenis Sedekah</th>
+									<th>Jumlah Uang</th>
+									<th>Jumlah Beras</th>
+									<th>Sedekah diambil dari</th>
+									<th>Jenis Pembayaran</th>
+									<th>Alamat</th>
+									<th>Aksi</th>
+								</tr>
+							</tfoot>
+							<tbody>
+							<?php	$no=0;
+							while ($row4=mysqli_fetch_array($results4))
+							{
+								$id_u =	$row4['id_user'];
+								$queryx = "SELECT * FROM akun_user WHERE id_user='$id_u'";
+								$resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
+								$datax=mysqli_fetch_array($resultsx);
+								$nama=$datax['nama'];
+								$saldo=$datax['saldo'];
+								$lat=$row4['lat'];
+								$lng=$row4['lng'];
 
-		<!-- //////////////////////////////// RIWAYAT SEDEKAH  /////////////////////////////////// -->
+								$useragent=$_SERVER['HTTP_USER_AGENT'];
+								$mobile = preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4));
+								if($mobile)
+								{
+									$linkmaps="google.navigation:q=$lat,$lng&mode=d";
+								}
+								else
+								{
+									$linkmaps="http://www.google.com/maps/place/$lat,$lng";
+								}
 
-								<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-								<?php if($lenght22 > 0){ ?>
-									<div class="table-responsive">
-											<table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-												<thead>
-													<tr style="text-align:center">
-														<th>No</th>
-														<th width="150">Nama</th>
-														<th>Jenis Sedekah</th>
-														<th>Jumlah Uang</th>
-														<th>Jumlah Beras</th>
-														<th>Sedekah diambil dari</th>
-														<th>Jenis Pembayaran</th>
-														<th width="200">Alamat</th>
-														<th>Aksi</th>
-													</tr>
-												</thead>
-												<tfoot>
-													<tr style="text-align:center">
-														<th>No</th>
-														<th>Nama</th>
-														<th>Jenis Sedekah</th>
-														<th>Jumlah Uang</th>
-														<th>Jumlah Beras</th>
-														<th>Sedekah diambil dari</th>
-														<th>Jenis Pembayaran</th>
-														<th>Alamat</th>
-														<th>Aksi</th>
-													</tr>
-												</tfoot>
-												<tbody>
-												<?php	$no=0;
-												while ($row2=mysqli_fetch_array($results2))
-												{
-													$id_u =	$row2['id_user'];
-													$queryx = "SELECT * FROM akun_user WHERE id_user='$id_u'";
-													$resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
-													$datax=mysqli_fetch_array($resultsx);
-													$nama=$datax['nama'];
-													$saldo=$datax['saldo'];
-													$lat=$row2['lat'];
-													$lng=$row2['lng'];
-													
-													$useragent=$_SERVER['HTTP_USER_AGENT'];
-													$mobile = preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4));
-													if($mobile)
-													{
-														$linkmaps="google.navigation:q=$lat,$lng&mode=d";
-													}
-													else
-													{
-														$linkmaps="http://www.google.com/maps/place/$lat,$lng";
-													}									
-													
-													$totaltabungan = $row2['jumlah_transaksi_beras'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
+								$finaltotalsaldo = $konversi->normal($row4['jumlah_transaksi_beras'])." Kg";
 
-													/////////////// konversi uang ke angka
-													if($row['jenis_transaksi'] == 'uang') {
-														$uang = $row['jumlah_transaksi_uang']; 
-														$x = number_format($uang,0,'','.');
-														$rupiah = "Rp. ".$x;
-													}
-													else
-													{
-														$rupiah = "Rp. -";
-													}
+								/////////////// konversi uang ke angka
+								if($row4['jenis_transaksi'] == 'uang') {
+									$uang = $row4['jumlah_transaksi_uang']; 
+									$x= number_format($uang,0,'','.');
+									$rupiah = "Rp. ".$x;
+								}
+								else
+								{
+									$rupiah = "Rp. -";
+								}
 
-													?>
-													<tr style="text-align:center">
-														<td><?php echo ++$no ?></td>
-														<td><?php echo $nama ?></td>
-														<td><?php echo $row2['jenis_transaksi'] ?></td>
-														<td><?php echo $rupiah ?></td>
-														<td><?php echo $finaltotalsaldo ?></td>
-														<td><?php echo $row2['sedekah_dari'] ?></td>
-														<td><?php 
-																echo $row2['jenis_pembayaran'];
-																if($row2['jenis_pembayaran'] == "transfer")
-																{ ?>
-																	<br>
-																		<a class="btn btn-sm btn-warning m-0 image-popup-no-margins" href="../asset/image/log_transfer_sedekah/<?php echo $row2['bukti_tf'] ?>">Cek Bukti Transfer
-																			<img src="../asset/image/log_transfer_sedekah/<?php echo $row2['bukti_tf'] ?>" class="d-none" width="107" height="75">
-																		</a>
-																<?php } 
-														?></td>
-														<td>
-															<?php echo $row2['alamat'] ?>
-														</td>
-														<td><a class="btn btn-sm btn-primary m-0"  href="<?php echo $linkmaps ?>" target="_blank" >Buka Peta</a></td>
-													</tr>
-												<?php } ?>
-												</tbody>
-											</table>
-										</div>
-									<?php } else {?>
-									<div class="card-body text-center">
-										<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
-										<h5 class="m-0 mt-3">Tidak ada transaksi sedekah</h5>
-									</div>
-								<?php } ?>
-								</div>
-							</div><!-- myTabContent -->
+								?>
+								<tr style="text-align:center">
+									<td><?php echo ++$no ?></td>
+									<td><?php echo $row4['tanggal_penyaluran'] ?></td>
+									<td><?php echo $nama ?></td>
+									<td><?php echo $row4['jenis_transaksi'] ?></td>
+									<td><?php echo $rupiah ?></td>
+									<td><?php echo $finaltotalsaldo ?></td>
+									<td><?php echo $row4['sedekah_dari'] ?></td>
+									<td><?php 
+											echo $row4['jenis_pembayaran'];
+											if($row4['jenis_pembayaran'] == "transfer")
+											{ ?>
+												<br>
+													<a class="btn btn-sm btn-warning m-0 image-popup-no-margins" href="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>">Cek Bukti Transfer
+														<img src="../asset/image/log_transfer_sedekah/<?php echo $row['bukti_tf'] ?>" class="d-none" width="227">
+													</a>																
+											<?php } 
+									?>													
+								</td>
+									<td>
+										<?php echo $row4['alamat'] ?>
+									</td>
+									<td class="text-center">
+										<a class="btn btn-sm btn-primary m-0"  href="<?php echo $linkmaps ?>" target="_blank" >Buka Peta</a>
+									</td>
+								</tr>
+							<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<?php } else {?>
+					<div class="card-body text-center">
+						<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+						<h5 class="m-0 mt-3">Belum ada sedekah yang disalurkan</h5>
+					</div>
+				<?php } ?>
+			</div>
+
+					</div><!-- myTabContent -->
 	            </div>
 	          </div>
 	        </section>
@@ -597,8 +674,141 @@ if (isset($_SESSION['s_admin_id']))
 	</div>
 
 <!-- /////////////////////// Modal Pengaturan /////////////////////////////// -->
+<!-- /////////////////////// Modal Konfirmasi Sedekah /////////////////////////////// -->
 
+	<div class="modal fade" id="modalsedekah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header " >
+					<h5 class="modal-title" id="exampleModalLabel">Konfirmasi Sedekah</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="open_file" action="" method="POST" onsubmit="return validate();">
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="far fa-handshake fa-4x mb-3 animated rotateIn" style="color:#4AB616"></i>
+						<p>Informasi yang dimasukan pada formulir dibawah ini akan di tampilkan pada halaman depan website sehingga penyaluran sedekah akan transparan. selanjutnya jumlah total sedekah akan direset menjadi 0 Kg. </p>
+					</div>		
+					<label>Disalurkan ke : </label>
+						<textarea class="form-control mb-4" type="text" name="target" required=""></textarea>
+					<label>Jumlah Sedekah : </label>
+						<div class="input-group mb-4">
+							<input class="form-control" type="number" min="0" step="any" name="jumlahsedekah" id="jumlahsedekah" required="">
+							<div class="input-group-append">
+								<span class="input-group-text">/Kg</span>
+							</div>
+						</div>
+					<label>Tanggal : </label>
+						<input class="form-control mb-2" type="date" name="tanggalsedekah"  required="">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-color" data-dismiss="modal">Konfirmasi</button>
+					<input type="submit" name="submitxyz" value="Simpan" class="btn btn-danger">
+				</div>
+				</form>
+				<?php 
 
+					if(isset($_POST['submitxyz']))
+					{
+						$target = $_POST['target'];
+						$jumlah = $_POST['jumlahsedekah'];
+						$waktu = $_POST['tanggalsedekah'];
+
+						function tanggalan($waktu)
+						{
+							$x=substr($waktu, 0, 7);
+
+							$tahun = substr($waktu, 0, 4);
+							$bulanx = substr($x, -2);
+								if ($bulanx == '01')
+								{
+									$bulan = "januari";
+								}
+								if ($bulanx == '02')
+								{
+									$bulan = "Februari";
+								}
+								if ($bulanx == '03')
+								{
+									$bulan = "Maret";
+								}
+								if ($bulanx == '04')
+								{
+									$bulan = "April";
+								}
+								if ($bulanx == '05')
+								{
+									$bulan = "Mei";
+								}
+								if ($bulanx == '06')
+								{
+									$bulan = "Juni";
+								}
+								if ($bulanx == '07')
+								{
+									$bulan = "Juli";
+								}
+								if ($bulanx == '08')
+								{
+									$bulan = "Agustus";
+								}
+								if ($bulanx == '09')
+								{
+									$bulan = "September";
+								}
+								if ($bulanx == '10')
+								{
+									$bulan = "Oktober";
+								}
+								if ($bulanx == '11')
+								{
+									$bulan = "November";
+								}
+								if ($bulanx == '12')
+								{
+									$bulan = "Desember";
+								}
+							$hari = substr($waktu, -2);
+	
+							return $tangal = $hari." ".$bulan." ".$tahun;
+						}
+
+						$datexx = tanggalan($waktu);
+
+						$sql3="INSERT INTO log_penyaluran_sedekah(
+							target,
+							jumlah,
+							tanggal
+						) VALUES (
+							'$target',
+							'$jumlah',
+							'$datexx'
+						)";
+						$query3=mysqli_query($db,$sql3) or die (mysqli_error($db));
+						if ($query3) 
+						{
+							$sql4="UPDATE log_sedekah SET
+							status='sudah_disalurkan', tanggal_penyaluran='$datexx' WHERE status='sudah_diverifikasi'";
+
+							$query4=mysqli_query($db,$sql4) or die(mysqli_error($db));
+							if ($query4)
+							{
+								echo 
+								"<script>
+									location.replace('sedekah.php');
+								</script>";	
+							}						
+						}
+					}
+				?>
+			</div>
+		</div>
+	</div>
+
+<!-- /////////////////////// Modal Konfirmasi Sedekah /////////////////////////////// -->
 
 <?php include('../partials/js.php'); ?>
 

@@ -2,8 +2,6 @@
 
 	include('../db_con.php');
 
-
-
 if (isset($_SESSION['s_admin_id']))
 
 {
@@ -34,27 +32,8 @@ if (isset($_SESSION['s_admin_id']))
 	$row3=mysqli_fetch_array($results3);
 	$totaltabungan = round($row3['total'], 2);
 
-	//////////////////////  char dot dot 
-
-	$totaltabungan = $totaltabungan;
-	if (strpos($totaltabungan, '.') !== false) {
-		$b=strstr($totaltabungan, '.', true);
-		$removecoma = str_replace('.', '', $b );
-		$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-	}
-	else
-	{
-		$removecoma = $totaltabungan;
-		$takedecimal = null;
-	}
-	$hasil_rupiah = number_format($removecoma,0,'','.');
-	if (strpos($totaltabungan, '.') !== false) {
-		$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-	}
-	else
-	{
-		$finaltotalsaldo=$hasil_rupiah;
-	}
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 
 ?>
 
@@ -318,7 +297,7 @@ if (isset($_SESSION['s_admin_id']))
 					<h5 class="mt-0 font-weight-bold">Saldo Tabungan Beras</h5>
 					<span>Kamu bisa mengecek total keseluruhan saldo beras disini, angka dapat berubah setiap pengguna menyelesaikan transaksi.</span><br>
 					<span>Total keseluruhan saldo tabungan beras saat ini adalah :</span>
-					<h1 style="font-size: 80px" class="font-color"><?php echo $finaltotalsaldo ?> Kg</h1>
+					<h1 style="font-size: 80px" class="font-color"><?php echo $konversi->normal($totaltabungan) ?> Kg</h1>
 					</div>
 				</div>
 
@@ -444,38 +423,9 @@ if (isset($_SESSION['s_admin_id']))
 												$linkmaps="http://www.google.com/maps/place/$lat,$lng";
 											}
 
+											$rupiah = $konversi->normal($row['jumlah_transaksi_beras']);
+											$beras = $konversi->normal($row['jumlah_transaksi_beras'])." Kg";
 											
-											/////////////// konversi beras ke angka
-											$totaltabungan = $row['jumlah_transaksi_beras'];
-											if (strpos($totaltabungan, '.') !== false) {
-												$b=strstr($totaltabungan, '.', true);
-												$removecoma = str_replace('.', '', $b );
-												$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-											}
-											else
-											{
-												$removecoma = $totaltabungan;
-												$takedecimal = null;
-											}
-											$hasil_rupiah = number_format($removecoma,0,'','.');
-											if (strpos($totaltabungan, '.') !== false) {
-												$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-											}
-											else
-											{
-												$finaltotalsaldo=$hasil_rupiah."  Kg";
-											}
-
-											/////////////// konversi uang ke angka
-											if($row['jenis_transaksi'] == 'uang') {
-												$uang = $row['jumlah_transaksi_uang']; 
-												$rupiah = number_format($uang,0,'','.');
-											}
-											else
-											{
-												$rupiah = "-";
-											}
-
 									?>
 
 									<div class="col-lg-6 col-sm-12 mb-3">
@@ -490,7 +440,7 @@ if (isset($_SESSION['s_admin_id']))
 
 												<p class="m-0"><span class="font-weight">Jumlah Uang:</span> Rp. <?php echo $rupiah ?></p>
 
-												<p class="m-0"><span class="font-weight">Jumlah Beras:</span> <?php echo $finaltotalsaldo ?></p>
+												<p class="m-0"><span class="font-weight">Jumlah Beras:</span> <?php echo $beras ?></p>
 													<p class="m-0" ><span class="font-weight">Tanggal Transaksi:</span> <?php echo $row['tanggal_transaksi'] ?></p>
 													<p class="m-0"><span class="font-weight">Alamat:</span> <?php echo $row['alamat'] ?></p>
 												<div class="mt-3">
@@ -510,7 +460,7 @@ if (isset($_SESSION['s_admin_id']))
 													<div class="col-md-4 col-lg-6 col-xl-auto col-sm-auto">
 														<form method="post" action="">
 																<input type="hidden" name="nama" value="<?php echo $nama ?>" type="text" /> <!-- hidden -->
-																<input type="hidden" name="beras" value="<?php echo $finaltotalsaldo ?>" type="text" /> <!-- hidden -->
+																<input type="hidden" name="beras" value="<?php echo $beras ?>" type="text" /> <!-- hidden -->
 																<input type="hidden" name="uang" value="<?php echo $rupiah ?>" type="text" /> <!-- hidden -->
 																<input type="hidden" name="nohp" value="<?php echo $nohp ?>" type="text" /> <!-- hidden -->
 																<input type="hidden" name="alamat" value="<?php echo $row['alamat']	 ?>" type="text" /> <!-- hidden -->
@@ -594,35 +544,8 @@ if (isset($_SESSION['s_admin_id']))
 												$linkmaps="http://www.google.com/maps/place/$lat,$lng";
 											}
 
-											$totaltabungan = $row23['jumlah_transaksi_beras'];
-											if (strpos($totaltabungan, '.') !== false) {
-												$b=strstr($totaltabungan, '.', true);
-												$removecoma = str_replace('.', '', $b );
-												$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-											}
-											else
-											{
-												$removecoma = $totaltabungan;
-												$takedecimal = null;
-											}
-											$hasil_rupiah = number_format($removecoma,0,'','.');
-											if (strpos($totaltabungan, '.') !== false) {
-												$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-											}
-											else
-											{
-												$finaltotalsaldo=$hasil_rupiah."  Kg";
-											}
-											/////////////// konversi uang ke angka
-											if($row23['jenis_transaksi'] == 'uang') {
-												$uang = $row23['jumlah_transaksi_uang']; 
-												$x= number_format($uang,0,'','.');
-												$rupiah = "Rp. ".$x;
-											}
-											else
-											{
-												$rupiah = "Rp. -";
-											}
+											$rupiah = $konversi->normal($row23['jumlah_transaksi_uang']);
+											$beras = $konversi->normal($row23['jumlah_transaksi_beras'])." Kg";
 
 											?>
 											<tr style="text-align:center">
@@ -630,7 +553,7 @@ if (isset($_SESSION['s_admin_id']))
 												<td><?php echo $nama ?></td>
 												<td><?php echo $row23['jenis_transaksi'] ?></td>
 												<td><?php echo $rupiah ?></td>
-												<td><?php echo $finaltotalsaldo ?></td>
+												<td><?php echo $beras ?></td>
 												<td><?php 
 														echo $row23['jenis_pembayaran'];
 														if($row23['jenis_pembayaran'] == "transfer")
@@ -699,25 +622,7 @@ if (isset($_SESSION['s_admin_id']))
 											$saldo=$datay['saldo'];
 
 											/////////////// konversi beras ke angka
-											$totaltabungan = $row['jumlah_transaksi_beras'];
-											if (strpos($totaltabungan, '.') !== false) {
-												$b=strstr($totaltabungan, '.', true);
-												$removecoma = str_replace('.', '', $b );
-												$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-											}
-											else
-											{
-												$removecoma = $totaltabungan;
-												$takedecimal = null;
-											}
-											$hasil_rupiah = number_format($removecoma,0,'','.');
-											if (strpos($totaltabungan, '.') !== false) {
-												$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-											}
-											else
-											{
-												$finaltotalsaldo=$hasil_rupiah."  Kg";
-											}
+											$finaltotalsaldo = $konversi->normal($row['jumlah_transaksi_beras'])." Kg";
 
 											/////////////// konversi uang ke angka
 											if($row['jenis_transaksi'] == 'uang') {
@@ -828,25 +733,8 @@ if (isset($_SESSION['s_admin_id']))
 												$linkmaps="http://www.google.com/maps/place/$lat,$lng";
 											}
 
-											$totaltabungan = $row23['jumlah_transaksi_beras'];
-											if (strpos($totaltabungan, '.') !== false) {
-												$b=strstr($totaltabungan, '.', true);
-												$removecoma = str_replace('.', '', $b );
-												$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-											}
-											else
-											{
-												$removecoma = $totaltabungan;
-												$takedecimal = null;
-											}
-											$hasil_rupiah = number_format($removecoma,0,'','.');
-											if (strpos($totaltabungan, '.') !== false) {
-												$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-											}
-											else
-											{
-												$finaltotalsaldo=$hasil_rupiah."  Kg";
-											}
+											$finaltotalsaldo = $konversi->normal($row23['jumlah_transaksi_beras'])." Kg";
+
 											/////////////// konversi uang ke angka
 											if($row23['jenis_transaksi'] == 'uang') {
 												$uang = $row23['jumlah_transaksi_uang']; 

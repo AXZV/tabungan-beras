@@ -20,6 +20,8 @@ if (isset($_POST['subsedekah'])) {
     $bukti_tf = null;
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
 
+    $tanggal_penyaluran = "-";
+    
     if($radiobutton == "nontabungan")
     {
         $jenis_pembayaran = "COD";
@@ -42,6 +44,7 @@ if (isset($_POST['subsedekah'])) {
         id_transaksi,
         id_user,
         tanggal_transaksi,
+        tanggal_penyaluran,
         jumlah_transaksi_beras,
         jumlah_transaksi_uang,
         jenis_transaksi,
@@ -56,6 +59,7 @@ if (isset($_POST['subsedekah'])) {
         '$id_transaksi',
         '$id_user',
         '$tanggal_transaksi',
+        '$tanggal_penyaluran',
         '$jumlah_beras',
         '$jumlah_uang',
         '$jenis_transaksi',
@@ -105,6 +109,8 @@ else if (isset($_POST['uangsedekah'])) {
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
     $b = str_replace('.', '', $jumlah_uang );
 
+    $tanggal_penyaluran = "-";
+
     if($radiobutton == "cod")
     {
         $newfilename=null;
@@ -127,6 +133,7 @@ else if (isset($_POST['uangsedekah'])) {
         id_transaksi,
         id_user,
         tanggal_transaksi,
+        tanggal_penyaluran,
         jumlah_transaksi_beras,
         jumlah_transaksi_uang,
         jenis_transaksi,
@@ -141,6 +148,7 @@ else if (isset($_POST['uangsedekah'])) {
         '$id_transaksi',
         '$id_user',
         '$tanggal_transaksi',
+        '$tanggal_penyaluran',
         '$jumlah_beras',
         '$b',
         '$jenis_transaksi',

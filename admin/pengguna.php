@@ -18,6 +18,8 @@ if (isset($_SESSION['s_admin_id']))
 	$row3=mysqli_fetch_array($results3);
 	$totaluser = round($row3['total'], 2);
 
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 ?>
 <!DOCTYPE html>
 <html>
@@ -161,7 +163,7 @@ if (isset($_SESSION['s_admin_id']))
 	                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	                  <thead>
 	                    <tr style="text-align:center">
-						  <th>No</th>
+						  					<th>No</th>
 	                      <th>Nama</th>
 	                      <th>Nama Pengguna</th>
 	                      <th>Nomor KTP</th>
@@ -173,7 +175,7 @@ if (isset($_SESSION['s_admin_id']))
 	                  </thead>
 	                  <tfoot>
 	                    <tr style="text-align:center">
-						  <th>No</th>
+						  					<th>No</th>
 	                      <th>Nama</th>
 	                      <th>Nama Pengguna</th>
 	                      <th>Nomor KTP</th>
@@ -187,17 +189,17 @@ if (isset($_SESSION['s_admin_id']))
 						<?php $no=1;
 							  while ($row=mysqli_fetch_array($results))
 							  { ?>
-	                    <tr>
-						  <td style="text-align:center"><?php echo $no++;?></td>
+	                    <tr style="text-align:center">
+						 		 				<td><?php echo $no++;?></td>
 	                      <td><?php echo $row['nama'];?></td>
 	                      <td><?php echo $row['username'];?></td>
 	                      <td><?php echo $row['no_ktp'];?></td>
 	                      <td><?php echo $row['no_hp'];?></td>
 	                      <td width="250"><?php echo $row['alamat'];?></td>
-	                      <td><?php echo $row['saldo'];?></td>
+	                      <td><?php echo $konversi->normal($row['saldo'])." Kg";?></td>
 	                      <td class="text-center">
                           <form action="prosespengaturan.php" method="POST">
-						  	<button class="btn btn-sm btn-danger m-0" name="hapus_user" value="<?php echo $row['id_user'];?>"  onclick="return confirm('apakah anda yakin akan menghapus akun ini ?')">Hapus</button></td>
+						  							<button class="btn btn-sm btn-danger m-0" name="hapus_user" value="<?php echo $row['id_user'];?>"  onclick="return confirm('apakah anda yakin akan menghapus akun ini ?')">Hapus</button></td>
                           </form>
 						</tr>
 						<?php } ?>
