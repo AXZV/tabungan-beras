@@ -1,32 +1,21 @@
 <?php
 	session_start();
 	include('db_con2.php');
+	include 'function/fungsi.php';
 
 	$query3 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_sedekah WHERE status='sudah_diverifikasi'";
 	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
 	$row3=mysqli_fetch_array($results3);
+	$lenght4 = mysqli_num_rows($results3);
 	$totalsedekah = round($row3['total'], 2);
 
-	//////////////////////  char dot dot 
-	$totaltabungan = $totalsedekah;
-	if (strpos($totaltabungan, '.') !== false) {
-		$b=strstr($totaltabungan, '.', true);
-		$removecoma = str_replace('.', '', $b );
-		$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-	}
-	else
-	{
-		$removecoma = $totaltabungan;
-		$takedecimal = null;
-	}
-	$hasil_rupiah = number_format($removecoma,0,'','.');
-	if (strpos($totaltabungan, '.') !== false) {
-		$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-	}
-	else
-	{
-		$finaltotalsaldo=$hasil_rupiah;
-	}
+	$konv= new konversi;
+	$finaltotalsaldo = $konv->normal($totalsedekah);
+
+	$query2 = "SELECT * FROM log_penyaluran_sedekah";
+	$results2 = mysqli_query($db, $query2) or die (mysqli_error());
+	$lenght1=mysqli_num_rows($results2);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -215,56 +204,48 @@
 	<div class="container py-5">
 		<div class="heading text-center">
 			<h2 class="font-weight-bold">Sedekah</h2>
-			<p class="text-center">Tabungan Beras menyalurkan dana sedekah kepada pihak yang membutuhkan<br>serta bekerjasama dengan Lembaga maupun Organisasi.</p>
+			<p class="text-center">Sedekah yang anda sumbangkan akan kami salurkan ke pihak-pihak yang membutuhkan.<br>Proses penyaluran dilakukan secara langsung atau bekerjasama dengan Lembaga maupun Organisasi nonprofit.</p>
 			<hr>
 		</div>
 		<div class="row">
 			<div class="col-md-8 col-sm-12">
 				<div class="card mb-3">
 					<div class="card-header">
-						<h5 class="font-weight-bold m-0">Detail Sedekah</h5>
+						<h5 class="font-weight-bold m-0">Detail Penyaluran Sedekah</h5>
 					</div>
 					<div class="card-body p-0">
 						<div class="scr-div" style="height: 250px; overflow-y: auto;">
+						<?php if($lenght1 < 0){ ?>
 							<ul class="list-group list-group-flush">
+
+							<?php while ($row33 = mysqli_fetch_array($results2)){ ?>
 								<li class="list-group-item">
 									<div class="media">
 									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
 									  <div class="media-body">
-									    <h5 class="mt-0">Korban Bucin</h5>
-									    <p class="m-0"><span>Jumlah :</span> 1Kg</p>
-									    <p class="m-0"><span>Tanggal :</span> 25 Januari 2018</p>
+									    <h5 class="mt-0"><?php echo $row33['target']?></h5>
+									    <p class="m-0"><span>Jumlah :</span> <?php echo $row33['jumlah']?> Kg</p>
+									    <p class="m-0"><span>Tanggal :</span> <?php echo $row33['tanggal']?></p>
 									  </div>
 									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="media">
-									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
-									  <div class="media-body">
-									    <h5 class="mt-0">Rumah Anak Php</h5>
-									    <p class="m-0"><span>Jumlah :</span> 2.5Kg</p>
-									    <p class="m-0"><span>Tanggal :</span> 25 Maret 2019</p>
-									  </div>
-									</div>
-								</li>
-								<li class="list-group-item">
-									<div class="media">
-									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
-									  <div class="media-body">
-									    <h5 class="mt-0">Korban Kelaparan Desa Penari</h5>
-									    <p class="m-0"><span>Jumlah :</span> 14.5Kg</p>
-									    <p class="m-0"><span>Tanggal :</span> 25 Januari 2020</p>
-									  </div>
-									</div>
-								</li>
+								</li>	
+								<?php } ?>						
 							</ul>
+							<?php } else {?>
+									<div>
+										<i class="far fa-frown"></i>
+										<p>kami belum menyalurkan sedekah / kami belum menerima sumbangan sedekah dari donatur.<br>
+										Mari bantu ringankan beban saudara-saudara kita.</p>
+										<a href="sedekah/beras" class="btn btn-color"><i class="fas fa-hand-holding-heart"></i> Sedekah Sekarang</a>
+									</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-4 col-sm-12 text-center">
-				<h5 class="mt-0 font-weight-bold">Total Sedekah Saat Ini</h5>
-				<h1 class="font-color" style="font-size: 3.5rem;"><span class="counter"><?php echo $finaltotalsaldo ?></span>Kg</h1>
+				<h5 class="mt-0 font-weight-bold">Total Saldo Sedekah Saat Ini</h5>
+				<h1 class="font-color" style="font-size: 3.5rem;"><span class="counter"><?php echo $finaltotalsaldo ?></span> Kg</h1>
 				<img class="img-fluid" src="asset/image/undraw_gifts_btw0.svg">
 			</div>
 		</div>
