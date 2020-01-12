@@ -232,8 +232,8 @@
 								<?php } ?>						
 							</ul>
 							<?php } else {?>
-									<div>
-										<i class="far fa-frown"></i>
+									<div class="text-center p-4">
+										<img width="50" class="mb-2" src="https://image.flaticon.com/icons/svg/1828/1828843.svg">
 										<p>kami belum menyalurkan sedekah / kami belum menerima sumbangan sedekah dari donatur.<br>
 										Mari bantu ringankan beban saudara-saudara kita.</p>
 										<a href="sedekah/beras" class="btn btn-color"><i class="fas fa-hand-holding-heart"></i> Sedekah Sekarang</a>
