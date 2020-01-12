@@ -1,6 +1,32 @@
 <?php
 	session_start();
 	include('db_con2.php');
+
+	$query3 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_sedekah WHERE status='sudah_diverifikasi'";
+	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
+	$row3=mysqli_fetch_array($results3);
+	$totalsedekah = round($row3['total'], 2);
+
+	//////////////////////  char dot dot 
+	$totaltabungan = $totalsedekah;
+	if (strpos($totaltabungan, '.') !== false) {
+		$b=strstr($totaltabungan, '.', true);
+		$removecoma = str_replace('.', '', $b );
+		$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
+	}
+	else
+	{
+		$removecoma = $totaltabungan;
+		$takedecimal = null;
+	}
+	$hasil_rupiah = number_format($removecoma,0,'','.');
+	if (strpos($totaltabungan, '.') !== false) {
+		$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
+	}
+	else
+	{
+		$finaltotalsaldo=$hasil_rupiah;
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -118,7 +144,7 @@
 </div>
 
 <section>
-	<div class="container my-3 py-5">
+	<div class="container mt-3 py-5">
 		<div class="heading text-center mb-5">
 			<h2 class="font-weight-bold">Kategori</h2>
 			<hr>
@@ -189,20 +215,62 @@
 	<div class="container py-5">
 		<div class="heading text-center">
 			<h2 class="font-weight-bold">Sedekah</h2>
+			<p class="text-center">Tabungan Beras menyalurkan dana sedekah kepada pihak yang membutuhkan<br>serta bekerjasama dengan Lembaga maupun Organisasi.</p>
 			<hr>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-sm-12 text-justify">
-				<div class="alert alert-warning" role="alert">Orang dermawan yang gemar bersedekah juga menempati kedudukan yang mulia di sisi Allah. Ampunan serta surga seluas hamparan langit dan bumi dijanjikan oleh Allah bagi mereka yang suka bersedekah, baik di kala senang maupun susah <span class="font-weight-bold">(Q.S Ali Imran: 133-134)</span></div>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<div class="col-md-8 col-sm-12">
+				<div class="card mb-3">
+					<div class="card-header">
+						<h5 class="font-weight-bold m-0">Detail Sedekah</h5>
+					</div>
+					<div class="card-body p-0">
+						<div class="scr-div" style="height: 250px; overflow-y: auto;">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">
+									<div class="media">
+									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+									  <div class="media-body">
+									    <h5 class="mt-0">Korban Bucin</h5>
+									    <p class="m-0"><span>Jumlah :</span> 1Kg</p>
+									    <p class="m-0"><span>Tanggal :</span> 25 Januari 2018</p>
+									  </div>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="media">
+									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+									  <div class="media-body">
+									    <h5 class="mt-0">Rumah Anak Php</h5>
+									    <p class="m-0"><span>Jumlah :</span> 2.5Kg</p>
+									    <p class="m-0"><span>Tanggal :</span> 25 Maret 2019</p>
+									  </div>
+									</div>
+								</li>
+								<li class="list-group-item">
+									<div class="media">
+									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+									  <div class="media-body">
+									    <h5 class="mt-0">Korban Kelaparan Desa Penari</h5>
+									    <p class="m-0"><span>Jumlah :</span> 14.5Kg</p>
+									    <p class="m-0"><span>Tanggal :</span> 25 Januari 2020</p>
+									  </div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-md-4 col-sm-12">
+			<div class="col-md-4 col-sm-12 text-center">
+				<h5 class="mt-0 font-weight-bold">Total Sedekah Saat Ini</h5>
+				<h1 class="font-color" style="font-size: 3.5rem;"><span class="counter"><?php echo $finaltotalsaldo ?></span>Kg</h1>
 				<img class="img-fluid" src="asset/image/undraw_gifts_btw0.svg">
 			</div>
 		</div>
 	</div>
 </section>
-<section class="background-color-2">
+<section>
 	<div class="container py-5">
 		<div class="heading text-center mb-5">
 			<h2 class="font-weight-bold">Mengapa Memilih Tabungan Beras?</h2>
@@ -211,23 +279,23 @@
 		<div class="row text-center">
 			<div class="col-md-4 col-sm-12">
 				<i style="font-size: 5rem" class="fas fa-user-shield font-color mb-1"></i>
-				<h4 class="font-weight-bold font-color">Keamanan</h4>
+				<h4 class="font-weight-bold">Keamanan</h4>
 				<p>Tabungan Beras menggunakan sistem keamanan yang baik, sehingga pengguna tidak perlu khawatir dengan masalah keamanan.</p>
 			</div>
 			<div class="col-md-4 col-sm-12">
 				<i style="font-size: 5rem" class="fas fa-shipping-fast font-color mb-1"></i>
-				<h4 class="font-weight-bold font-color">Layanan</h4>
+				<h4 class="font-weight-bold">Layanan</h4>
 				<p>Tabungan Beras mempunyai layanan COD (Ambil Barang Langsung Ketempat) untuk mempermudah dalam transaksi.</p>
 			</div>
 			<div class="col-md-4 col-sm-12">
 				<i style="font-size: 5rem" class="fas fa-money-check-alt font-color mb-1"></i>
-				<h4 class="font-weight-bold font-color">Kemudahan</h4>
+				<h4 class="font-weight-bold">Kemudahan</h4>
 				<p>Tabungan Beras mempunyai metode pembayaran, seperti transfer uang, untuk mempermudah dalam pembayaran.</p>
 			</div>
 		</div>
 	</div>
 </section>
-
+<hr>
 <section class="white">
        <div class="container p-4">
           <div class="copyright text-center text-muted">
@@ -274,6 +342,11 @@ $(document).ready(function(){
   });
 });
 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="asset/js/jquery.countup.js"></script>
+<script>
+$('.counter').countUp();
 </script>
 </body>
 </html>
