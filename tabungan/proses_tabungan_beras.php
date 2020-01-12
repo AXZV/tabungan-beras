@@ -1,6 +1,8 @@
 <?php 
 
 include('../db_con.php');
+include '../function/fungsi.php';
+$konvrs = new konversi;
 // REGISTER USER
 if (isset($_POST['subtabungan'])) {
     $id_user= $_SESSION['s_user_id'];
@@ -10,7 +12,10 @@ if (isset($_POST['subtabungan'])) {
 
     $id_transaksi = $date.$id_user.$rand."_tabungan";
     $tanggal_transaksi = date("d M Y");
-    $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
+
+    $jmlh = mysqli_real_escape_string($db, $_POST['jumlah']);
+    $jumlah_beras = $konvrs->nonnormal($jmlh);
+
     $jumlah_uang =null;
     $jenis_transaksi = "beras";
     $kategori = mysqli_real_escape_string($db, $_POST['kategori']);
@@ -84,7 +89,10 @@ else if (isset($_POST['uangtabungan'])) {
 
     $id_transaksi = $date.$id_user.$rand."_tabungan";
     $tanggal_transaksi = date("d M Y");
-    $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah_beras']);
+
+    $jmlh = mysqli_real_escape_string($db, $_POST['jumlah_beras']);
+    $jumlah_beras = $konvrs->nonnormal($jmlh);
+
     $jumlah_uang = mysqli_real_escape_string($db, $_POST['jumlah']);
     $jenis_transaksi = "uang";
     $alamat = mysqli_real_escape_string($db, $_POST['alamat']);
@@ -95,7 +103,7 @@ else if (isset($_POST['uangtabungan'])) {
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
     $b = str_replace('.', '', $jumlah_uang );
 
-    echo("<script>console.log('PHP: " . $alamat . "');</script>");
+
 
     if($radiobutton == "cod")
     {

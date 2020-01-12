@@ -84,20 +84,23 @@ if (isset($_SESSION['s_user_id']))
 						<form method="post" action="proses_tabungan_beras.php">
 							<div class='switch mb-4 d-flex'>
 								<div class='quality'>
-									<input type="radio" id="radiocod" name="radiob" checked value="cod">
+									<input type="radio" id="radiocod" name="radiob"  value="cod">
 									<label for='radiocod'>Cash On Delivery (COD)</label>
 								</div>
 								<div class='quality'>
-									<input type="radio" id="radiotransfer" name="radiob"  value="noncod">
+									<input type="radio" id="radiotransfer" name="radiob" checked  value="noncod">
 									<label for='radiotransfer'>Antar Ke Kantor</label>
 								</div>
 							</div>
 							<label>Jumlah :</label>
-							<div class="input-group mb-4">
-							<input type="number" min="0" step="any" id="jumlah" name="jumlah" placeholder="Jumlah" required="" class="form-control" >
-							<div class="input-group-append">
-								<span class="input-group-text">Kg</span>
+							<div class="input-group mb-4" id="jmlhdiv">
+								<input type="text" step="any" id="jumlah" name="jumlah" placeholder="Jumlah" required="" class="form-control" >
+								<div class="input-group-append">
+									<span class="input-group-text">Kg</span>
+								</div>
 							</div>
+							<div class="mb-4" id="keterangan" style="display:none">
+								<small style="color:red">  " Untuk menggunakan layanan COD minimal transaksi penabungan 500 Kg "</small>
 							</div>
 
 
@@ -107,7 +110,7 @@ if (isset($_SESSION['s_user_id']))
 						        <option value="beras_baru">Beras Baru</option>
 						        <option value="beras_lama">Beras Lama</option>
 						    </select>
-							<div id="coddiv">
+							<div id="coddiv" style="display:none">
 								<label>Alamat : </label>
 								<div>
 									<small>Geser pin map sesuai alamat</small>
@@ -124,13 +127,13 @@ if (isset($_SESSION['s_user_id']))
 											<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
 											<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
 										</div>
-										<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
+										<textarea id="address" class="form-control mb-3" name="alamat"><?php echo $alamat ?></textarea>
 										<?php include('../maps/maps-in-data.php'); ?>
 									</div>
 								</div>
 							</div>
 
-						    <button class="btn btn-color btn-block m-0" name="subtabungan" type="submit">Kirim</button>
+						    <button class="btn btn-color btn-block m-0" id="kirim" name="subtabungan" type="submit">Kirim</button>
 						</form>
 					</div>
 					<?php
@@ -148,6 +151,9 @@ if (isset($_SESSION['s_user_id']))
 </section>
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>
+
+<script type="text/javascript" src="../function/fungsi.js"></script>
+
 <!-- ////// radion button -->
 <script>
 	$(document).ready(function(){
@@ -157,8 +163,6 @@ if (isset($_SESSION['s_user_id']))
 			$("#c" + test).show();
 		})
 	})
-
-	
 </script>
 
 <script>
@@ -167,14 +171,43 @@ if (isset($_SESSION['s_user_id']))
 	$('input[type="radio"]').click(function() {
 	if($(this).attr('id') == 'radiocod') {
 		$('#coddiv').show();
-		document.getElementById("address").required = true;              
+		$('#keterangan').show();
+		// $("#jumlah").attr({"min" : 500});
+		$("#jmlhdiv").removeClass("mb-4");
+		$("#jmlhdiv").addClass("mb-1");
+		document.getElementById("address").required = true;
+		
+		$('#jumlah').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 500);
+		});
+
 	}
 	if($(this).attr('id') == 'radiotransfer') {
 		$('#coddiv').hide();
-		document.getElementById("address").required = false;           
+		$('#keterangan').hide();
+		// $("#jumlah").attr({"min" : 1});
+		$("#jmlhdiv").addClass("mb-4");
+		$("#jmlhdiv").removeClass("mb-1");
+		document.getElementById("address").required = false;
+		
+		$('#jumlah').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 1);
+		});
 	}
 	});
 	});
 </script>
+
+<!-- ////// Format angka -->
+<script>
+	var rupiah = document.getElementById("jumlah");
+	rupiah.addEventListener("keyup", function(e) {
+	rupiah.value = formatRupiah(this.value, "Rp. ");
+	});
+</script>
+
+
 </body>
 </html>

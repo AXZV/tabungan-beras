@@ -109,18 +109,18 @@ if (isset($_SESSION['s_user_id']))
 										<label for='radiononcod'>Antar Ke Kantor</label>
 									</div>
 									<div class='quality'>
-										<input type="radio" id="radiocod" name="radiob" checked value="cod">
+										<input type="radio" id="radiocod" name="radiob"  value="cod">
 										<label for='radiocod'>Cash On Delivery (COD)</label>
 									</div>
 									<div class='quality'>
-										<input type="radio" id="radiotransfer" name="radiob" value="transfer">
+										<input type="radio" id="radiotransfer" name="radiob" checked value="transfer">
 										<label for='radiotransfer'>Transfer</label>
 									</div>
 								</div>
 
-									<div id="transferdiv" style="display:none;">
+									<div id="transferdiv" >
 										<label>Nomor Rekening :</label>
-										<div class="input-group mb-1">
+										<div class="input-group mb-1" >
 											<div class="input-group-prepend">
 												<span class="input-group-text" style="text-transform: uppercase;"><?php echo $bank ?></span>
 											</div>
@@ -133,11 +133,14 @@ if (isset($_SESSION['s_user_id']))
 									</div>
 
 									<label>Jumlah :</label>
-									<div class="input-group mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text">Rp.</span>
-									</div>
+									<div class="input-group mb-4" id="jmlhdiv">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Rp.</span>
+										</div>
 										<input type="text" id="jumlah_uang" name="jumlah" placeholder="Jumlah" required="" class="form-control">
+									</div>
+									<div class="mb-4" id="keterangan" style="display:none;">
+										<small style="color:red;">  " Untuk menggunakan layanan COD minimal transaksi penabungan Rp. 500.000 (lima ratus ribu rupiah) "</small>
 									</div>
 									
 									<div class="form-row">
@@ -165,20 +168,20 @@ if (isset($_SESSION['s_user_id']))
 										</div>
 									</div>	
 
-									<div id="transferdiv2" style="display:none;">
+									<div id="transferdiv2">
 										<p class="m-0">Bukti Transfer : </p>
 										<img class="img-fluid mb-3 rounded" style="max-height: 150px;" id="img-upload">
 										<div class="input-group mb-3">
 										<div class="custom-file">
 											<input type="file" class="custom-file-input btn-file" id="buktitf"
-											aria-describedby="inputGroupFileAddon01" name="buktitf">
+											aria-describedby="inputGroupFileAddon01" name="buktitf" required>
 											<label class="custom-file-label" for="buktitf">Choose file</label>
 										</div>
 										</div>
 									</div>
 
 
-									<div id="coddiv">
+									<div id="coddiv" style="display:none;">
 										<label>Alamat : </label>
 										<div>
 											<small>Geser pin map sesuai alamat</small>
@@ -201,7 +204,7 @@ if (isset($_SESSION['s_user_id']))
 										</div>
 									</div>
 
-									<button class="btn btn-color btn-block m-0" name="uangtabungan" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" id="kirim" name="uangtabungan" type="submit">Kirim</button>
 								</form>
 								
 
@@ -222,6 +225,8 @@ if (isset($_SESSION['s_user_id']))
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>
 
+<script type="text/javascript" src="../function/fungsi.js"></script>
+
 <!-- ////// konversi beras -->
 <script>
 	$('input').keyup(function(){
@@ -232,38 +237,78 @@ if (isset($_SESSION['s_user_id']))
 		$('#jumlah_beras').html(b/10000);
 		var hargaberas = <?php echo json_encode($harga);  ?>;
 		var totalharga = ((b/hargaberas).toFixed(2));
-		document.getElementById('jumlah_beras2').value = totalharga+ " Kg";
+
+		document.getElementById('jumlah_beras2').value = rubahangka(totalharga);
+
 	})
 </script>
 
 <script>
 
 	$(document).ready(function() {
+
 	$('input[type="radio"]').click(function() {
 	if($(this).attr('id') == 'radiononcod') {
+		$('#kirim').attr('disabled', false);  
+
 		$('#coddiv').hide();
 		$('#coddiv2').show();
 		$('#map')
 		$('#transferdiv').hide();
 		$('#transferdiv2').hide();
-		document.getElementById("buktitf").required = false;              
+		$('#keterangan').hide();
+		$("#jmlhdiv").addClass("mb-4");
+		$("#jmlhdiv").removeClass("mb-1");
+		document.getElementById("buktitf").required = false;
+
+		$('#jumlah_uang').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 1);
+		});
+		            
 	}
 	if($(this).attr('id') == 'radiocod') {
+		
 		$('#coddiv').show();
 		$('#coddiv2').show();
 		$('#transferdiv').hide();
 		$('#transferdiv2').hide();
-		document.getElementById("buktitf").required = false;              
+		$('#keterangan').show();
+		$("#jmlhdiv").addClass("mb-1");
+		$("#jmlhdiv").removeClass("mb-4");
+		document.getElementById("buktitf").required = false;
+		$('#kirim').attr('disabled', true); 
+
+		$('#jumlah_uang').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 500000);
+		});
+
 	}
 	if($(this).attr('id') == 'radiotransfer') {
+		$('#kirim').attr('disabled', false);  
+
 		$('#coddiv').hide();
 		$('#coddiv2').hide();
 		$('#transferdiv').show();
 		$('#transferdiv2').show();
-		document.getElementById("buktitf").required = true;           
+		$('#keterangan').hide();
+		$("#jmlhdiv").addClass("mb-4");
+		$("#jmlhdiv").removeClass("mb-1");
+		document.getElementById("buktitf").required = true;
+
+		$('#jumlah_uang').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 1);
+		});
+          
 	}
 	});
+
+
+
 	});
+
 </script>
 
 <!-- img upload -->
@@ -310,29 +355,8 @@ if (isset($_SESSION['s_user_id']))
 <script>
 	var rupiah = document.getElementById("jumlah_uang");
 	rupiah.addEventListener("keyup", function(e) {
-	// tambahkan 'Rp.' pada saat form di ketik
-	// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
 	rupiah.value = formatRupiah(this.value, "Rp. ");
 	});
-
-	/* Fungsi formatRupiah */
-	function formatRupiah(angka, prefix) {
-	var number_string = angka.replace(/[^,\d]/g, "").toString(),
-		split = number_string.split(","),
-		sisa = split[0].length % 3,
-		rupiah = split[0].substr(0, sisa),
-		ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-
-	// tambahkan titik jika yang di input sudah menjadi angka ribuan
-	if (ribuan) {
-		separator = sisa ? "." : "";
-		rupiah += separator + ribuan.join(".");
-	}
-
-	rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-	return prefix == undefined ? rupiah : rupiah ? rupiah : "";
-	}
-
 </script>
 
 
