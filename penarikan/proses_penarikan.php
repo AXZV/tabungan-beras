@@ -1,6 +1,8 @@
 <?php 
 
 include('../db_con.php');
+include '../function/fungsi.php';
+$konvrs = new konversi;
 // REGISTER USER
 if (isset($_POST['penarikan'])) {
     $id_user= $_SESSION['s_user_id'];
@@ -8,10 +10,11 @@ if (isset($_POST['penarikan'])) {
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
     $id_transaksi = $date.$id_user.$rand."_penarikan";
-
-
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
-    $jumlah_transaksi = mysqli_real_escape_string($db, $_POST['jumlah_transaksi']);
+    
+    $jmlh= mysqli_real_escape_string($db, $_POST['jumlah_transaksi']);
+    $jumlah_transaksi  = $konvrs->nonnormal($jmlh);
+    
     $alamat = mysqli_real_escape_string($db, $_POST['alamat']);
     $lat = mysqli_real_escape_string($db, $_POST['lat2']);
     $lng = mysqli_real_escape_string($db, $_POST['lng2']);
@@ -26,7 +29,7 @@ if (isset($_POST['penarikan'])) {
     {
         $jenis_transaksi="Ambil di kantor";
     }
-
+    echo("<script>console.log('PHP: " . $jumlah_transaksi . "');</script>");
 
     $sql="INSERT INTO log_penarikan(
         id_transaksi,

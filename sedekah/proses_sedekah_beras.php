@@ -1,10 +1,12 @@
 <?php 
 
 include('../db_con.php');
+include '../function/fungsi.php';
+$konvrs = new konversi;
+
 // REGISTER USER
 if (isset($_POST['subsedekah'])) {
     $id_user= $_SESSION['s_user_id'];
-    echo("<script>console.log('PHP: " . "Fffffff". $id_user . "');</script>");
     $date = date("dm");
     $rand = substr(md5(microtime()),rand(0,26),6);
 
@@ -20,24 +22,23 @@ if (isset($_POST['subsedekah'])) {
     $bukti_tf = null;
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
 
+    $jmlh = mysqli_real_escape_string($db, $_POST['jumlah']);
+    $jumlah_beras  = $konvrs->nonnormal($jmlh);
+
+
     $tanggal_penyaluran = "-";
     
     if($radiobutton == "nontabungan")
     {
         $jenis_pembayaran = "COD";
-        $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
     }
     else if($radiobutton == "noncod")
     {
         $jenis_pembayaran = "Antar ke Kantor";
-        $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
     }
     else if($radiobutton == "tabungan")
     {
-        $jenis_pembayaran = "Ambil dari Tabungan";
-        $saldoakhir = mysqli_real_escape_string($db, $_POST['jumlah_saldo']);
-        $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah2']);
-        
+        $jenis_pembayaran = "Ambil dari Tabungan";    
     }
 
     $sql="INSERT INTO log_sedekah(

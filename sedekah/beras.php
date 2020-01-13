@@ -1,5 +1,8 @@
 <?php
 include('../db_con.php');
+include '../function/fungsi.php';
+$konv = new konversi;
+
 if (isset($_SESSION['s_user_id']))
 {
 	$id_user = $_SESSION['s_user_id'];
@@ -7,7 +10,8 @@ if (isset($_SESSION['s_user_id']))
 	$results = mysqli_query($db, $query) or die (mysqli_error());
 	$data=mysqli_fetch_array($results);
 
-	$jumlah_tabungan=$data['saldo'];
+	$jumlah_tabungan=$konv->normal($data['saldo']);
+	$jumlah_tabunganx=$data['saldo'];
 	$alamat=$data['alamat'];
 	$lat=$data['lat'];
 	$lng=$data['lng'];
@@ -100,24 +104,17 @@ if (isset($_SESSION['s_user_id']))
 								<div id="tabungan" style="display:none;">
 									<label>Jumlah Saldo Tabungan Anda :</label>
 									<div class="input-group mb-2">
-										<input type="text" readonly="" min="0" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $jumlah_tabungan ?>" placeholder="Jumlah (Rp)"  >
+										<input type="text" readonly="" id="jumlah_tabungan" name="jumlah_saldo" class="form-control" value="<?php echo $jumlah_tabungan ?>" placeholder="Jumlah (Rp)"  >
 										<div class="input-group-append">
 											<span class="input-group-text">Kg</span>
 										</div>
 									</div>
 									<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
-									<label>Jumlah Sedekah :</label>
-									<div class="input-group mb-4">
-										<input type="number" min="0" step="any" id="jumlah_uang" name="jumlah2" class="form-control" placeholder="Jumlah Sedekah" >								
-										<div class="input-group-append">
-											<span class="input-group-text">Kg</span>
-										</div>
-									</div>
 								</div>
-								<div id="nontabungan">
+								<div>
 									<label>Jumlah Sedekah :</label>
 									<div class="input-group mb-4">
-									<input type="number" min="0" step="any" id="jumlah_uang2" name="jumlah" placeholder="Jumlah Sedekah" class="form-control" >
+									<input type="text" id="jumlah_uang2" required name="jumlah" placeholder="Jumlah Sedekah" class="form-control" >
 									<div class="input-group-append">
 										<span class="input-group-text">Kg</span>
 									</div>
@@ -140,12 +137,14 @@ if (isset($_SESSION['s_user_id']))
 												<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
 												<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
 											</div>
-											<textarea id="address" class="form-control mb-3" name="alamat"><?php echo $alamat ?></textarea>
+											<textarea id="address" required class="form-control mb-3" name="alamat"><?php echo $alamat ?></textarea>
 											<?php include('../maps/maps-in-data.php'); ?>
 										</div>
 									</div>
 								</div>
-									<button class="btn btn-color btn-block m-0" name="subsedekah" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" style="display:block;" id="subsedekah" name="subsedekah" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" style="display:none;" id="subsedekah2" name="subsedekah" type="submit">Kirim</button>
+
 								</form>
 							</div>
 						<?php
@@ -163,6 +162,9 @@ if (isset($_SESSION['s_user_id']))
 </section>
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>
+
+<script type="text/javascript" src="../function/fungsi.js"></script>
+
 <!-- ////// radion button -->
 <script>
 	$(document).ready(function(){
@@ -173,26 +175,36 @@ if (isset($_SESSION['s_user_id']))
 		})
 	})
 </script>
+
+
 <!-- ////// konversi beras -->
 <script>
-$('input').keyup(function(){
-	var jumlah_uang = parseFloat($('#jumlah_uang').val());
-	var saldo = <?php echo json_encode($jumlah_tabungan);  ?>;
-	var saldonum = Number(saldo);
-	if(jumlah_uang > saldonum)
-	{
-		console.log("lebih");
-		$('#saldokurang').show();
-	}
-	else
-	{
-		console.log("kurang");
-		$('#saldokurang').hide();
-		var tabungan = <?php echo json_encode($jumlah_tabungan);  ?>;
-		var totalharga = ((tabungan-jumlah_uang).toFixed(2));
-		document.getElementById('jumlah_tabungan').value = totalharga;
-	}
-})
+
+	var rupiah = document.getElementById("jumlah_uang2");
+	rupiah.addEventListener("keyup", function(e) {
+		var jmlh_uang = this.value;
+		var vals = jmlh_uang.replace(/\./g,''); /// hapus .
+		var vals2 = vals.replace(/\,/g,'.'); /// ganti , menjadi .
+		var jmlh_uangnum = Number(vals2);
+
+		var saldo = <?php echo json_encode($jumlah_tabunganx);  ?>;
+		var saldonum = Number(saldo);
+		if(jmlh_uangnum > saldonum)
+		{
+			$('#saldokurang').show();
+			$('#subsedekah2').attr('disabled', true);
+			console.log("y");
+		}
+		else
+		{
+			$('#saldokurang').hide();
+			var totalharga = ((saldo-jmlh_uangnum).toFixed(2));
+			document.getElementById('jumlah_tabungan').value = rubahangka(totalharga);
+			$('#subsedekah2').attr('disabled', false);
+			console.log("a");
+		}
+	});
+
 </script>
 <script>
 	$(document).ready(function() {
@@ -201,25 +213,20 @@ $('input').keyup(function(){
 		$('#nontabungan').show();
 		$('#mapxy').show();
 		$('#tabungan').hide();
-		
-		document.getElementById("address").required = true;
-		document.getElementById("jumlah_uang").required = false; 
-		document.getElementById("jumlah_tabungan").required = false; 
-		document.getElementById("jumlah").required = true;
-		document.getElementById("jumlah_uang2 ").required = true;   
-		          
+		document.getElementById("address").required = false;
+		document.getElementById("subsedekah2").style.display='none';
+		document.getElementById("subsedekah").style.display='block';
 	}
 
 	if($(this).attr('id') == 'noncod') {
 		$('#nontabungan').show();
 		$('#mapxy').hide();
 		$('#tabungan').hide();
-		document.getElementById("address").required = false;
-		document.getElementById("jumlah_uang").required = false; 
-		document.getElementById("jumlah_tabungan").required = false; 
-		document.getElementById("jumlah").required = true;
-		document.getElementById("jumlah_uang2 ").required = true;   
-		          
+		document.getElementById("address").required = true;
+		document.getElementById("subsedekah2").style.display='none';
+		document.getElementById("subsedekah").style.display='block';
+
+		// console.log("Sdwerwersd");
 	}
 
 	if($(this).attr('id') == 'radiotabungan') {
@@ -227,14 +234,25 @@ $('input').keyup(function(){
 		$('#mapxy').hide();
 		$('#tabungan').show();
 		document.getElementById("address").required = false;
-		document.getElementById("jumlah_uang").required = true; 
-		document.getElementById("jumlah_tabungan").required = true;
-		document.getElementById("jumlah").required = false;
-		document.getElementById("jumlah_uang2 ").required = false;   
+		document.getElementById("subsedekah2").style.display='block';
+		document.getElementById("subsedekah").style.display='none';
+
+		// console.log("Sdsd");
 	}
 	});
 	});
 </script>
+
+
+<!-- ////// Format angka -->
+
+
+	<script>
+		var rupiah = document.getElementById("jumlah_uang2");
+		rupiah.addEventListener("keyup", function(e) {
+		rupiah.value = formatRupiah(this.value, "Rp. ");
+		});
+	</script>
 
 </body>
 </html>	
