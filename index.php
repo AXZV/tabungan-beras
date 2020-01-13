@@ -27,7 +27,14 @@
 	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
 	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
 	<meta name="theme-color" content="#4AB616">
-	<?php include('partials/css.php'); ?>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="asset/css/style.css">
 </head>
 <body>
 
@@ -215,7 +222,7 @@
 					</div>
 					<div class="card-body p-0">
 						<div class="scr-div" style="height: 250px; overflow-y: auto;">
-						<?php if($lenght1 < 0){ ?>
+						<?php if($lenght1 > 0){ ?>
 							<ul class="list-group list-group-flush">
 
 							<?php while ($row33 = mysqli_fetch_array($results2)){ ?>
@@ -236,7 +243,7 @@
 										<img width="50" class="mb-2" src="https://image.flaticon.com/icons/svg/1828/1828843.svg">
 										<p>kami belum menyalurkan sedekah / kami belum menerima sumbangan sedekah dari donatur.<br>
 										Mari bantu ringankan beban saudara-saudara kita.</p>
-										<a href="sedekah/beras" class="btn btn-color"><i class="fas fa-hand-holding-heart"></i> Sedekah Sekarang</a>
+										<a href="sedekah/beras" class="btn btn-color">Sedekah Sekarang</a>
 									</div>
 							<?php } ?>
 						</div>
