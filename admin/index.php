@@ -268,73 +268,73 @@ if (isset($_SESSION['s_admin_id']))
 					</div>
 					<div class="card-body">
 		        		<div class="row">
-		        			<div class="col-lg-4 col-sm-12">
-										<a class="banner" href="notifikasi">
-												<div class="card my-2">
-													<div class="card-body p-0">
-												<div class="media">
-													<div class="p-4 rounded" style="background-color: #00cec9">
-														<i class="fa fa-bell d-flex text-white hover-image" style="font-size: 4rem;"></i>
-													</div>
-													<div class="media-body p-3 text-muted text-center">
-														<h5 class="mt-0 font-weight-bold">Notifikasi</h5>
-														<h1 class="m-0 font-weight-bold"><?php echo $lenght2 ?></h1>
-													</div>
-												</div>
+		        			<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+								<a class="banner" href="notifikasi">
+										<div class="card my-2">
+											<div class="card-body p-0">
+										<div class="media">
+											<div class="p-4 rounded" style="background-color: #00cec9">
+												<i class="fa fa-bell d-flex text-white hover-image" style="font-size: 3rem;"></i>
+											</div>
+											<div class="media-body p-2 text-muted text-center">
+												<h5 class="mt-0 font-weight-bold">Notifikasi</h5>
+												<h1 class="m-0 font-weight-bold"><?php echo $lenght2 ?></h1>
 											</div>
 										</div>
-										</a>
+									</div>
+								</div>
+								</a>
 		        			</div>
-									<div class="col-lg-4 col-sm-12">
-										<a class="banner" href="penarikan">
-												<div class="card my-2">
-													<div class="card-body p-0">
-												<div class="media">
-													<div class="p-4 rounded" style="background-color: #4AB616">
-														<i class="fab fa-get-pocket d-flex text-white hover-image" style="font-size: 4rem;"></i>
-													</div>
-													<div class="media-body p-3 text-muted text-center">
-														<h5 class="mt-0 font-weight-bold">Penarikan</h5>
-														<h1 class="m-0 font-weight-bold"><?php echo $lenght6 ?></h1>
-													</div>
-												</div>
+							<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+								<a class="banner" href="penarikan">
+										<div class="card my-2">
+											<div class="card-body p-0">
+										<div class="media">
+											<div class="p-4 rounded" style="background-color: #4AB616">
+												<i class="fab fa-get-pocket d-flex text-white hover-image" style="font-size: 3rem;"></i>
+											</div>
+											<div class="media-body p-2 text-muted text-center">
+												<h5 class="mt-0 font-weight-bold">Penarikan</h5>
+												<h1 class="m-0 font-weight-bold"><?php echo $lenght6 ?></h1>
 											</div>
 										</div>
-										</a>
+									</div>
+								</div>
+								</a>
 		        			</div>
-		        			<div class="col-lg-4 col-sm-12">
-										<a class="banner" href="pengguna">
-												<div class="card my-2">
-													<div class="card-body p-0">
-												<div class="media">
-													<div class="p-4 rounded" style="background-color: #FFCB5A">
-														<i class="fa fa-user d-flex text-white hover-image" style="font-size: 4rem;"></i>
-													</div>
-													<div class="media-body p-3 text-muted text-center">
-														<h5 class="mt-0 font-weight-bold">Pengguna</h5>
-														<h1 class="m-0 font-weight-bold"><?php echo $lenght ?></h1>
-													</div>
-												</div>
+		        			<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+								<a class="banner" href="pengguna">
+										<div class="card my-2">
+											<div class="card-body p-0">
+										<div class="media">
+											<div class="p-4 rounded" style="background-color: #FFCB5A">
+												<i class="fa fa-user d-flex text-white hover-image" style="font-size: 3rem;"></i>
+											</div>
+											<div class="media-body p-2 text-muted text-center">
+												<h5 class="mt-0 font-weight-bold">Pengguna</h5>
+												<h1 class="m-0 font-weight-bold"><?php echo $lenght ?></h1>
 											</div>
 										</div>
-										</a>	
+									</div>
+								</div>
+								</a>	
 		        			</div>
-		        			<div class="col-lg-4 col-sm-12">
-										<a class="banner" href="sedekah">
-												<div class="card my-2">
-													<div class="card-body p-0">
-												<div class="media">
-													<div class="p-4 rounded" style="background-color: #ff7675">
-														<i class="fas fa-donate d-flex text-white hover-image" style="font-size: 4rem;"></i>
-													</div>
-													<div class="media-body p-3 text-muted text-center">
-														<h5 class="mt-0 font-weight-bold">Sedekah</h5>
-														<h1 class="m-0 font-weight-bold"><?php echo $lenght4 ?></h1>
-													</div>
-												</div>
+		        			<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+								<a class="banner" href="sedekah">
+										<div class="card my-2">
+											<div class="card-body p-0">
+										<div class="media">
+											<div class="p-4 rounded" style="background-color: #ff7675">
+												<i class="fas fa-donate d-flex text-white hover-image" style="font-size: 3rem;"></i>
+											</div>
+											<div class="media-body p-2 text-muted text-center">
+												<h5 class="mt-0 font-weight-bold">Sedekah</h5>
+												<h1 class="m-0 font-weight-bold"><?php echo $lenght4 ?></h1>
 											</div>
 										</div>
-										</a>	
+									</div>
+								</div>
+								</a>	
 		        			</div>
 		        		</div>
 		        	</div>
