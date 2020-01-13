@@ -27,7 +27,14 @@
 	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
 	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
 	<meta name="theme-color" content="#4AB616">
-	<?php include('partials/css.php'); ?>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="asset/css/style.css">
 </head>
 <body>
 
@@ -209,7 +216,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8 col-sm-12">
-				<div class="card mb-3">
+				<div class="card mb-3 z-depth-0 border">
 					<div class="card-header">
 						<h5 class="font-weight-bold m-0">Detail Penyaluran Sedekah</h5>
 					</div>
@@ -221,9 +228,9 @@
 							<?php while ($row33 = mysqli_fetch_array($results2)){ ?>
 								<li class="list-group-item">
 									<div class="media">
-									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/913/913139.svg" alt="Generic placeholder image">
 									  <div class="media-body">
-									    <h5 class="mt-0"><?php echo $row33['target']?></h5>
+									    <p class="m-0 font-weight-bold"><?php echo $row33['target']?></p>
 									    <p class="m-0"><span>Jumlah :</span> <?php echo $row33['jumlah']?> Kg</p>
 									    <p class="m-0"><span>Tanggal :</span> <?php echo $row33['tanggal']?></p>
 									  </div>
