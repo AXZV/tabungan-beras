@@ -229,7 +229,7 @@ if (isset($_SESSION['s_admin_id']))
 											<h5 class="mt-0 font-weight-bold">Harga Beras</h5>
 											<span>Harga beras berdasarkan <a href="https://hargapangan.id/" target="_blank" class="font-color font-weight-bold">hargapangan.id</a></span><br>
 											<span>Harga sekarang adalah :</span>
-											<h1><?php echo $hargaberas; ?> / Kg</h1>
+											<h1>Rp. <?php echo $hargaberas; ?> / Kg</h1>
 											<a class="btn btn-color m-0" data-toggle="modal" data-target="#modalhargaberas<?php echo $hargaberasx ?>" >Update Harga Beras</a>
 										</div>
 									</div>
@@ -247,13 +247,6 @@ if (isset($_SESSION['s_admin_id']))
 											<p class="m-0"><span class="font-weight-bold">Nomor Rekening : </span><?php echo $norek ?></p>
 											<p class="m-0"><span class="font-weight-bold">Pemilik : </span>an. <?php echo $pemilik_rek ?></p>
 											<div class="input-group mb-4">
-		<!-- 											<div class="input-group-prepend">
-														<span class="input-group-text" style="text-transform: uppercase;"><?php //echo $bank ?></span>
-													</div>
-													<input type="text" readonly="" min="0" id="norek" name="norek" class="form-control" value="<?php //echo $norek ?>"  required="">
-													<div class="input-group-append">
-														<span class="input-group-text">an. <?php //echo $pemilik_rek ?></span>
-													</div> -->
 												</div>
 												<?php
 													$pr = str_replace(' ', '_', $pemilik_rek );

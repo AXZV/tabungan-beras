@@ -83,13 +83,19 @@ if (isset($_SESSION['s_user_id']))
 						?>
 							<div class="card-body">
 								<form method="post" action="proses_sedekah_beras.php">
-								<div class='switch mb-4'><div class='quality'>
-									<input type="radio" id="radionontabungan" name="radiob" checked value="nontabungan">
-									<label for='radionontabungan'>Cash On Delivery (COD)</label>
-								</div><div class='quality'>
-									<input type="radio" id="radiotabungan" name="radiob" value="tabungan">
-									<label for='radiotabungan'>Ambil dari Tabungan</label>
-								</div>
+								<div class='switch mb-4 d-flex'>
+									<div class='quality'>
+										<input type="radio" id="noncod" name="radiob" value="noncod">
+										<label for='noncod'>Antar Ke Kantor</label>
+									</div>
+									<div class='quality'>
+										<input type="radio" id="radionontabungan" name="radiob" checked value="nontabungan">
+										<label for='radionontabungan'>Cash On Delivery (COD)</label>
+									</div>
+									<div class='quality'>
+										<input type="radio" id="radiotabungan" name="radiob" value="tabungan">
+										<label for='radiotabungan'>Ambil dari Tabungan</label>
+									</div>
 								</div>
 								<div id="tabungan" style="display:none;">
 									<label>Jumlah Saldo Tabungan Anda :</label>
@@ -117,6 +123,7 @@ if (isset($_SESSION['s_user_id']))
 									</div>
 									</div>
 								</div>
+								<div id="mapxy">
 									<label>Alamat : </label>
 									<div>
 										<small>Geser pin map sesuai alamat</small>
@@ -133,10 +140,11 @@ if (isset($_SESSION['s_user_id']))
 												<div class="col"><input type="text" readonly="" class="form-control" id="lat" name="lat2" value=""></div>
 												<div class="col"><input type="text" readonly="" class="form-control" id="lon" name="lng2" value=""></div>
 											</div>
-											<textarea id="address" class="form-control mb-3" name="alamat" required=""><?php echo $alamat ?></textarea>
+											<textarea id="address" class="form-control mb-3" name="alamat"><?php echo $alamat ?></textarea>
 											<?php include('../maps/maps-in-data.php'); ?>
 										</div>
 									</div>
+								</div>
 									<button class="btn btn-color btn-block m-0" name="subsedekah" type="submit">Kirim</button>
 								</form>
 							</div>
@@ -191,7 +199,22 @@ $('input').keyup(function(){
 	$('input[type="radio"]').click(function() {
 	if($(this).attr('id') == 'radionontabungan') {
 		$('#nontabungan').show();
+		$('#mapxy').show();
 		$('#tabungan').hide();
+		
+		document.getElementById("address").required = true;
+		document.getElementById("jumlah_uang").required = false; 
+		document.getElementById("jumlah_tabungan").required = false; 
+		document.getElementById("jumlah").required = true;
+		document.getElementById("jumlah_uang2 ").required = true;   
+		          
+	}
+
+	if($(this).attr('id') == 'noncod') {
+		$('#nontabungan').show();
+		$('#mapxy').hide();
+		$('#tabungan').hide();
+		document.getElementById("address").required = false;
 		document.getElementById("jumlah_uang").required = false; 
 		document.getElementById("jumlah_tabungan").required = false; 
 		document.getElementById("jumlah").required = true;
@@ -201,7 +224,9 @@ $('input').keyup(function(){
 
 	if($(this).attr('id') == 'radiotabungan') {
 		$('#nontabungan').hide();
+		$('#mapxy').hide();
 		$('#tabungan').show();
+		document.getElementById("address").required = false;
 		document.getElementById("jumlah_uang").required = true; 
 		document.getElementById("jumlah_tabungan").required = true;
 		document.getElementById("jumlah").required = false;

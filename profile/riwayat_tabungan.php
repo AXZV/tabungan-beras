@@ -12,6 +12,9 @@
 	$query3 = "SELECT * FROM log_tabungan WHERE status='belum_diverifikasi' AND id_user='$id_user'";
 	$results3 = mysqli_query($db, $query3) or die (mysqli_error());
 	$lenght3=mysqli_num_rows($results3);
+
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +62,7 @@
 							  </li>
 							</ul>
 								<div class="tab-content p-3" style="width:100%" id="myTabContent"> <!-- myTabContent -->
-									<!-- /////////////////////////// riwayat belum terverifikasi /////////////////////////// -->
+								<!-- /////////////////////////// riwayat belum terverifikasi /////////////////////////// -->
 									<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 									<?php if($lenght2 > 0){ ?>
 									<div class="table-responsive">
@@ -86,32 +89,11 @@
 												<?php	$no=1;
 												while ($row2=mysqli_fetch_array($results2))
 												{ 
-														$totaltabungan = $row2['jumlah_transaksi_beras'];
-														if (strpos($totaltabungan, '.') !== false) {
-															$b=strstr($totaltabungan, '.', true);
-															$removecoma = str_replace('.', '', $b );
-															$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-														}
-														else
-														{
-															$removecoma = $totaltabungan;
-															$takedecimal = null;
-														}
-														$hasil_rupiah = number_format($removecoma,0,'','.');
-														if (strpos($totaltabungan, '.') !== false) {
-															$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-														}
-														else
-														{
-															$finaltotalsaldo=$hasil_rupiah."  Kg";
-														}
-															// echo("<script>console.log('PHP: " . $finaltotalsaldo . "');</script>");
-
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no++;?></td>
 														<td><?php echo $row2['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo?></td>
+														<td><?php echo $konversi->normal($row2['jumlah_transaksi_beras'])?> Kg</td>
 														<td><?php echo $row2['jenis_transaksi'] ?></td>
 														<td><?php echo $row2['jenis_pembayaran'] ?></td>
 													</tr>
@@ -126,7 +108,7 @@
 										</div>
 									<?php } ?>	
 									</div>
-									<!-- /////////////////////////// riwayat terverifikasi /////////////////////////// -->
+								<!-- /////////////////////////// riwayat terverifikasi /////////////////////////// -->
 									<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 									<?php if($lenght3 > 0){ ?>
 									<div class="table-responsive">
@@ -155,30 +137,11 @@
 												<?php	$no2=1;
 												while ($row3=mysqli_fetch_array($results3))
 												{ 
-													$totaltabungan = $row3['jumlah_transaksi_beras'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
 													?>
 													<tr>
 														<td style="text-align:center" ><?php echo $no2++;?></td>
 														<td><?php echo $row3['tanggal_transaksi'] ?></td>
-														<td><?php echo $finaltotalsaldo ?></td>
+														<td><?php echo $konversi->normal($row3['jumlah_transaksi_beras']) ?> Kg</td>
 														<td><?php echo $row3['jenis_transaksi'] ?></td>
 														<td><?php echo $row3['jenis_pembayaran'] ?></td>
 														<td>
@@ -212,47 +175,38 @@
 <script src="../admin/vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="../admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script type="text/javascript">
-// Call the dataTables jQuery plugin
-$(document).ready(function() {
-  $('#dataTable').DataTable();
-  $('#dataTable2').DataTable();
-});
+	// Call the dataTables jQuery plugin
+	$(document).ready(function() {
+	$('#dataTable').DataTable();
+	$('#dataTable2').DataTable();
+	});
 </script>
 <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 <script>
-//the maps api is setup above
-window.onload = function() {
-    var latlng = new google.maps.LatLng(-7.0491487,110.3925141); //Set the default location of map
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: latlng,
-        zoom: 16, //The zoom value for map
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        draggable: false //this makes it drag and drop
-    });
-	var infowindow = new google.maps.InfoWindow({
-	content: contentString
-	});
+	//the maps api is setup above
+	window.onload = function() {
+		var latlng = new google.maps.LatLng(-7.0491487,110.3925141); //Set the default location of map
+		var map = new google.maps.Map(document.getElementById('map'), {
+			center: latlng,
+			zoom: 16, //The zoom value for map
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		});
+		var marker = new google.maps.Marker({
+			position: latlng,
+			map: map,
+			draggable: false //this makes it drag and drop
+		});
+		var infowindow = new google.maps.InfoWindow({
+		content: contentString
+		});
 
-	marker.addListener('click', function() {
-	infowindow.open(map, marker);
-	});
-};
-
-
+		marker.addListener('click', function() {
+		infowindow.open(map, marker);
+		});
+	};
 
 
-// $(window).on('popstate', function(event) {
-
-// 	 	location.href=index.php;
-// 	console.log("fuck");
-
-// });
-
-window.onbeforeunload = function() {console.log("fuck"); };
+	window.onbeforeunload = function() {console.log("fuck"); };
 
 </script>
 </body>

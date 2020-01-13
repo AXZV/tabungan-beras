@@ -17,32 +17,8 @@ if (isset($_SESSION['s_admin_id']))
 	$results2 = mysqli_query($db, $query2) or die (mysqli_error());
 	$lenght22 = mysqli_num_rows($results2);
 
-
-	// $query3 = "SELECT SUM(`jumlah_transaksi_beras`) as total FROM log_sedekah WHERE status='sudah_diverifikasi'";
-	// $results3 = mysqli_query($db, $query3) or die (mysqli_error());
-	// $row3=mysqli_fetch_array($results3);
-	// $totalsedekah = round($row3['total'], 2);
-
-	//////////////////////  char dot dot 
-	// $totaltabungan = $totalsedekah;
-	// if (strpos($totaltabungan, '.') !== false) {
-	// 	$b=strstr($totaltabungan, '.', true);
-	// 	$removecoma = str_replace('.', '', $b );
-	// 	$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-	// }
-	// else
-	// {
-	// 	$removecoma = $totaltabungan;
-	// 	$takedecimal = null;
-	// }
-	// $hasil_rupiah = number_format($removecoma,0,'','.');
-	// if (strpos($totaltabungan, '.') !== false) {
-	// 	$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-	// }
-	// else
-	// {
-	// 	$finaltotalsaldo=$hasil_rupiah;
-	// }
+	include '../function/fungsi.php';
+	$konversi = new konversi;
 ?>
 <!DOCTYPE html>
 <html>
@@ -283,27 +259,7 @@ if (isset($_SESSION['s_admin_id']))
 														$linkmaps="http://www.google.com/maps/place/$lat,$lng";
 													}
 
-													$totaltabungan = $row['jumlah_transaksi'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
-
-
+													$finaltotalsaldo = $konversi->normal($row['jumlah_transaksi'])." Kg";
 													?>
 													<tr  style="text-align:center">									
 														<td><?php echo ++$no ?></td>
@@ -392,26 +348,7 @@ if (isset($_SESSION['s_admin_id']))
 														$linkmaps="http://www.google.com/maps/place/$lat,$lng";
 													}									
 													
-													$totaltabungan = $row2['jumlah_transaksi'];
-													if (strpos($totaltabungan, '.') !== false) {
-														$b=strstr($totaltabungan, '.', true);
-														$removecoma = str_replace('.', '', $b );
-														$takedecimal =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-													}
-													else
-													{
-														$removecoma = $totaltabungan;
-														$takedecimal = null;
-													}
-													$hasil_rupiah = number_format($removecoma,0,'','.');
-													if (strpos($totaltabungan, '.') !== false) {
-														$finaltotalsaldo=$hasil_rupiah.",".$takedecimal."  Kg";
-													}
-													else
-													{
-														$finaltotalsaldo=$hasil_rupiah."  Kg";
-													}
-
+													$finaltotalsaldo = $konversi->normal($row2['jumlah_transaksi'])." Kg";
 
 													?>
 													<tr  style="text-align:center">

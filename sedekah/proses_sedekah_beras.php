@@ -12,7 +12,7 @@ if (isset($_POST['subsedekah'])) {
     $tanggal_transaksi = date("d M Y");
     $jumlah_uang =null;
     $jenis_transaksi = "beras";
-    $jenis_pembayaran = "cod";
+
     $alamat = mysqli_real_escape_string($db, $_POST['alamat']);
     $lat = mysqli_real_escape_string($db, $_POST['lat2']);
     $lng = mysqli_real_escape_string($db, $_POST['lng2']);
@@ -20,12 +20,21 @@ if (isset($_POST['subsedekah'])) {
     $bukti_tf = null;
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
 
+    $tanggal_penyaluran = "-";
+    
     if($radiobutton == "nontabungan")
     {
+        $jenis_pembayaran = "COD";
+        $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
+    }
+    else if($radiobutton == "noncod")
+    {
+        $jenis_pembayaran = "Antar ke Kantor";
         $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah']);
     }
     else if($radiobutton == "tabungan")
     {
+        $jenis_pembayaran = "Ambil dari Tabungan";
         $saldoakhir = mysqli_real_escape_string($db, $_POST['jumlah_saldo']);
         $jumlah_beras = mysqli_real_escape_string($db, $_POST['jumlah2']);
         
@@ -35,6 +44,7 @@ if (isset($_POST['subsedekah'])) {
         id_transaksi,
         id_user,
         tanggal_transaksi,
+        tanggal_penyaluran,
         jumlah_transaksi_beras,
         jumlah_transaksi_uang,
         jenis_transaksi,
@@ -49,6 +59,7 @@ if (isset($_POST['subsedekah'])) {
         '$id_transaksi',
         '$id_user',
         '$tanggal_transaksi',
+        '$tanggal_penyaluran',
         '$jumlah_beras',
         '$jumlah_uang',
         '$jenis_transaksi',
@@ -98,23 +109,31 @@ else if (isset($_POST['uangsedekah'])) {
     $radiobutton = mysqli_real_escape_string($db, $_POST['radiob']);
     $b = str_replace('.', '', $jumlah_uang );
 
+    $tanggal_penyaluran = "-";
 
     if($radiobutton == "cod")
     {
         $newfilename=null;
+        $jenis_pembayaran = "COD";
     }
-    else if($radiobutton == "transfer")
+    if($radiobutton == "noncod")
     {
+        $newfilename=null;
+        $jenis_pembayaran = "Antar ke Kantor";
+    }
+    if($radiobutton == "transfer")
+    {
+        $jenis_pembayaran = "Transfer";
         $temp = explode(".", $_FILES['buktitf']["name"]);
         $newfilename = $id_transaksi.'.'.end($temp);
         move_uploaded_file($_FILES["buktitf"]["tmp_name"],"../asset/image/log_transfer_sedekah/".$newfilename);
-        
     }
-
+    echo("<script>console.log('PHPxx: " . $jenis_pembayaran . "');</script>");
     $sql="INSERT INTO log_sedekah(
         id_transaksi,
         id_user,
         tanggal_transaksi,
+        tanggal_penyaluran,
         jumlah_transaksi_beras,
         jumlah_transaksi_uang,
         jenis_transaksi,
@@ -129,11 +148,12 @@ else if (isset($_POST['uangsedekah'])) {
         '$id_transaksi',
         '$id_user',
         '$tanggal_transaksi',
+        '$tanggal_penyaluran',
         '$jumlah_beras',
         '$b',
         '$jenis_transaksi',
         '$sedekah_dari',
-        '$radiobutton',
+        '$jenis_pembayaran',
         '$alamat',
         '$newfilename',
         '$lat',
