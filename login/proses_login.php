@@ -17,7 +17,7 @@ include('../db_con2.php');
 				$_SESSION['s_user_id'] = $data['id_user'];
 				}
 
-			header('Location:../profile/index.php');
+			header('Location:../profile');
 				
 			}	
 			else {
@@ -30,11 +30,11 @@ include('../db_con2.php');
 							$_SESSION['s_admin_id'] = $data['id_admin'];
 							}
 			
-						header('Location:../admin/index.php');
+						header('Location:../admin');
 						}
 					else
 					{
-						header('Location:index.php?error=1');
+						header('Location:index?error=1');
 					}
 			}
 	

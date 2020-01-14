@@ -54,8 +54,10 @@ if (isset($_SESSION['s_admin_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<?php include('../partials/css.php'); ?>
 	<link rel="stylesheet" type="text/css" href="../asset/css/admin.css">
@@ -149,7 +151,7 @@ if (isset($_SESSION['s_admin_id']))
 
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
 
-                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXXmBvHF1K3QQ0cbaznD0yfSqNizuv3rOrcQKW43gWgQ8ujiyg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/icon/usr-2.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
 
               </a>
 
@@ -192,7 +194,7 @@ if (isset($_SESSION['s_admin_id']))
 					<div class="col-lg-8 col-sm-12">
 						<div class="card-body">
 							<div class="media">
-							  <img class="d-flex mr-3" width="55" src="https://image.flaticon.com/icons/svg/2206/2206248.svg" alt="Generic placeholder image">
+							  <img class="d-flex mr-3" width="55" src="../asset/image/icon/usr-2.svg" alt="Generic placeholder image">
 							  <div class="media-body">
 							    <h5 class="mt-0 font-weight-bold">Halo! Selamat Pagi Admin.</h5>
 							    <span>Rejeki bukan hanya berupa uang, tetapi juga umur yang panjang. Nikmatilah kesehatan yang dikelilingi oleh kebaikan dan kedamaian.</span>
@@ -357,7 +359,7 @@ if (isset($_SESSION['s_admin_id']))
 			        				</div>
 			        				<div class="card-body">
 										<div class="media">
-										  <img class="d-flex mr-3" width="100" src="https://image.flaticon.com/icons/svg/1146/1146860.svg" alt="Generic placeholder image">
+										  <img class="d-flex mr-3" width="100" src="../asset/image/icon/cloud.svg" alt="Generic placeholder image">
 										  <div class="media-body">
 										    <h5 class="mt-0 font-weight-bold font-color">Hujan di sertai petir</h5>
 										    <span>20&deg;C Sebelum berangkat kerja, kamu harus sudah menyiapkan jas hujan dan payung.</span>
@@ -374,7 +376,7 @@ if (isset($_SESSION['s_admin_id']))
 			        				<div class="card-body">
 			        					<a data-toggle="modal" data-target="#modalpengaturanadmin" class="active-tab-2" >
 											<div class="media">
-											  <img class="d-flex mr-3" width="100" src="https://image.flaticon.com/icons/svg/1632/1632619.svg" alt="Generic placeholder image">
+											  <img class="d-flex mr-3" width="100" src="../asset/image/icon/cog.svg" alt="Generic placeholder image">
 											  <div class="media-body">
 											    <h5 class="mt-0 font-weight-bold font-color">Pegaturan Akun</h5>
 											    <span class="black-text">Anda dapat mengakses pengaturan email, nama, alamat, password.</span>
@@ -425,7 +427,7 @@ if (isset($_SESSION['s_admin_id']))
 
 						if($pass == $passuser)
 						{
-							echo "<script>window.location.href='profil.php';</script>";	
+							echo "<script>window.location.href='profil';</script>";	
 						}
 						else
 						{
@@ -485,7 +487,7 @@ if (isset($_SESSION['s_admin_id']))
 						{
 							echo 
 							"<script>
-								location.replace('index.php');
+								location.replace('index');
 							</script>";							
 						}
 					}
@@ -541,7 +543,7 @@ if (isset($_SESSION['s_admin_id']))
 						{
 							echo 
 							"<script>
-								location.replace('index.php');
+								location.replace('index');
 							</script>";							
 						}
 						else
@@ -595,6 +597,6 @@ if (isset($_SESSION['s_admin_id']))
 }
 else
 {
-	header('Location:../login/index.php') ;
+	header('Location:../login') ;
 }
 ?>

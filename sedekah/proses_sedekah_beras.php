@@ -81,7 +81,7 @@ if (isset($_POST['subsedekah'])) {
             $query2=mysqli_query($db,$sql2);
             if ($query2) 
             {
-                header('Location:../profile/index.php');
+                header('Location:../profile');
                 $_SESSION['sedekah'] = 1;
             }
         }
@@ -170,7 +170,7 @@ else if (isset($_POST['uangsedekah'])) {
         $query2=mysqli_query($db,$sql2);
         if ($query2) 
         {
-            header('Location:../profile/index.php');
+            header('Location:../profile');
             $_SESSION['sedekah'] = 1;
         }
     }

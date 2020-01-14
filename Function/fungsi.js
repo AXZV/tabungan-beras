@@ -59,12 +59,3 @@ function mincod(xx, parameter)
        return $('#kirim').attr('disabled', false);
     }
 }
-
-//////////////////// rubah angka ke format number ////////////////////
-
-function angkatonumxy(angkaxy) // 5000.2
-{
-    var vals = angkaxy.replace(/\./g,''); /// hapus .
-    var vals2 = vals.replace(/\,/g,'.'); /// ganti , menjadi .
-    return vals2;
-}

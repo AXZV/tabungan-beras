@@ -53,8 +53,9 @@ function matauang($jumlah_transaksi)
 ?>
 
 <div class="card-body">
-    <p>Maaf anda belum bisa melakukan transaksi sedekah dikarenakan transkasi anda dengan detail</p>
-
+    <div class="alert alert-warning" role="alert">
+        <span>Maaf anda belum bisa melakukan transaksi sedekah dikarenakan transkasi anda dengan detail sebagai berikut belum diproses, silahkan hubungi admin.</span>
+    </div>
     <div class="form-row">
         <div class="col-sm-12 col-lg-6 mb-3 mb-lg-0 mb-xl-0">
             <label>Nomor Transaksi :</label>
@@ -103,7 +104,4 @@ function matauang($jumlah_transaksi)
             </div>
         </div>
     </div>
-    
-    <p> belum diproses, silahkan hubungi admin </p>
-
 </div>

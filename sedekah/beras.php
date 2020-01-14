@@ -31,8 +31,10 @@ if (isset($_SESSION['s_user_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<script type="text/javascript" src="../partials/jquery-3.2.1.min.js"></script>
 	<?php include('../partials/css.php'); ?>
@@ -45,26 +47,26 @@ if (isset($_SESSION['s_user_id']))
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 				<div class="sticky-top mb-3 mb-lg-0" style="top: 5rem; z-index: 1">
-					<div class="heading mb-5">
+					<div class="heading">
 						<h5 class="font-weight-bold font-color">Kategori</h5>
 						<hr>
 					</div>
 					<a href="../sedekah/beras" class="black-text active-tab-2">
 						<div class="media mb-3">
-						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image">
-						  <div class="media-body">
+						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="../asset/image/icon/tbg-2.svg" alt="Generic placeholder image">
+						  <div class="media-body text-justify">
 						    <h5 class="mt-0 font-weight-bold font-color">Sedekah Beras</h5>
-						    Anda dapat membantu orang lain dengan menyedekahkan beras yang ingin anda sedekahkan, akan kami salurkan kepada pihak yang membutuhkan dan bekerjasama dengan kami, dan kami konfirmasikan kepada anda setelah penyaluran sedekah telah dilakukan.
+						    Anda dapat membantu orang lain dengan menyedekahkan beras yang ingin anda sedekahkan.
 						  </div>
 						</div>
 					</a>
 					<hr>
 					<a href="../sedekah/uang" class="black-text active-tab-2">
 						<div class="media mb-3">
-						  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg" alt="Generic placeholder image">
-						  <div class="media-body">
+						  <img class="d-flex mr-3" width="70" src="../asset/image/icon/tbg-1.svg" alt="Generic placeholder image">
+						  <div class="media-body text-justify">
 						    <h5 class="mt-0 font-weight-bold font-color">Sedekah Uang</h5>
-						    Anda dapat membantu orang lain dengan menyedekahkan uang anda, akan kami salurkan kepada pihak yang membutuhkan dan bekerjasama dengan kami, dan kami konfirmasikan kepada anda setelah penyaluran sedekah telah dilakukan.
+						    Anda dapat membantu orang lain dengan menyedekahkan uang anda.
 						  </div>
 						</div>
 					</a>
@@ -87,18 +89,26 @@ if (isset($_SESSION['s_user_id']))
 						?>
 							<div class="card-body">
 								<form method="post" action="proses_sedekah_beras.php">
+								<div class="mb-2">
+									<p class="mb-2">Metode Transaksi :</p>
+									<div class="alert alert-warning" role="alert">
+										<small>* Pilih Kantor untuk sedekah langsung ke kantor</small><br>
+										<small>* Pilih COD untuk sedekah di rumah atau di tempat lain</small><br>
+										<small>* Pilih Tabungan untuk sedekah dari tabungan</small>
+									</div>
+								</div>
 								<div class='switch mb-4 d-flex'>
 									<div class='quality'>
 										<input type="radio" id="noncod" name="radiob" value="noncod">
-										<label for='noncod'>Antar Ke Kantor</label>
+										<label for='noncod'>Kantor</label>
 									</div>
 									<div class='quality'>
 										<input type="radio" id="radionontabungan" name="radiob" checked value="nontabungan">
-										<label for='radionontabungan'>Cash On Delivery (COD)</label>
+										<label for='radionontabungan'>COD</label>
 									</div>
 									<div class='quality'>
 										<input type="radio" id="radiotabungan" name="radiob" value="tabungan">
-										<label for='radiotabungan'>Ambil dari Tabungan</label>
+										<label for='radiotabungan'>Tabungan</label>
 									</div>
 								</div>
 								<div id="tabungan" style="display:none;">
@@ -123,7 +133,7 @@ if (isset($_SESSION['s_user_id']))
 								<div id="mapxy">
 									<label>Alamat : </label>
 									<div>
-										<small>Geser pin map sesuai alamat</small>
+										<small><span class="red-text font-weight-bold">*</span> Geser pin map sesuai alamat</small>
 										<div class="mampus">	
 											<div class="input-group" id="search">		
 												<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">

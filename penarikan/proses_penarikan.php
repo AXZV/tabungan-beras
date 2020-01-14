@@ -61,7 +61,7 @@ if (isset($_POST['penarikan'])) {
             $query2=mysqli_query($db,$sql2);
             if ($query2) 
             {
-                header('Location:../profile/index.php');
+                header('Location:../profile');
                 $_SESSION['jenistransaksi'] = $jenis_transaksi;
                 $_SESSION['penarikan'] = 1;
             }

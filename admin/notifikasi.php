@@ -44,8 +44,10 @@ if (isset($_SESSION['s_admin_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<?php include('../partials/css.php'); ?>
@@ -270,7 +272,7 @@ if (isset($_SESSION['s_admin_id']))
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXXmBvHF1K3QQ0cbaznD0yfSqNizuv3rOrcQKW43gWgQ8ujiyg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/icon/usr-2.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" data-toggle="modal" data-target="#modalpengaturanadmin">
@@ -332,7 +334,7 @@ if (isset($_SESSION['s_admin_id']))
 								<?php if($fotop != null) { ?>
 									<img width="65" class="rounded-circle border mr-3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/user_profile_pic/<?php echo $fotop ?>'); background-size: cover; background-repeat: no-repeat; background-position: initial;">
 								<?php } else {?>
-									<img class="mr-3" width="65" src="https://image.flaticon.com/icons/svg/145/145852.svg" alt="Generic placeholder image">
+									<img class="mr-3" width="65" src="../asset/image/icon/usr-3.svg" alt="Generic placeholder image">
 								<?php } ?>
 								<h5 class="mb-0 font-weight-bold" style="align-self: center;"><?php echo $nama ?></h5>
 							</div>
@@ -433,7 +435,7 @@ if (isset($_SESSION['s_admin_id']))
 											<?php if($fotx != null) { ?>
 												<img width="65" class="rounded-circle border mr-2 mb-3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/user_profile_pic/<?php echo $fotx ?>'); background-size: cover; background-repeat: no-repeat; background-position: initial;">
 											<?php } else {?>
-											<img class="d-flex mr-3 mb-3" width="55" src="https://image.flaticon.com/icons/svg/145/145852.svg" alt="Generic placeholder image">
+											<img class="d-flex mr-3 mb-3" width="55" src="../asset/image/icon/usr-3.svg" alt="Generic placeholder image">
 											<?php } ?>
 											<div class="media-body">
 											<h5 class="mt-0 font-weight-bold"><?php echo $nama ?></h5>
@@ -585,7 +587,7 @@ if (isset($_SESSION['s_admin_id']))
 							</div>
 							<?php } else {?>
 										<div class="card-body text-center">
-											<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+											<img width="100" src="../asset/image/icon/hstry.svg">
 											<h5 class="m-0 mt-3">Tidak ada transaksi yang belum dikonfirmasi</h5>
 										</div>
 									<?php } ?>
@@ -640,7 +642,7 @@ if (isset($_SESSION['s_admin_id']))
 										<?php if($fotx != null) { ?>
 											<img width="65" class="rounded-circle border mr-2 mb-3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/user_profile_pic/<?php echo $fotx ?>'); background-size: cover; background-repeat: no-repeat; background-position: initial;">
 										<?php } else {?>
-									  	<img class="d-flex mr-3 mb-3" width="55" src="https://image.flaticon.com/icons/svg/145/145852.svg" alt="Generic placeholder image">
+									  	<img class="d-flex mr-3 mb-3" width="55" src="../asset/image/icon/usr-3.svg" alt="Generic placeholder image">
 										<?php } ?>
 										<div class="media-body">
 									    <h5 class="mt-0 font-weight-bold"><?php echo $nama ?></h5>
@@ -775,7 +777,7 @@ if (isset($_SESSION['s_admin_id']))
 							</div>
 							<?php } else {?>
 									<div class="card-body text-center">
-										<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+										<img width="100" src="../asset/image/icon/hstry.svg">
 										<h5 class="m-0 mt-3">Tidak ada transaksi</h5>
 									</div>
 								<?php } ?>
@@ -853,7 +855,7 @@ if (isset($_SESSION['s_admin_id']))
 
 						{
 
-							echo "<script>window.location.href='profil.php';</script>";	
+							echo "<script>window.location.href='profil';</script>";	
 
 						}
 
@@ -972,7 +974,7 @@ else
 
 {
 
-	header('Location:../login/index.php') ;
+	header('Location:../login') ;
 
 }
 

@@ -11,7 +11,7 @@
 		<div class="card">
 		<div class="card-header text-center">
 			<?php if($data['fotoprofil'] == null){ ?>
-				<img width="150" class="rounded-circle border mb-2" src="https://image.flaticon.com/icons/svg/145/145867.svg">
+				<img width="150" class="rounded-circle border mb-2" src="../asset/image/icon/usr-1.svg">
 			<?php } else { ?>
 				<img width="150" height="150" class="rounded-circle border mb-2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/user_profile_pic/<?php echo($data['fotoprofil']) ?>'); background-size: cover; background-repeat: no-repeat; background-position: initial;">
 			<?php } ?>

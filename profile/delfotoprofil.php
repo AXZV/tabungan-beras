@@ -37,7 +37,7 @@
         $query=mysqli_query($db,$sql) or die (mysqli_error());
         if ($query) 
         {
-            header("location:index.php");
+            header("location:index");
         }
         
     };

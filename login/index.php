@@ -19,10 +19,12 @@ else
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<script type="text/javascript" src="../partials/jquery-3.2.1.min.js"></script>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
+	<script type="text/javascript" src="../partials/jquery-3.2.1.min.js"></script>
 	<?php include('../partials/css.php'); ?>
 </head>
 <body>
@@ -58,7 +60,7 @@ if(isset($_GET['error'])==1)
 						    <button class="btn btn-color white-text btn-block m-0 mb-3 border-0" name="login_user" type="submit">Masuk</button>
 						</form>
 					    <p>Tidak Punya Akun?
-					        <a href="../register">Daftar Sekarang</a>
+					        <a class="font-color" href="../register">Daftar Sekarang</a>
 					    </p>
 					</div>
 				</div>

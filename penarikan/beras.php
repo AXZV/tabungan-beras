@@ -38,8 +38,10 @@ if (isset($_SESSION['s_user_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<script type="text/javascript" src="../partials/jquery-3.2.1.min.js"></script>
 	<?php include('../partials/css.php'); ?>
@@ -52,16 +54,16 @@ if (isset($_SESSION['s_user_id']))
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 				<div class="sticky-top mb-3 mb-lg-0" style="top: 5rem; z-index: 1">
-					<div class="heading mb-5">
+					<div class="heading">
 						<h5 class="font-weight-bold font-color">Kategori</h5>
 						<hr>
 					</div>
 					<a href="#" class="black-text active-tab-2">
 						<div class="media mb-3">
-						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image">
+						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="../asset/image/icon/mny-1.svg" alt="Generic placeholder image">
 						  <div class="media-body desk">
 						    <h5 class="mt-0 font-weight-bold font-color">Penarikan Tabungan</h5>
-						    Anda dapat melakukan penarikan tabungan anda dengan mengisi formulir disamping ini.
+						    Anda dapat melakukan penarikan pada tabungan anda.
 						  </div>
 						</div>
 					</a>
@@ -84,12 +86,19 @@ if (isset($_SESSION['s_user_id']))
 					?>
 							<div class="card-body">
 								<form method="post" id="formfield" action="proses_penarikan.php">
+								<div class="mb-2">
+									<p class="mb-2">Metode Transaksi :</p>
+									<div class="alert alert-warning" role="alert">
+										<small>* Pilih COD untuk mengambil tabungan di rumah atau di tempat lain</small><br>
+										<small>* Pilih Kantor untuk mengambil tabungan langsung ke kantor</small>
+									</div>
+								</div>
 								<div class='switch mb-4'><div class='quality'>
 									<input type="radio" id="radionontabungan" name="radiob" checked value="cod">
-									<label for='radionontabungan'>Cash On Delivery (COD)</label>
+									<label for='radionontabungan'>COD</label>
 								</div><div class='quality'>
 									<input type="radio" id="radiotabungan" name="radiob" value="noncod">
-									<label for='radiotabungan'>Ambil Di Kantor</label>
+									<label for='radiotabungan'>Kantor</label>
 								</div>
 								</div>
 								<div>
@@ -112,7 +121,7 @@ if (isset($_SESSION['s_user_id']))
 								<div id="nontabungan">
 									<label>Alamat : </label>
 									<div>
-										<small>Geser pin map sesuai alamat</small>
+										<small><span class="red-text font-weight-bold">*</span> Geser pin map sesuai alamat</small>
 										<div class="mampus">	
 											<div class="input-group" id="search">		
 												<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat" >

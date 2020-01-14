@@ -73,7 +73,7 @@ if (isset($_POST['subtabungan'])) {
             $query2=mysqli_query($db,$sql2);
             if ($query2) 
             {
-                header('Location:../profile/index.php');
+                header('Location:../profile');
                 $_SESSION['tabungan'] = 1;
             }
         }
@@ -162,7 +162,7 @@ else if (isset($_POST['uangtabungan'])) {
         $query2=mysqli_query($db,$sql2);
         if ($query2) 
         {
-            header('Location:../profile/index.php');
+            header('Location:../profile');
             $_SESSION['tabungan'] = 1;
         }
     }

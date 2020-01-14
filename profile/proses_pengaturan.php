@@ -119,7 +119,7 @@ include '../db_con.php';
 
         {
 
-            header("location: pengaturan.php");
+            header("location: pengaturan");
 
         }
 
@@ -161,7 +161,7 @@ include '../db_con.php';
 
 
 
-        header('Location:pengaturan.php') ;
+        header('Location:pengaturan') ;
 
     }
 
@@ -328,7 +328,7 @@ include '../db_con.php';
         $query=mysqli_query($db,$sql);
         if ($query) 
         {
-            header("location: pengaturan.php");
+            header("location: pengaturan");
         }
         unset($_SESSION['formerror']);
         unset($_SESSION['formakunerror']);
@@ -345,7 +345,7 @@ include '../db_con.php';
         $_SESSION['noktp'] = $data_user['no_ktp'];
         $_SESSION['alamat'] = $data_user['alamat'];
         $_SESSION['email'] = $email;
-        header('Location:pengaturan.php') ;
+        header('Location:pengaturan') ;
     }
 
     }
@@ -428,7 +428,7 @@ include '../db_con.php';
 
         {
 
-            header("location: pengaturan.php");
+            header("location: pengaturan");
 
         }
 
@@ -470,7 +470,7 @@ include '../db_con.php';
 
 
 
-        header('Location:pengaturan.php') ;
+        header('Location:pengaturan') ;
 
     }
 
@@ -495,7 +495,7 @@ include '../db_con.php';
             $query3=mysqli_query($db,$sql3);
             if ($query3) 
             {
-                header("location:riwayat_penarikan.php");
+                header("location:riwayat_penarikan");
             }
         }
     }
@@ -516,7 +516,7 @@ include '../db_con.php';
             $query3=mysqli_query($db,$sql3);
             if ($query3) 
             {
-                header("location:riwayat_tabungan.php");
+                header("location:riwayat_tabungan");
             }
         }
     }
@@ -537,7 +537,7 @@ include '../db_con.php';
             $query3=mysqli_query($db,$sql3);
             if ($query3) 
             {
-                header("location:riwayat_sedekah.php");
+                header("location:riwayat_sedekah");
             }
         }
     }

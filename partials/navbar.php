@@ -21,7 +21,7 @@ else
 }
 
 ?>
-    <nav class="navbar navbar-expand-lg navbar-dark transparent sticky-top background-color-1" style="z-index: 2">
+    <nav class="navbar navbar-expand-lg navbar-dark transparent sticky-top background-color-1" style="z-index: 100">
     <a class="navbar-brand" href="../index"><!-- <i class="fas fa-balance-scale"></i> --><span style="font-family: 'Righteous', cursive; letter-spacing: 1px"> Tabungan Beras</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
       aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@ else
       </div>
       <div class="modal-footer">
         <a class="btn btn-color" data-dismiss="modal">Batal</a>
-        <a href="../login/logout.php" class="btn btn-danger">Keluar</a>
+        <a href="../login/logout" class="btn btn-danger">Keluar</a>
       </div>
     </div>
   </div>

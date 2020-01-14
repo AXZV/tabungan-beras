@@ -140,7 +140,7 @@ if ($passwordbetul == 1 && $notpl_betul == 1 && $username_betul == 1)
             if($query2)
             {
                 $_SESSION['s_user_id'] = $id_user;
-                header('Location:../profile/index.php');
+                header('Location:../profile');
             }
         }
     else
@@ -162,7 +162,7 @@ else
     $_SESSION['alamat1'] = $alamat;
     $_SESSION['email1'] = $email;
 
-    header('Location:index.php') ;
+    header('Location:index') ;
 }
 
 }

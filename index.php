@@ -24,8 +24,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+	<link rel="manifest" href="favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -127,7 +129,7 @@
 <!-- end code -->
 
 <div class="container-fluid">
-	<div class="row" style="height: 450px; background: url(https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
+	<div class="row" style="height: 450px; background: url(asset/image/bg/1.jpg); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
 	<div class="wellcome " style="position: absolute; left: 0; right: 0; margin: auto; top: 20vh">
 		<div class="title white-text text-center">
 		  <h1 class="font-weight-bold" style="font-family: 'Righteous', cursive;"><!-- <i class="fas fa-balance-scale"></i> --> Tabungan Beras</h1>
@@ -147,13 +149,13 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6 col-sm-12 text-center">
-				<img width="100" src="https://image.flaticon.com/icons/svg/1138/1138548.svg">
+				<img width="100" src="asset/image/icon/tbg-1.svg">
 				<h5 class="font-weight-bold mt-1">Tabungan</h5>
 				<p>Tabungan Beras, Tabungan Uang<br>anda dapat mengakses menu tabungan di sini.</p>
 				<a href="tabungan/beras" class="btn btn-color">Tabung Sekarang</a>
 			</div>
 			<div class="col-md-6 col-sm-12 text-center">
-				<img width="100" src="https://image.flaticon.com/icons/svg/1530/1530847.svg">
+				<img width="100" src="asset/image/icon/sdkh-1.svg">
 				<h5 class="font-weight-bold mt-1">Sedekah</h5>
 				<p>Sedekah Beras, Sedekah Uang<br>anda dapat mengakses menu sedekah di sini.</p>
 				<a href="sedekah/beras" class="btn btn-color">Sedekah Sekarang</a>
@@ -173,14 +175,14 @@
 			</div>
 			<div class="col-md-6 col-sm-12">
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/145/145867.svg" alt="Generic placeholder image">
+				  <img class="d-flex mr-3" width="70" src="asset/image/icon/usr-1.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Daftar</h5>
 				    <span>Untuk dapat mengakses layanan Tabungan Beras, anda dapat membuat akun terlebih dahulu, dengan mendaftarkan diri anda. Isi formulir pendaftaran dengan cermat, demi kemudahan transaksi. Data diri anda menjadi rahasia kami.</span>
 				  </div>
 				</div>
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg" alt="Generic placeholder image">
+				  <img class="d-flex mr-3" width="70" src="asset/image/icon/tbg-1.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Menabung</h5>
 				    <span>Selesaikan proses transaksi dengan mengisi form yang tersedia.
@@ -190,14 +192,14 @@
 				  </div>
 				</div>
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+				  <img class="d-flex mr-3" width="70" src="asset/image/icon/sdkh-1.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Sedekah</h5>
 				    <span>Anda juga dapat menggunakan layanan sedekah kami, yang pengalokasiannya akan kami kordinasikan dengan pemberi sedekah, dan kami konfirmasi setelah selesai penyerahan.</span>
 				  </div>
 				</div>
 				<div class="media mb-3">
-				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/639/639365.svg" alt="Generic placeholder image">
+				  <img class="d-flex mr-3" width="70" src="asset/image/icon/mny-1.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Penarikan</h5>
 				    <span>Nasabah dapat melakukan menarik saldo tabungan pada hari dan jam kerja.</span>
@@ -228,7 +230,7 @@
 							<?php while ($row33 = mysqli_fetch_array($results2)){ ?>
 								<li class="list-group-item">
 									<div class="media">
-									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/913/913139.svg" alt="Generic placeholder image">
+									  <img class="d-flex mr-3" width="70" src="asset/image/icon/sdkh-2.svg" alt="Generic placeholder image">
 									  <div class="media-body">
 									    <p class="m-0 font-weight-bold"><?php echo $row33['target']?></p>
 									    <p class="m-0"><span>Jumlah :</span> <?php echo $konv->normal($row33['jumlah'])?> Kg</p>
@@ -240,7 +242,7 @@
 							</ul>
 							<?php } else {?>
 									<div class="text-center p-4">
-										<img width="50" class="mb-2" src="https://image.flaticon.com/icons/svg/1828/1828843.svg">
+										<img width="50" class="mb-2" src="asset/image/icon/crs-crcl.svg">
 										<p>kami belum menyalurkan sedekah / kami belum menerima sumbangan sedekah dari donatur.<br>
 										Mari bantu ringankan beban saudara-saudara kita.</p>
 										<a href="sedekah/beras" class="btn btn-color">Sedekah Sekarang</a>
@@ -297,10 +299,10 @@
         </div>
 </section>
 <style type="text/css">
-.nav-sticky.scrolled {
-  background-color: #4AB616 !important;
-  transition: background-color 200ms linear;
-}
+.nav-sticky.scrolled {background-color: #4AB616 !important;transition: background-color 200ms linear;}
+@media (max-width: 575.98px) {.nav-sticky {background-color: #4AB616 !important;}}
+@media (min-width: 576px) and (max-width: 767.98px) {.nav-sticky {background-color: #4AB616 !important;}}
+@media (min-width: 768px) and (max-width: 991.98px) {.nav-sticky {background-color: #4AB616 !important;}}
 </style>
 
 <?php include('partials/js.php'); ?>

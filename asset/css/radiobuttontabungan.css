@@ -5,7 +5,7 @@
     height: 40px;
     border: 3px solid #4AB616;
     color: #4AB616;
-    font-size: 17px;
+    font-size: 1rem;
     border-radius: 10px;
 }
 
@@ -50,7 +50,8 @@
     background-color: #4AB616;
     color: white;
     display: table-cell;
-    vertical-align: middle
+    vertical-align: middle;
+    border: 1px solid #4AB616;
 }
 .quality input[type="radio"]:active ~ label {
     transform: scale(1.05);

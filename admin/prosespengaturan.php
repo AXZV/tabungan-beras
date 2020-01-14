@@ -16,7 +16,7 @@ if (isset($_POST['pengaturanprofil'])) {
     $query=mysqli_query($db,$sql) or die (mysqli_error($db));
     if ($query) 
     {
-        header("location: profil.php");
+        header("location: profil");
     }
 
 }
@@ -34,7 +34,7 @@ if (isset($_POST['pengaturanakun'])) {
     $query=mysqli_query($db,$sql) or die (mysqli_error($db));
     if ($query) 
     {
-        header("location: profil.php");
+        header("location: profil");
     }
 
 }
@@ -53,13 +53,13 @@ if (isset($_POST['pengaturanpassword'])) {
         $query=mysqli_query($db,$sql) or die (mysqli_error($db));
         if ($query) 
         {
-            header("location: profil.php");
+            header("location: profil");
         }
 
     }
     else
     {
-        header("location: profil.php?p=e");
+        header("location: profil?p=e");
     }
 
 }
@@ -73,7 +73,7 @@ if (isset($_POST['hapus_user'])) {
     $results = mysqli_query($db, $query) or die (mysqli_error());
     if ($results) 
     {
-        header("location:pengguna.php");
+        header("location:pengguna");
     }
 }
 
@@ -106,7 +106,7 @@ if (isset($_POST['konfirmasi_tabungan'])) {
             $query3=mysqli_query($db,$sql3);
             if ($query3) 
             {
-                header("location: notifikasi.php");
+                header("location: notifikasi");
             }
         }
     }
@@ -150,7 +150,7 @@ if (isset($_POST['konfirmasi_tabungan'])) {
                     $query3=mysqli_query($db,$sql3);
                     if ($query3) 
                     {
-                        header("location: sedekah.php");
+                        header("location: sedekah");
                     }
                 }
             }
@@ -164,7 +164,7 @@ if (isset($_POST['konfirmasi_tabungan'])) {
                 $query3=mysqli_query($db,$sql3);
                 if ($query3) 
                 {
-                    header("location: sedekah.php");
+                    header("location: sedekah");
                 }
             }
 
@@ -201,7 +201,7 @@ if (isset($_POST['konfirmasi_tabungan'])) {
                     $query3=mysqli_query($db,$sql3);
                     if ($query3) 
                     {
-                        header("location: penarikan.php");
+                        header("location: penarikan");
                     }
                 }
 

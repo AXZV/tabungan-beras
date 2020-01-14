@@ -16,7 +16,7 @@ if (isset($_SESSION['s_user_id']))
 	$data2=mysqli_fetch_array($results2);
 
 	$harga=$data2['harga_beras'];
-	echo("<script>console.log('xxx: " . $harga. "');</script>");
+	//echo("<script>console.log('xxx: " . $harga. "');</script>");
 
 	function harga($harga){
 		
@@ -46,12 +46,14 @@ if (isset($_SESSION['s_user_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<script type="text/javascript" src="../partials/jquery-3.2.1.min.js"></script>
 	<?php include('../partials/css.php'); ?>
-	<link rel="stylesheet" type="text/css" href="../asset/css/radiobuttontabungan.css">
+	<link rel="stylesheet" type="text/css" href="../asset/css/radiobuttonsedekah.css">
 </head>
 <body>
 <?php include('../partials/navbar.php'); ?>
@@ -60,14 +62,14 @@ if (isset($_SESSION['s_user_id']))
 		<div class="row">
 			<div class="col-lg-4 col-sm-12">
 				<div class="sticky-top mb-3 mb-lg-0" style="top: 5rem; z-index: 1">
-					<div class="heading mb-5">
+					<div class="heading">
 						<h5 class="font-weight-bold font-color">Kategori</h5>
 						<hr>
 					</div>
 					<a href="../tabungan/beras" class="black-text active-tab-2">
 						<div class="media mb-3">
-						  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image">
-						  <div class="media-body">
+						  <img class="d-flex mr-3" width="70" src="../asset/image/icon/tbg-2.svg" alt="Generic placeholder image">
+						  <div class="media-body text-justify">
 						    <h5 class="mt-0 font-weight-bold font-color">Tabungan Beras</h5>
 						    Anda dapat menabungkan beras anda disini.
 						  </div>
@@ -76,8 +78,8 @@ if (isset($_SESSION['s_user_id']))
 					<hr>
 					<a href="../tabungan/uang" class="black-text active-tab-2">
 						<div class="media mb-3">
-						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg" alt="Generic placeholder image">
-						  <div class="media-body">
+						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="../asset/image/icon/tbg-1.svg" alt="Generic placeholder image">
+						  <div class="media-body text-justify">
 						    <h5 class="mt-0 font-weight-bold font-color">Tabungan Uang</h5>
 						    Anda dapat menabungkan uang anda dengan nominal yang ditentukan, yang akan kami konversi ke beras.
 						  </div>
@@ -102,15 +104,22 @@ if (isset($_SESSION['s_user_id']))
 					?>
 							<div class="card-body">
 								<form method="post" action="proses_tabungan_beras.php" enctype="multipart/form-data">
-
+								<div class="mb-2">
+									<p class="mb-2">Metode Transaksi :</p>
+									<div class="alert alert-warning" role="alert">
+										<small>* Pilih Kantor untuk menabung langsung ke kantor</small><br>
+										<small>* Pilih COD untuk menabung di rumah atau di tempat lain</small><br>
+										<small>* Pilih Transfer untuk menabung dengan cara transfer uang</small>
+									</div>
+								</div>
 								<div class='switch mb-4 d-flex'>
 									<div class='quality'>
 										<input type="radio" id="radiononcod" name="radiob" value="noncod">
-										<label for='radiononcod'>Antar Ke Kantor</label>
+										<label for='radiononcod'>Kantor</label>
 									</div>
 									<div class='quality'>
 										<input type="radio" id="radiocod" name="radiob" checked  value="cod">
-										<label for='radiocod'>Cash On Delivery (COD)</label>
+										<label for='radiocod'>COD</label>
 									</div>
 									<div class='quality'>
 										<input type="radio" id="radiotransfer" name="radiob"  value="transfer">
@@ -129,7 +138,7 @@ if (isset($_SESSION['s_user_id']))
 												<span class="input-group-text">an. <?php echo $pemilik_rek ?></span>
 											</div>
 										</div>
-										<small class=" mb-4"> * Silahkan lakukan transfer ke nomor rekening diatas, lalu upload bukti transfer pada form dibawah ini</small><br><br>
+										<small><span class="red-text font-weight-bold">*</span> Silahkan lakukan transfer ke nomor rekening diatas, lalu upload bukti transfer pada form dibawah ini</small><br><br>
 									</div>
 
 									<label>Jumlah :</label>
@@ -140,7 +149,7 @@ if (isset($_SESSION['s_user_id']))
 										<input type="text" id="jumlah_uang" name="jumlah" placeholder="Jumlah" required="" class="form-control">
 									</div>
 									<div class="mb-4" id="keterangan">
-										<small style="color:red;">  " Untuk menggunakan layanan COD minimal transaksi penabungan Rp. 500.000 (lima ratus ribu rupiah) "</small>
+										<small><span class="red-text font-weight-bold">*</span> Untuk menggunakan layanan Cash On Delivery (COD) minimal transaksi penabungan Rp. 500.000 (lima ratus ribu rupiah)</small>
 									</div>
 									
 									<div class="form-row">
@@ -184,7 +193,7 @@ if (isset($_SESSION['s_user_id']))
 									<div id="coddiv">
 										<label>Alamat : </label>
 										<div>
-											<small>Geser pin map sesuai alamat</small>
+											<small><span class="red-text font-weight-bold">*</span> Geser pin map sesuai alamat</small>
 											<div class="mampus">	
 												<div class="input-group" id="search">		
 													<input type="text" class="form-control" value="" id="addr" placeholder="Cari alamat">

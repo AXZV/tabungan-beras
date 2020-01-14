@@ -35,8 +35,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<?php include('../partials/css.php'); ?>
 </head>
@@ -117,7 +119,7 @@
 
 					<div class="card-body">
 						<div class="media">
-						  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image" style="align-self: center;">
+						  <img class="d-flex mr-3" width="70" src="../asset/image/icon/tbg-2.svg" alt="Generic placeholder image" style="align-self: center;">
 						  <div class="media-body">
 						    <h1 class="font-color font-weight-bold"><?php echo $konversi->normal($totaltabungan) ?> Kg</h1>
 						    <span>Saldo beras di peroleh pada saat kamu menabung beras maupun uang.</span>
@@ -133,19 +135,19 @@
 						<div class="row mb-4">
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="../tabungan/beras">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/tbg-1.svg">
 									<p>Tabungan</p>
 								</a>
 							</div>
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="../penarikan/beras">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/mny-1.svg">
 									<p>Penarikan</p>
 								</a>
 							</div>
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="../sedekah/beras">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/sdkh-1.svg">
 									<p>Sedekah</p>
 								</a>
 							</div>
@@ -153,19 +155,19 @@
 						<div class="row">
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="riwayat_tabungan">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/hstry-1.svg">
 									<p>Riwayat Tabungan</p>
 								</a>
 							</div>
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="riwayat_penarikan">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/hstry-2.svg">
 									<p>Riwayat Penarikan</p>
 								</a>
 							</div>
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="riwayat_sedekah">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/hstry-3.svg">
 									<p>Riwayat Sedekah</p>
 								</a>
 							</div>
@@ -180,7 +182,7 @@
 					<div class="card-body">
 						<a data-toggle="modal" data-target="#modalpengaturan" class="active-tab-2">
 							<div class="media">
-							  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1632/1632619.svg" alt="Generic placeholder image" style="align-self: center;">
+							  <img class="d-flex mr-3" width="70" src="../asset/image/icon/cog.svg" alt="Generic placeholder image" style="align-self: center;">
 							  <div class="media-body">
 							    <h5 class="mt-0 font-weight-bold font-color">Pengaturan</h5>
 							    <span class="black-text">Anda dapat mengakses pengaturan email, nama, alamat, password.</span>
@@ -406,6 +408,6 @@
 }
 else
 {
-	header('Location:../login/index.php') ;
+	header('Location:../login') ;
 }
 ?>

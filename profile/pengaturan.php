@@ -10,8 +10,10 @@ if (isset($_SESSION['s_user_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<?php include('../partials/css.php'); ?>
 </head>
@@ -36,25 +38,25 @@ if (isset($_SESSION['s_user_id']))
 						<div class="row">
 							<div class="col-3">
 								<a class="black-text active-tab-2" id="buttonprofil" >
-									<img id="bprofil" class="mb-2 border rounded p-1 grey lighten-3" width="70" src="https://image.flaticon.com/icons/svg/145/145867.svg">
+									<img id="bprofil" class="mb-2 border rounded p-1 grey lighten-3" width="70" src="../asset/image/icon/usr-1.svg">
 									<p class="m-0 font-weight-bold">Profil</p>
 								</a>
 							</div>
 							<div class="col-3">
 								<a class="black-text active-tab-2" id="buttonakun" href="#">
-									<img id="bakun" class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/306/306047.svg">
+									<img id="bakun" class="mb-2" width="70" src="../asset/image/icon/shld-1.svg">
 									<p class="m-0">Akun</p>
 								</a>
 							</div>
 							<div class="col-3">
 								<a class="black-text active-tab-2" id="buttonpassword">
-									<img id="bpassword" class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1197/1197500.svg">
+									<img id="bpassword" class="mb-2" width="70" src="../asset/image/icon/lock-1.svg">
 									<p class="m-0">Password</p>
 								</a>
 							</div>
 							<div class="col-3">
 								<a class="black-text active-tab-2" href="../profile">
-									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1299/1299944.svg">
+									<img class="mb-2" width="70" src="../asset/image/icon/rtrn.svg">
 									<p class="m-0">Kembali</p>
 								</a>
 							</div>
@@ -299,7 +301,7 @@ if (isset($_SESSION['s_user_id']))
 }
 else
 {
-	header('Location:../login/index.php') ;
+	header('Location:../login') ;
 }
 ?>
 

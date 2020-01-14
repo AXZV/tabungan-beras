@@ -28,8 +28,10 @@ if (isset($_SESSION['s_admin_id']))
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="favicon/favicon.ico" type="image/x-icon"/>
-	<link rel="shortcut icon" href="favicon/favicon.ico" type="image/x-icon"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+	<link rel="manifest" href="../favicon/site.webmanifest">
 	<meta name="theme-color" content="#4AB616">
 	<?php include('../partials/css.php'); ?>
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -97,7 +99,7 @@ if (isset($_SESSION['s_admin_id']))
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXXmBvHF1K3QQ0cbaznD0yfSqNizuv3rOrcQKW43gWgQ8ujiyg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                <img width="25" class="rounded-circle border" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="background-image: url('../asset/image/icon/usr-2.svg'); background-size: cover; background-repeat: no-repeat; background-position: center;">
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" data-toggle="modal" data-target="#modalpengaturanadmin">
@@ -120,7 +122,7 @@ if (isset($_SESSION['s_admin_id']))
 					<div class="col-lg-8 col-sm-12">
 						<div class="card-body">
 							<div class="media">
-							  <img class="d-flex mr-3" width="55" src="https://image.flaticon.com/icons/svg/2206/2206248.svg" alt="Generic placeholder image">
+							  <img class="d-flex mr-3" width="55" src="../asset/image/icon/usr-2.svg" alt="Generic placeholder image">
 							  <div class="media-body">
 							    <h5 class="mt-0 font-weight-bold">Halo! Selamat Pagi Admin.</h5>
 							    <span>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. amet nibh libero, in gravida nulla.</span>
@@ -208,7 +210,7 @@ if (isset($_SESSION['s_admin_id']))
 					</div>
 					<?php } else {?>
 						<div class="card-body text-center">
-							<img width="100" src="https://image.flaticon.com/icons/svg/1634/1634836.svg">
+							<img width="100" src="../asset/image/icon/hstry.svg">
 							<h5 class="m-0 mt-3">Belum ada Nasabah</h5>
 						</div>
 					<?php } ?>
@@ -252,7 +254,7 @@ if (isset($_SESSION['s_admin_id']))
 
 						if($pass == $passuser)
 						{
-							echo "<script>window.location.href='profil.php';</script>";	
+							echo "<script>window.location.href='profil';</script>";	
 						}
 						else
 						{
@@ -285,6 +287,6 @@ if (isset($_SESSION['s_admin_id']))
 }
 else
 {
-	header('Location:../login/index.php') ;
+	header('Location:../login') ;
 }
 ?>
