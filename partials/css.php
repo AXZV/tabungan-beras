@@ -5,7 +5,6 @@
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/css/mdb.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="asset/css/style.css">
 <link rel="stylesheet" type="text/css" href="../asset/css/style.css">
 
 

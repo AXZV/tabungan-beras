@@ -196,9 +196,9 @@ if (isset($_SESSION['s_admin_id']))
 						<h1 style="font-size: 80px" class="font-color"><?php echo $konversi->normal($totalsedekah) ?> Kg</h1>
 						<?php if ($lenght22 > 0)
 						{ ?>
-							<a class="btn btn-primary m-0" data-toggle="modal" data-target="#modalsedekah" >Konfirmasi Sedekah</a>
+							<a class="btn btn-color m-0" data-toggle="modal" data-target="#modalsedekah" >Konfirmasi Sedekah</a>
 						<?php } else { ?>
-							<button class="btn btn-primary m-0" data-toggle="modal" data-target="#modalsedekah" disabled>Konfirmasi Sedekah</button>
+							<button class="btn btn-color m-0" data-toggle="modal" data-target="#modalsedekah" disabled>Konfirmasi Sedekah</button>
 						<?php } ?> 
 					</div>
 					<div class="col-lg-4 col-md-12">
