@@ -231,7 +231,7 @@
 									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/913/913139.svg" alt="Generic placeholder image">
 									  <div class="media-body">
 									    <p class="m-0 font-weight-bold"><?php echo $row33['target']?></p>
-									    <p class="m-0"><span>Jumlah :</span> <?php echo $row33['jumlah']?> Kg</p>
+									    <p class="m-0"><span>Jumlah :</span> <?php echo $konv->normal($row33['jumlah'])?> Kg</p>
 									    <p class="m-0"><span>Tanggal :</span> <?php echo $row33['tanggal']?></p>
 									  </div>
 									</div>
