@@ -134,13 +134,13 @@
 							<div class="col-4">
 								<a class="black-text active-tab-2" href="../tabungan/beras">
 									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg">
-									<p>Tabungan Beras</p>
+									<p>Tabungan</p>
 								</a>
 							</div>
 							<div class="col-4">
-								<a class="black-text active-tab-2" href="../tabungan/uang">
+								<a class="black-text active-tab-2" href="../penarikan/beras">
 									<img class="mb-2" width="70" src="https://image.flaticon.com/icons/svg/1138/1138548.svg">
-									<p>Tabungan Uang</p>
+									<p>Penarikan</p>
 								</a>
 							</div>
 							<div class="col-4">

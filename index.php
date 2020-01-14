@@ -200,7 +200,7 @@
 				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/639/639365.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Penarikan</h5>
-				    <span>Nasabah dapat menarik kapanpun tabungannya, minimal satu bulan setelah tanggal penabungan.</span>
+				    <span>Nasabah dapat melakukan menarik saldo tabungan pada hari dan jam kerja.</span>
 				  </div>
 				</div>
 			</div>
