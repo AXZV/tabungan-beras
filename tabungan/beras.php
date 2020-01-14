@@ -84,22 +84,22 @@ if (isset($_SESSION['s_user_id']))
 						<form method="post" action="proses_tabungan_beras.php">
 							<div class='switch mb-4 d-flex'>
 								<div class='quality'>
-									<input type="radio" id="radiocod" name="radiob"  value="cod">
+									<input type="radio" id="radiocod" name="radiob" checked value="cod">
 									<label for='radiocod'>Cash On Delivery (COD)</label>
 								</div>
 								<div class='quality'>
-									<input type="radio" id="radiotransfer" name="radiob" checked  value="noncod">
+									<input type="radio" id="radiotransfer" name="radiob" value="noncod">
 									<label for='radiotransfer'>Antar Ke Kantor</label>
 								</div>
 							</div>
 							<label>Jumlah :</label>
-							<div class="input-group mb-4" id="jmlhdiv">
+							<div class="input-group mb-1" id="jmlhdiv">
 								<input type="text" step="any" id="jumlah" name="jumlah" placeholder="Jumlah" required="" class="form-control" >
 								<div class="input-group-append">
 									<span class="input-group-text">Kg</span>
 								</div>
 							</div>
-							<div class="mb-4" id="keterangan" style="display:none">
+							<div class="mb-4" id="keterangan">
 								<small style="color:red">  " Untuk menggunakan layanan COD minimal transaksi penabungan 500 Kg "</small>
 							</div>
 
@@ -110,7 +110,7 @@ if (isset($_SESSION['s_user_id']))
 						        <option value="beras_baru">Beras Baru</option>
 						        <option value="beras_lama">Beras Lama</option>
 						    </select>
-							<div id="coddiv" style="display:none">
+							<div id="coddiv">
 								<label>Alamat : </label>
 								<div>
 									<small>Geser pin map sesuai alamat</small>
@@ -133,7 +133,9 @@ if (isset($_SESSION['s_user_id']))
 								</div>
 							</div>
 
-						    <button class="btn btn-color btn-block m-0" id="kirim" name="subtabungan" type="submit">Kirim</button>
+						    <button class="btn btn-color btn-block m-0" disabled id="kirim" name="subtabungan" type="submit">Kirim</button>
+							<button class="btn btn-color btn-block m-0" style="display:none;" id="kirim2" name="subtabungan" type="submit">Kirim</button>
+
 						</form>
 					</div>
 					<?php
@@ -166,15 +168,27 @@ if (isset($_SESSION['s_user_id']))
 </script>
 
 <script>
+	$('input').keyup(function(){
+
+		$('#jumlah').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 500);
+		});
+
+	})
+</script>
+
+<script>
 
 	$(document).ready(function() {
 	$('input[type="radio"]').click(function() {
 	if($(this).attr('id') == 'radiocod') {
 		$('#coddiv').show();
 		$('#keterangan').show();
-		// $("#jumlah").attr({"min" : 500});
 		$("#jmlhdiv").removeClass("mb-4");
 		$("#jmlhdiv").addClass("mb-1");
+		$('#kirim').show();
+		$('#kirim2').hide();
 		document.getElementById("address").required = true;
 		
 		$('#jumlah').on('keyup',function() {
@@ -186,9 +200,10 @@ if (isset($_SESSION['s_user_id']))
 	if($(this).attr('id') == 'radiotransfer') {
 		$('#coddiv').hide();
 		$('#keterangan').hide();
-		// $("#jumlah").attr({"min" : 1});
 		$("#jmlhdiv").addClass("mb-4");
 		$("#jmlhdiv").removeClass("mb-1");
+		$('#kirim').hide();
+		$('#kirim2').show();
 		document.getElementById("address").required = false;
 		
 		$('#jumlah').on('keyup',function() {

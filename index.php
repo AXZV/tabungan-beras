@@ -200,7 +200,7 @@
 				  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/639/639365.svg" alt="Generic placeholder image">
 				  <div class="media-body text-justify">
 				    <h5 class="mt-0 font-weight-bold">Penarikan</h5>
-				    <span>Nasabah dapat menarik kapanpun tabungannya, minimal satu bulan setelah tanggal penabungan.</span>
+				    <span>Nasabah dapat melakukan menarik saldo tabungan pada hari dan jam kerja.</span>
 				  </div>
 				</div>
 			</div>
@@ -216,7 +216,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8 col-sm-12">
-				<div class="card mb-3">
+				<div class="card mb-3 z-depth-0 border">
 					<div class="card-header">
 						<h5 class="font-weight-bold m-0">Detail Penyaluran Sedekah</h5>
 					</div>
@@ -228,10 +228,10 @@
 							<?php while ($row33 = mysqli_fetch_array($results2)){ ?>
 								<li class="list-group-item">
 									<div class="media">
-									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/1530/1530847.svg" alt="Generic placeholder image">
+									  <img class="d-flex mr-3" width="70" src="https://image.flaticon.com/icons/svg/913/913139.svg" alt="Generic placeholder image">
 									  <div class="media-body">
-									    <h5 class="mt-0"><?php echo $row33['target']?></h5>
-									    <p class="m-0"><span>Jumlah :</span> <?php echo $row33['jumlah']?> Kg</p>
+									    <p class="m-0 font-weight-bold"><?php echo $row33['target']?></p>
+									    <p class="m-0"><span>Jumlah :</span> <?php echo $konv->normal($row33['jumlah'])?> Kg</p>
 									    <p class="m-0"><span>Tanggal :</span> <?php echo $row33['tanggal']?></p>
 									  </div>
 									</div>

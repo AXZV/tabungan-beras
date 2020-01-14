@@ -109,16 +109,16 @@ if (isset($_SESSION['s_user_id']))
 										<label for='radiononcod'>Antar Ke Kantor</label>
 									</div>
 									<div class='quality'>
-										<input type="radio" id="radiocod" name="radiob"  value="cod">
+										<input type="radio" id="radiocod" name="radiob" checked  value="cod">
 										<label for='radiocod'>Cash On Delivery (COD)</label>
 									</div>
 									<div class='quality'>
-										<input type="radio" id="radiotransfer" name="radiob" checked value="transfer">
+										<input type="radio" id="radiotransfer" name="radiob"  value="transfer">
 										<label for='radiotransfer'>Transfer</label>
 									</div>
 								</div>
 
-									<div id="transferdiv" >
+									<div id="transferdiv" style="display:none;" >
 										<label>Nomor Rekening :</label>
 										<div class="input-group mb-1" >
 											<div class="input-group-prepend">
@@ -133,13 +133,13 @@ if (isset($_SESSION['s_user_id']))
 									</div>
 
 									<label>Jumlah :</label>
-									<div class="input-group mb-4" id="jmlhdiv">
+									<div class="input-group mb-1" id="jmlhdiv">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Rp.</span>
 										</div>
 										<input type="text" id="jumlah_uang" name="jumlah" placeholder="Jumlah" required="" class="form-control">
 									</div>
-									<div class="mb-4" id="keterangan" style="display:none;">
+									<div class="mb-4" id="keterangan">
 										<small style="color:red;">  " Untuk menggunakan layanan COD minimal transaksi penabungan Rp. 500.000 (lima ratus ribu rupiah) "</small>
 									</div>
 									
@@ -168,7 +168,7 @@ if (isset($_SESSION['s_user_id']))
 										</div>
 									</div>	
 
-									<div id="transferdiv2">
+									<div id="transferdiv2" style="display:none;">
 										<p class="m-0">Bukti Transfer : </p>
 										<img class="img-fluid mb-3 rounded" style="max-height: 150px;" id="img-upload">
 										<div class="input-group mb-3">
@@ -181,7 +181,7 @@ if (isset($_SESSION['s_user_id']))
 									</div>
 
 
-									<div id="coddiv" style="display:none;">
+									<div id="coddiv">
 										<label>Alamat : </label>
 										<div>
 											<small>Geser pin map sesuai alamat</small>
@@ -204,7 +204,9 @@ if (isset($_SESSION['s_user_id']))
 										</div>
 									</div>
 
-									<button class="btn btn-color btn-block m-0" id="kirim" name="uangtabungan" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" disabled id="kirim" name="uangtabungan" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" style="display:none;" id="kirim2" name="uangtabungan" type="submit">Kirim</button>
+
 								</form>
 								
 
@@ -240,6 +242,11 @@ if (isset($_SESSION['s_user_id']))
 
 		document.getElementById('jumlah_beras2').value = rubahangka(totalharga);
 
+		$('#jumlah_uang').on('keyup',function() {
+			var xx = $(this).val();
+			mincod(xx, 500000);
+		});
+
 	})
 </script>
 
@@ -249,7 +256,7 @@ if (isset($_SESSION['s_user_id']))
 
 	$('input[type="radio"]').click(function() {
 	if($(this).attr('id') == 'radiononcod') {
-		$('#kirim').attr('disabled', false);  
+		$('#kirim2').attr('disabled', false);  
 
 		$('#coddiv').hide();
 		$('#coddiv2').show();
@@ -257,6 +264,8 @@ if (isset($_SESSION['s_user_id']))
 		$('#transferdiv').hide();
 		$('#transferdiv2').hide();
 		$('#keterangan').hide();
+		$('#kirim').hide();
+		$('#kirim2').show();
 		$("#jmlhdiv").addClass("mb-4");
 		$("#jmlhdiv").removeClass("mb-1");
 		document.getElementById("buktitf").required = false;
@@ -274,6 +283,8 @@ if (isset($_SESSION['s_user_id']))
 		$('#transferdiv').hide();
 		$('#transferdiv2').hide();
 		$('#keterangan').show();
+		$('#kirim2').hide();
+		$('#kirim').show();
 		$("#jmlhdiv").addClass("mb-1");
 		$("#jmlhdiv").removeClass("mb-4");
 		document.getElementById("buktitf").required = false;
@@ -286,13 +297,15 @@ if (isset($_SESSION['s_user_id']))
 
 	}
 	if($(this).attr('id') == 'radiotransfer') {
-		$('#kirim').attr('disabled', false);  
+		$('#kirim2').attr('disabled', false);  
 
 		$('#coddiv').hide();
 		$('#coddiv2').hide();
 		$('#transferdiv').show();
 		$('#transferdiv2').show();
 		$('#keterangan').hide();
+		$('#kirim').hide();
+		$('#kirim2').show();
 		$("#jmlhdiv").addClass("mb-4");
 		$("#jmlhdiv").removeClass("mb-1");
 		document.getElementById("buktitf").required = true;
