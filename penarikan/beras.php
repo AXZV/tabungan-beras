@@ -1,5 +1,7 @@
 <?php
 include('../db_con.php');
+include '../function/fungsi.php';
+$konv = new konversi;
 if (isset($_SESSION['s_user_id']))
 {
 	$id_user = $_SESSION['s_user_id'];
@@ -12,52 +14,16 @@ if (isset($_SESSION['s_user_id']))
 	$lat=$data['lat'];
 	$lng=$data['lng'];
 
-	//////////////////////  char dot dot 
-		if (strpos($jumlah_tabungan, '.') !== false) {
-			$b=strstr($jumlah_tabungan, '.', true);
-			$removecoma = str_replace('.', '', $b );
-			$takedecimal =  substr($jumlah_tabungan, strpos($jumlah_tabungan, ".") + 1); 
-		}
-		else
-		{
-			$removecoma = $jumlah_tabungan;
-			$takedecimal = null;
-		}
-		$hasil_rupiah = number_format($removecoma,0,'','.');
-		if (strpos($jumlah_tabungan, '.') !== false) {
-			$finaltotalsaldo=$hasil_rupiah.",".$takedecimal;
-		}
-		else
-		{
-			$finaltotalsaldo=$hasil_rupiah;
-		}
-	//////////////////////////////////////
+	$finaltotalsaldo = $konv->normal($jumlah_tabungan);
+
 
 	$query4 = "SELECT SUM(`jumlah_transaksi`) as total FROM log_penarikan WHERE status='belum_diverifikasi' AND id_user='$id_user'";
 	$results4 = mysqli_query($db, $query4) or die (mysqli_error());
 	$row4=mysqli_fetch_array($results4);
 	$totaltabungan = round($row4['total'], 2);
 	
-	//////////////////////  char dot dot 
-		if (strpos($totaltabungan, '.') !== false) {
-			$b2=strstr($totaltabungan, '.', true);
-			$removecoma2 = str_replace('.', '', $b2 );
-			$takedecimal2 =  substr($totaltabungan, strpos($totaltabungan, ".") + 1); 
-		}
-		else
-		{
-			$removecoma2 = $totaltabungan;
-			$takedecimal2 = null;
-		}
-		$hasil_rupiah2 = number_format($removecoma2,0,'','.');
-		if (strpos($totaltabungan, '.') !== false) {
-			$finaltotalsaldo2=$hasil_rupiah2.",".$takedecimal2;
-		}
-		else
-		{
-			$finaltotalsaldo2=$hasil_rupiah2;
-		}
-	//////////////////////////////////////
+	$finaltotalsaldo2 = $konv->normal($totaltabungan);
+
 	
 	$query21 = "SELECT * FROM log_status WHERE id_user='$id_user'";
 	$results21 = mysqli_query($db, $query21) or die (mysqli_error());
@@ -90,7 +56,7 @@ if (isset($_SESSION['s_user_id']))
 						<h5 class="font-weight-bold font-color">Kategori</h5>
 						<hr>
 					</div>
-					<a href="../sedekah/beras" class="black-text active-tab-2">
+					<a href="#" class="black-text active-tab-2">
 						<div class="media mb-3">
 						  <img class="d-flex mr-3 border rounded p-1 grey lighten-3" width="70" src="https://image.flaticon.com/icons/svg/306/306670.svg" alt="Generic placeholder image">
 						  <div class="media-body desk">
@@ -137,7 +103,7 @@ if (isset($_SESSION['s_user_id']))
 									<span id="saldokurang" style="display:none; color:red"> Maaf saldo anda tidak cukup </span></br>
 									<label>Jumlah Penarikan:</label>
 									<div class="input-group mb-4">
-										<input type="number" min="0" step="any" required="" id="jumlah_transaksi" name="jumlah_transaksi" class="form-control" placeholder="Jumlah Penarikan" >								
+										<input type="text" required="" id="jumlah_transaksi" name="jumlah_transaksi" class="form-control" placeholder="Jumlah Penarikan" >								
 										<div class="input-group-append">
 											<span class="input-group-text">Kg</span>
 										</div>
@@ -166,7 +132,7 @@ if (isset($_SESSION['s_user_id']))
 									</div>
 								</div>
 									<!-- <input type="button" id="btnmdl" value="kirim" class="btn-color form-control"  data-toggle="modal" data-target="#modalpengaturanadmin"></input> -->
-									<button class="btn btn-color btn-block m-0" name="penarikan" type="submit">Kirim</button>
+									<button class="btn btn-color btn-block m-0" id="bpenarikan" name="penarikan" type="submit">Kirim</button>
 								</form>
 							</div>
 						<?php
@@ -185,6 +151,7 @@ if (isset($_SESSION['s_user_id']))
 
 <?php include('../partials/footer.php'); ?>
 <?php include('../partials/js.php'); ?>
+<script type="text/javascript" src="../function/fungsi.js"></script>
 <!-- ////// radion button -->
 <script>
 	$(document).ready(function(){
@@ -195,52 +162,35 @@ if (isset($_SESSION['s_user_id']))
 		})
 	})
 </script>
-<!-- ////// konversi beras -->
+
 <script>
-	$('input').keyup(function(){
-		var jumlah_uang = parseFloat($('#jumlah_transaksi').val());
+	var rupiah = document.getElementById("jumlah_transaksi");
+	rupiah.addEventListener("keyup", function(e) {
+
+		var jmlh_uang = this.value;
+		var vals = jmlh_uang.replace(/\./g,''); /// hapus .
+    	var vals2 = vals.replace(/\,/g,'.'); /// ganti , menjadi .
+		var jmlh_uangnum = Number(vals2);
+
 		var saldo = <?php echo json_encode($jumlah_tabungan);  ?>;
 		var saldonum = Number(saldo);
-		if(jumlah_uang > saldonum)
+		
+		if(jmlh_uangnum > saldonum)
 		{
-			console.log("lebih");
 			$('#saldokurang').show();
+			$('#bpenarikan').attr('disabled', true);
 		}
 		else
 		{
-			console.log("kurang");
 			$('#saldokurang').hide();
-			var tabungan = <?php echo json_encode($jumlah_tabungan);  ?>;
-			var totalharga = ((tabungan-jumlah_uang).toFixed(2));
-
-			//////////////////////  char dot dot 
-				// if (strpos(totalharga, '.') !== false) {
-
-				// 	var b3=strstr(totalharga, '.', true);
-				// 	var removecoma3 = str_replace('.', '', b3 );
-				// 	var takedecimal3 =  substr(totalharga, strpos(totalharga, ".") + 1); 
-				// }
-				// else
-				// {
-				// 	removecoma3 = totalharga;
-				// 	takedecimal3 = null;
-				// }
-				// var hasil_rupiah3 = number_format(removecoma3,0,'','.');
-				// if (strpos(totalharga, '.') !== false) {
-				// 	var finaltotalsaldo3=hasil_rupiah3.",".takedecimal3;
-				// }
-				// else
-				// {
-				// 	finaltotalsaldo3=hasil_rupiah3;
-				// }
-
-				// console.log(finaltotalsaldo3);
-			//////////////////////////////////////
-
-			document.getElementById('jumlah_tabungan').value = totalharga;
+			var totalharga = ((saldo-jmlh_uangnum).toFixed(2));
+			document.getElementById('jumlah_tabungan').value = rubahangka(totalharga);
+			$('#bpenarikan').attr('disabled', false);
 		}
-	})
+
+	});
 </script>
+<!-- ////// konversi beras -->
 <script>
 	$(document).ready(function() {
 	$('input[type="radio"]').click(function() {
@@ -262,6 +212,14 @@ if (isset($_SESSION['s_user_id']))
 		// document.getElementById("jumlah").required = false; 
 	}
 	});
+	});
+</script>
+
+<!-- ////// Format angka -->
+<script>
+	var rupiah = document.getElementById("jumlah_transaksi");
+	rupiah.addEventListener("keyup", function(e) {
+	rupiah.value = formatRupiah(this.value, "Rp. ");
 	});
 </script>
 
