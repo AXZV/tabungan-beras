@@ -1,0 +1,16 @@
+body, h1, h2, h3, h4, h5, h6 {font-weight: 400!important}
+.font-color{color: #4AB616!important}
+.font-color-2{color: #F8A000!important}
+.background-color-1{background-color: #4AB616!important}
+.background-color-2{background-color: #E6ECF0!important}
+.btn-color {background: #4AB616!important; color: #ffff!important;}
+.btn-color-2{background: #F8A000!important; color: #ffff!important;}
+.pagination .page-item.active .page-link{background-color: #4AB616!important}
+.active-tab {background-color:#4AB616!important; color: #ffff!important}
+.active-tab-2:hover img {background-color: #eee!important;border-radius: .25rem!important;border: 1px solid #dee2e6!important;padding: .25rem!important;}
+.active-tab-2 img, .hover-image{transition: .1s ease}
+.banner:hover .hover-image {transform: scale(1.25)!important;}
+.btn {text-transform: capitalize!important;}
+@media (max-width: 991px) {
+	.dropdown-menu-right{right: auto!important; left: 0!important}
+}
