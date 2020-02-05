@@ -84,10 +84,11 @@ if($data3['jenis_pembayaran'] == 'Transfer')
     $status_transaksi = $midtrans->get_status_transaction($data_transaksi);
 
     $data4=$crud->get('log_transaksi_nontunai', 'id_transaksi',  $data_transaksi);
-    // $link = $data4['detail_pembayaran'];
+    $expire_day = date('d F Y H:i:s', strtotime($data4['tanggal_expired']));
+
     ?>
-    <div class="alert alert-warning" role="alert">
-        <span>Segera lakukan pembayaran di <span style="font-weight: bold;"><?php echo $status_transaksi['store'] ?> </span> terdekat !</span>
+    <div class="alert alert-danger" role="alert">
+        <span>Segera lakukan pembayaran sebelum <?php echo $expire_day ?></span>
     </div>
         <a class="btn btn-color btn-block m-0" id="myLink" href="<?php echo $data4['detail_pembayaran']; ?>" target="_blank">Cara membayar</a>
     </div>

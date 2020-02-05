@@ -1,5 +1,5 @@
 <?php
-include('../db_con.php');
+include('../db_con2.php');
 include '../function/fungsi.php';
 $konv = new konversi;
 $crud = new crud;

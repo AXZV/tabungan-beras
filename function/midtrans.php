@@ -29,7 +29,8 @@
 
                                 var final_data = {...data_transaksi, ...result };
                                 data = JSON.stringify(final_data);
-
+                                
+                                // console.table(result);
                                 document.location.replace('../function/fungsi.php?data='+data);
 
                             },
@@ -102,6 +103,16 @@
             curl_close($ch);
             $data = json_decode($result, true);  
             return $data;
+        }
+
+
+        function cancel_transaction($data_transaksi)
+        {
+            $transaction_id = $data_transaksi;
+            $url = $GLOBALS['BASE_URL'].'/v2/'.$transaction_id.'/cancel';
+            $login = $GLOBALS['server_key'];
+            $password ='';
+
         }
 
 

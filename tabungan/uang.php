@@ -6,10 +6,10 @@ include '../function/midtrans.php';
 $midtrans = new Midtrans\midtransx;
 $crud = new crud;
 
-// $red = $midtrans->get_status_transaction();
+// $idx = "7ba368a2-a835-4111-af47-17a69a86f5e5";
+// $red = $midtrans->get_status_transaction($idx);
 // // echo $red;
 // var_dump ($red);
-// echo $red['store'];
 
 if (isset($_SESSION['s_user_id']))
 {

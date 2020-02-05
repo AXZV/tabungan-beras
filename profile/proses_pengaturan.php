@@ -518,6 +518,13 @@ include '../db_con.php';
             {
                 header("location:riwayat_tabungan.php");
             }
+
+            $queryx = "DELETE FROM log_transaksi_nontunai WHERE id_transaksi='$id'";
+            $resultsx = mysqli_query($db, $queryx) or die (mysqli_error());
+            if ($resultsx) 
+            {  
+            }
+
         }
     }
 //////////////////////////  hapus_transaksi_tabungan ///////////////////////////////////

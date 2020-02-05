@@ -11,8 +11,9 @@
 	//// TOTAL SALDO
 
 	$data=$crud->get('akun_user', 'id_user', $id_user);
-	$totaltabungan= $data['saldo']; 
-
+	$totaltabungan= $data['saldo'];
+	
+	$data2=$crud->get('log_transaksi_nontunai', 'id_user',  $id_user, 'status', 'pending');
 
 ?>
 
@@ -54,6 +55,7 @@
 		background-color: #4AB616!important;
 	}
 
+
 </style>
 <body>
 <?php if(isset($_SESSION['sedekah'])==1)
@@ -68,7 +70,6 @@
 	}
 	if(isset($_SESSION['tabungan'])==1)
 	{
-		echo("<script>console.log('PHP: fuckkkk');</script>");
 		echo 
 		"<script> 
 			$(window).on('load', function(){
@@ -89,6 +90,17 @@
 
 		unset($_SESSION['penarikan']);
 	}
+	if(isset($_SESSION['nontunai'])==1)
+	{
+		echo 
+		"<script> 
+			$(window).on('load', function(){
+				$('#nontunai').modal('toggle')
+			});
+		</script>";
+
+		unset($_SESSION['nontunai']);
+	}
 ?>
 
 
@@ -100,6 +112,16 @@
 			<div class="col-lg-8 col-sm-12 px-0 px-sm-0 px-md-0 px-lg-3 px-xl-3 mt-3">
 
 <!-- ///////////////////////////////// RINCIAN ///////////////////////////////// -->
+				<?php if ($data2 > 1)
+				{ 
+					$exp = date('d F Y H:i:s', strtotime($data2['tanggal_expired']));
+					?>
+					<div class="alert alert-danger mb-4 text-center " role="alert">
+						<span>Anda mempunyai satu transkasi yang belum diselesaikan, silahkan lakukan pembayaran sebelum <?php echo $exp ?></span>
+						<a class="btn btn-color btn-block m-0" id="myLink" href="<?php echo $data2['detail_pembayaran']; ?>" target="_blank">Cara membayar</a>
+					</div>
+
+				<?php } ?>
 				<div class="card mb-4">
 					<div class="card-header">
 						<h5 class="mb-0 font-weight-bold">Saldo Beras</h5>
@@ -378,7 +400,39 @@
 			<!--/.Content-->
 		</div>
 	</div>
-<!-- Central Modal Medium Success-->
+	<!-- Central Modal Medium Success-->
+<!-- /////////////////////// Modal nontunai /////////////////////////////// -->
+	<div class="modal fade" id="nontunai" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-notify modal-success" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header" id="tabunganhead">
+					<p class="heading lead">Transaksi Berhasil</p>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+				<!--Body-->
+				<?php
+					$idx = $_SESSION['id_trans'];
+					$data4=$crud->get('log_transaksi_nontunai', 'id_transaksi',  $idx);
+					$expire_day = date('d F Y H:i:s', strtotime($data4['tanggal_expired']));
+				?>
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-cash-register fa-4x mb-3 animated rotateIn" style="color:#4AB616"></i>
+						<p>Segera lakukan pembayaran sebelum <?php echo $expire_day ?></p>
+					<a class="btn btn-color btn-block m-0" id="myLink" href="<?php echo $data4['detail_pembayaran']; ?>" target="_blank">Cara membayar</a>
+
+					</div>
+				</div>
+				<!--Footer-->
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
 
 
 <?php include('../partials/footer.php'); ?>

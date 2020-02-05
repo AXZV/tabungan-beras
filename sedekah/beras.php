@@ -1,5 +1,5 @@
 <?php
-include('../db_con.php');
+include('../db_con2.php');
 include '../function/fungsi.php';
 $konvrs = new konversi;
 $crud = new crud;
@@ -10,7 +10,7 @@ if (isset($_SESSION['s_user_id']))
 	$data=$crud->get('akun_user', 'id_user', $id_user);
 
 	$jumlah_tabungan=$konvrs->normal($data['saldo']);
-	$jumlah_tabunganx=$data['saldo'];
+	$jumlah_tabunganx=$data['saldo']	;
 	$alamat=$data['alamat'];
 	$lat=$data['lat'];
 	$lng=$data['lng'];

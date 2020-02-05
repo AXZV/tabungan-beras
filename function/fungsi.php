@@ -14,11 +14,9 @@
     if(isset($_GET['data']))
     {
         $d_transaksi = json_decode($_GET['data'], true);
-        // var_dump($d_data);
         $crud = new crud;
         $crud->push_tabungan($d_transaksi);
         $crud->push_nontunai($d_transaksi);
-
     }
     
     class konversi
@@ -165,10 +163,16 @@
                 $query2=mysqli_query($this->db,$sql2);
                 if ($query2) 
                 {
-                    $_SESSION['tabungan'] = 1;
-                    // push_nontunai($d_transaksi);
+                    if ($jenis_pembayaran == 'Transfer')
+                    {
+                        $_SESSION['nontunai'] = 1;
+                        $_SESSION['id_trans'] = $id_transaksi;
+                    }
+                    else
+                    {
+                        $_SESSION['tabungan'] = 1;
+                    }
                     header('Location:../profile/index.php');
-                    
                 }
             }
         }
@@ -181,18 +185,21 @@
             $tipe_pembayaran    =$d_transaksi['payment_type'];
             $status             =$d_transaksi['transaction_status'];
             $detail_pembayaran  =$d_transaksi['pdf_url'];
+            $tanggal_expired    = date('Y-m-d H:i:s', strtotime($tanggal_transaksi . ' +1 day'));
 
             $sql="INSERT INTO log_transaksi_nontunai(
                 id_transaksi,
                 id_user,
                 tanggal_transaksi,
+                tanggal_expired,
                 tipe_pembayaran,
                 status,
                 detail_pembayaran) 
             VALUES (
                 '$id_transaksi',       
                 '$id_user',            
-                '$tanggal_transaksi',  
+                '$tanggal_transaksi',
+                '$tanggal_expired',  
                 '$tipe_pembayaran',    
                 '$status',                
                 '$detail_pembayaran')";
